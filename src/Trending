@@ -1,0 +1,30 @@
+// Trending.js
+import React, { useEffect, useState } from 'react';
+import './Trending.css'; // Import the CSS for the fire animation
+
+function Trending() {
+  const [showAnimation, setShowAnimation] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowAnimation(false);
+    }, 3000); // Show animation for 3 seconds
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <div className="trending-container">
+      {showAnimation ? (
+        <div className="fire-animation">🔥🔥🔥</div> // Simple fire animation, you can enhance this with CSS
+      ) : (
+        <div className="content">
+          <h1>Trending Videos</h1>
+          {/* Add trending videos content here */}
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default Trending;

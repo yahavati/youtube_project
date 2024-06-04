@@ -36,3 +36,280 @@
     transform: rotate(360deg);
   }
 }
+
+.list-group-item {
+  border: 0;
+  background-color: white;
+}
+
+.list-group-item:hover {
+  background: lightgray;
+  cursor: pointer;
+}
+
+.fixed-list-group {
+  position: fixed;
+}
+
+.card-img-top {
+  height: 150px;
+  object-fit: cover;
+}
+
+.search-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.btn-group {
+  display: block;
+}
+
+.btn-outline-primary {
+  --bs-btn-color: black;
+  --bs-btn-border-color: gray;
+  --bs-btn-active-bg: black;
+  --bs-btn-active-border-color: gray;
+}
+
+.bg-light {
+  --bs-bg-opacity: ;
+}
+
+.line {
+  height: 1px;
+  background-color: white;
+  color: white;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.scrollable-menu {
+  overflow-y: auto;
+}
+
+.vh-100 {
+  height: 100vh;
+}
+
+.microphone-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: gray;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-left: 20px;
+  position: absolute;
+  right: -10%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.card-subtitle {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.card-text {
+  font-size: 0.8rem;
+  color: #777;
+}
+
+.card {
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.video-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.video-title {
+  align-self: flex-start;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.video-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.video-metadata {
+  flex-grow: 1;
+}
+
+.video-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+.btn-container.active {
+  background-color: #d3d3d3;
+}
+
+.btn-like, .btn-dislike {
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.btn-like i, .btn-dislike i {
+  color: gray;
+}
+
+.btn-container.active .btn-like i {
+  color: #4CAF50;
+}
+
+.btn-container.active .btn-dislike i {
+  color: #f44336;
+}
+
+.mid-menu-container {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.mid-menu-container .btn-group {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  margin: 0 10px;
+  width: calc(100% - 60px);
+}
+
+.mid-menu-container .btn-group::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-button {
+  background-color: #fff;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 5px 10px;
+}
+
+.scroll-button:focus {
+  outline: none;
+}
+
+.btn.btn-outline-primary {
+  border-radius: 20px;
+  margin: 0 5px;
+  padding: 5px 15px;
+}
+
+.btn-check:checked + .btn.btn-outline-primary {
+  background-color: black;
+  color: white;
+}
+
+.youtube-button {
+  background: none;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  cursor: pointer;
+  margin-left: 60px;
+ 
+ 
+}
+
+.youtube-icon {
+  font-size: 2rem;
+  color: red;
+}
+
+.youtube-text {
+  font-size: large;
+  font-style: oblique;
+  margin: 8px;
+}
+
+.fixed-left-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background: white;
+  width: 250px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+}
+.fixed-left-menu.sm-screen {
+  height: auto;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+
+
+/* Hide the left menu on smaller screens */
+@media (max-width: 991px) {
+  .fixed-left-menu {
+    display: none;
+  }
+}
+
+
+.main-content {
+  flex: 1;
+}
+
+/* index.css or App.css */
+.btn-danger, .btn-success, .btn-primary {
+  border: none;
+  cursor: pointer;
+}
+
+.me-2 {
+  margin-right: 0.5rem; /* Bootstrap class for small spacing between buttons */
+}
