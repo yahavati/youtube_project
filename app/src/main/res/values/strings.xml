@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Youtube_project</string>
+    <string name="Username">Username\n</string>
+    <string name="password">Password\n</string>
+    <string name="login_user">login\n</string>
+
+</resources>
