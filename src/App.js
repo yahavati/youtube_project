@@ -17,7 +17,7 @@ function App() {
   const navigate = useNavigate();
   const isVideoDetail = location.pathname.startsWith('/video/');
   const isLargeScreen = windowWidth >= 992;
-
+  
   useEffect(() => {
     fetch('/videos.json')
       .then(response => response.json())
