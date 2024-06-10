@@ -1,0 +1,92 @@
+[
+    {
+        "id": 1,
+        "title": "Food",
+        "author": "Lian",
+        "views": "120k",
+        "when": "1 week ago",
+        "img": "img1.jpg",
+        "videoUrl": "https://path-to-your-video-file/video1.mp4"
+    },
+    {
+        "id": 2,
+        "title": "News",
+        "author": "13 רשת",
+        "views": "20m",
+        "when": "2 days ago",
+        "img": "img6.jpg",
+        "videoUrl": "https://path-to-your-video-file/video2.mp4"
+    },
+    {
+        "id": 3,
+        "title": "Maccabi Tel Aviv",
+        "author": "sport 5",
+        "views": "10m",
+        "when": "4 days ago",
+        "img": "img5.jpg",
+        "videoUrl": "https://path-to-your-video-file/video3.mp4"
+    },
+    {
+        "id": 4,
+        "title": "Music",
+        "author": "Alicia Keys",
+        "views": "120k",
+        "when": "1 week ago",
+        "img": "img4.jpg",
+        "videoUrl": "https://path-to-your-video-file/video3.mp4"
+    },
+    {
+        "id": 5,
+        "title": "Trips",
+        "author": "Yahav Atias",
+        "views": "120k",
+        "when": "2 weeks ago",
+        "img": "img4.jpg",
+        "videoUrl": "https://path-to-your-video-file/video3.mp4"
+    },
+    {
+        "id": 6,
+        "title": "Food",
+        "author": "Lian",
+        "views": "120k",
+        "when": "1 week ago",
+        "img": "img1.jpg",
+        "videoUrl": "https://path-to-your-video-file/video1.mp4"
+    },
+    {
+        "id": 7,
+        "title": "News",
+        "author": "13 רשת",
+        "views": "20m",
+        "when": "2 days ago",
+        "img": "img6.jpg",
+        "videoUrl": "https://path-to-your-video-file/video2.mp4"
+    },
+    {
+        "id": 8,
+        "title": "Maccabi Tel Aviv",
+        "author": "sport 5",
+        "views": "10m",
+        "when": "4 days ago",
+        "img": "img5.jpg",
+        "videoUrl": "https://path-to-your-video-file/video3.mp4"
+    },
+    {
+        "id": 9,
+        "title": "Music",
+        "author": "Alicia Keys",
+        "views": "120k",
+        "when": "1 week ago",
+        "img": "img4.jpg",
+        "videoUrl": "https://path-to-your-video-file/video3.mp4"
+    },
+    {
+        "id": 10,
+        "title": "Trips",
+        "author": "Yahav Atias",
+        "views": "120k",
+        "when": "2 weeks ago",
+        "img": "img4.jpg",
+        "videoUrl": "https://path-to-your-video-file/video3.mp4"
+    }
+]

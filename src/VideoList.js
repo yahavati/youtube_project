@@ -1,15 +1,14 @@
 import React from 'react';
-import Videos from './Videos'; // Ensure this path is correct
-import Video from './Video'; // Ensure this path is correct
+import Video from './Video';
 
-function VideoList({ searchQuery }) {
-  const filteredVideos = Videos.filter((video) =>
+function VideoList({ videos, searchQuery }) {
+  const filteredVideos = videos.filter(video =>
     video.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
     <div className="row g-2 mt-2">
-      {filteredVideos.map((video) => (
+      {filteredVideos.map(video => (
         <Video {...video} key={video.id} />
       ))}
     </div>

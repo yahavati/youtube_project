@@ -1,5 +1,4 @@
-// App.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, Routes, Route, useNavigate } from 'react-router-dom';
 import VideoList from './VideoList';
 import VideoDetail from './VideoDetail';
@@ -10,13 +9,21 @@ import WindowWidth from './WindoWidth';
 import './App.css';
 
 function App() {
+  const [videos, setVideos] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [bgColor, setBgColor] = useState('white'); // State for background color
+  const [bgColor, setBgColor] = useState('white');
   const windowWidth = WindowWidth();
   const location = useLocation();
   const navigate = useNavigate();
   const isVideoDetail = location.pathname.startsWith('/video/');
-  const isLargeScreen = windowWidth >= 992; // Bootstrap lg size breakpoint is 992px
+  const isLargeScreen = windowWidth >= 992;
+
+  useEffect(() => {
+    fetch('/videos.json')
+      .then(response => response.json())
+      .then(data => setVideos(data))
+      .catch(error => console.error('Error fetching videos:', error));
+  }, []);
 
   const navigateToHome = () => {
     navigate('/');
@@ -39,14 +46,14 @@ function App() {
           </div>
         )}
         <div className={`col ${isLargeScreen && isVideoDetail ? 'col-lg-9' : 'main-content'}`}>
-          <div style={{ backgroundColor: bgColor, minHeight: '100vh' }}> {/* Apply background color */}
-            <Search onSearch={setSearchQuery} setBgColor={setBgColor} /> {/* Pass setBgColor to Search */}
+          <div style={{ backgroundColor: bgColor, minHeight: '100vh' }}>
+            <Search onSearch={setSearchQuery} setBgColor={setBgColor} />
             <div className="row bg-white">
               {!isVideoDetail && <MidMenu />}
             </div>
             <Routes>
-              <Route path="/" element={<VideoList searchQuery={searchQuery} />} />
-              <Route path="/video/:id" element={<VideoDetail />} />
+              <Route path="/" element={<VideoList videos={videos} searchQuery={searchQuery} />} />
+              <Route path="/video/:id" element={<VideoDetail videos={videos} />} />
             </Routes>
           </div>
         </div>

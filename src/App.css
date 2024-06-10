@@ -1,3 +1,5 @@
+/* Existing styles in App.css */
+
 .App {
   text-align: center;
 }
@@ -252,8 +254,6 @@
   padding: 5px;
   cursor: pointer;
   margin-left: 60px;
- 
- 
 }
 
 .youtube-icon {
@@ -290,8 +290,6 @@
   justify-content: space-around;
 }
 
-
-
 /* Hide the left menu on smaller screens */
 @media (max-width: 991px) {
   .fixed-left-menu {
@@ -299,17 +297,267 @@
   }
 }
 
-
 .main-content {
   flex: 1;
 }
 
-/* index.css or App.css */
-.btn-danger, .btn-success, .btn-primary {
+/* Styles for when screen width is greater than 750px */
+@media (min-width: 751px) {
+  .search-container {
+    display: flex;
+    align-items: center;
+    width: 60%;
+  }
+  .search-container form {
+    display: flex;
+    flex: 1;
+  }
+  .color-buttons,
+  .microphone-button {
+    display: inline-block;
+  }
+}
+
+/* Styles for when screen width is less than 750px */
+@media (max-width: 750px) {
+  .search-container {
+    display: flex;
+    align-items: center;
+  }
+  .search-container form {
+    display: none;
+  }
+  .search-container.show-input form {
+    display: flex;
+    flex: 1;
+  }
+  .color-buttons,
+  .microphone-button {
+    display: none;
+  }
+  .search-container.show-input .color-buttons,
+  .search-container.show-input .microphone-button {
+    display: none;
+  }
+  .search-container.show-input form input {
+    width: 100%;
+  }
+}
+
+/* Fire animation using emoji */
+@keyframes fireAnimation {
+  0% {
+    content: "🔥";
+    font-size: 0;
+    opacity: 0;
+  }
+  50% {
+    content: "🔥";
+    font-size: 100px;
+    opacity: 0.8;
+  }
+  100% {
+    content: "🔥";
+    font-size: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes cryAnimation  {
+  0% {
+    content: "😭";
+    font-size: 0;
+    opacity: 0;
+  }
+  50% {
+    content: "😭";
+    font-size: 100px;
+    opacity: 0.8;
+  }
+  100% {
+    content: "😭";
+    font-size: 0;
+    opacity: 0;
+  }
+}
+
+.fire-overlay , .cry-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0;
+  animation: none;
+  font-size: 100px; /* Initial size of the fire emoji */
+}
+
+.fire-overlay.active {
+  animation: fireAnimation 2s forwards;
+}
+
+.cry-overlay.active {
+  animation: cryAnimation 2s forwards;
+}
+
+/* Share Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  max-width: 90%;
+  text-align: center;
+  position: relative;
+}
+
+.close-button {
+  background: none;
   border: none;
+  font-size: 1.5rem;
+  position: absolute;
+  top: 10px;
+  right: 10px;
   cursor: pointer;
 }
 
-.me-2 {
-  margin-right: 0.5rem; /* Bootstrap class for small spacing between buttons */
+.create-post-button {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 20px 0;
 }
+
+.share-options {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px 0;
+}
+
+.share-option {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.share-url {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.share-url input {
+  width: 70%;
+  padding: 5px;
+  font-size: 1rem;
+}
+
+.copy-button {
+  background-color: blue;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Existing styles... */
+
+/* Comment Section Styles */
+.comments-section {
+  margin-top: 2rem;
+}
+
+.add-comment {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+
+.add-comment textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.add-comment button {
+  align-self: flex-end;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.comments-list .comment {
+  margin-bottom: 1rem;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.comments-list .comment p {
+  margin: 0 0 10px;
+}
+
+.comments-list .comment button {
+  margin-right: 10px;
+  padding: 5px 10px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.comments-list .comment button:hover {
+  background-color: #ddd;
+}
+
+.edit-comment textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+}
+
+.edit-comment button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+

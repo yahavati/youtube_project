@@ -1,6 +1,5 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Videos from './Videos'; 
 
 function Video({ id, title, author, views, when, img }) {
   const navigate = useNavigate();
