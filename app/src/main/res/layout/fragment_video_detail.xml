@@ -1,0 +1,123 @@
+<!-- fragment_video_detail.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/black"
+    tools:context=".VideoDetailFragment">
+
+    <!-- Video View -->
+    <VideoView
+        android:id="@+id/video_view"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/video_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Video Title"
+        android:textSize="20sp"
+        android:textColor="@android:color/white"
+        android:layout_margin="8dp" />
+
+    <!-- Author, Date, and Views -->
+    <TextView
+        android:id="@+id/video_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Author • Date • Views"
+        android:textSize="14sp"
+        android:textColor="@android:color/darker_gray"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Row of Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/button_like"
+            android:layout_width="58dp"
+            android:layout_height="46dp"
+            android:background="@null"
+            android:contentDescription="Like"
+            android:padding="16dp"
+            android:src="@drawable/like"
+            app:tint="@android:color/white" />
+
+        <ImageButton
+            android:id="@+id/button_dislike"
+            android:layout_width="57dp"
+            android:layout_height="49dp"
+            android:background="@null"
+            android:contentDescription="Dislike"
+            android:padding="16dp"
+            android:src="@drawable/dislike"
+            app:tint="@android:color/white" />
+
+        <ImageButton
+            android:id="@+id/button_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/share"
+            android:contentDescription="Share"
+            android:padding="16dp"
+            android:background="@null"
+            app:tint="@android:color/white" />
+
+        <ImageButton
+            android:id="@+id/button_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/download"
+            android:contentDescription="Save"
+            android:padding="16dp"
+            android:background="@null"
+            app:tint="@android:color/white" />
+    </LinearLayout>
+
+    <!-- Comment Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:id="@+id/comments_section">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/like"
+            android:contentDescription="Comments" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="View all comments"
+            android:textColor="@android:color/white"
+            android:layout_marginLeft="8dp"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <!-- Scrollable Videos -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:clipToPadding="false"
+        android:scrollbars="vertical" />
+</LinearLayout>
