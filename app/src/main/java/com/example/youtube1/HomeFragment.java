@@ -34,17 +34,14 @@ public class HomeFragment extends Fragment implements VideoAdapter.OnItemClickLi
 
         // Set touch listener on overlay_container to detect outside clicks
         View overlayContainer = view.findViewById(R.id.overlay_container);
-        overlayContainer.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                // Detect clicks outside the MenuFragment
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    // Close the MenuFragment and show the HomeFragment
-                    closeMenuFragment();
-                    return true;
-                }
-                return false;
+        overlayContainer.setOnTouchListener((v, event) -> {
+            // Detect clicks outside the MenuFragment
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                // Close the MenuFragment and show the HomeFragment
+                closeMenuFragment();
+                return true;
             }
+            return false;
         });
 
         return view;
@@ -52,8 +49,8 @@ public class HomeFragment extends Fragment implements VideoAdapter.OnItemClickLi
 
     private void openMenuFragment() {
         MenuFragment menuFragment = new MenuFragment();
-        if (getFragmentManager() != null) {
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        if (getParentFragmentManager() != null) {
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
             transaction.setCustomAnimations(R.anim.slide_in_bottom, R.anim.slide_out_top);
             transaction.replace(R.id.overlay_container, menuFragment);
             transaction.addToBackStack(null);
@@ -67,8 +64,8 @@ public class HomeFragment extends Fragment implements VideoAdapter.OnItemClickLi
     }
 
     private void closeMenuFragment() {
-        if (getFragmentManager() != null) {
-            getFragmentManager().popBackStack();
+        if (getParentFragmentManager() != null) {
+            getParentFragmentManager().popBackStack();
             View overlayContainer = getView().findViewById(R.id.overlay_container);
             if (overlayContainer != null) {
                 overlayContainer.setVisibility(View.GONE);
