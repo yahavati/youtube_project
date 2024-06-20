@@ -3,5 +3,6 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Youtube" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/youtube_project" vcs="Git" />
   </component>
 </project>
