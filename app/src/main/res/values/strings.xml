@@ -1,7 +1,15 @@
 <resources>
     <string name="app_name">Youtube_project</string>
-    <string name="Username">Username\n</string>
     <string name="password">Password\n</string>
-    <string name="login_user">login\n</string>
+    <string name="login_user">Log in\n</string>
+    <string name="enter_username_min_5_chars_1_number">Username </string>
+    <string name="orDivider">Or</string>
+    <string name="sign">Sign out\n</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="userNameField">Enter your username</string>
+    <string name="verifycodebutton">verifyCodeButton</string>
+    <string name="enter_verification_code">Enter verification code</string>
+    <string name="verify_code">Verify Code</string>
+
 
 </resources>
