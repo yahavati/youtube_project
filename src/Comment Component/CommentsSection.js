@@ -1,114 +1,111 @@
-// CommentsSection.js
-import React, {useState} from 'react';
-import './CommentsSection.css'
+import React, { useState, useEffect } from 'react';
+import './CommentsSection.css';
 
-function CommentsSection() {
-    const [comments, setComments] = useState([]);
-    const [newComment, setNewComment] = useState('');
-    const [editingCommentId, setEditingCommentId] = useState(null);
-    const [editingCommentText, setEditingCommentText] = useState('');
+function CommentsSection({ comments, onAddComment, onUpdateComments }) {
+    const [commentText, setCommentText] = useState('');
+    const [commentList, setCommentList] = useState(comments);
 
-    const handleAddComment = () => {
-        if (newComment.trim()) {
-            setComments([
-                ...comments,
-                {id: Date.now(), text: newComment, likes: 0, dislikes: 0, liked: false, disliked: false},
-            ]);
-            setNewComment('');
+    useEffect(() => {
+        setCommentList(comments);
+    }, [comments]);
+
+    const handleCommentChange = (e) => {
+        setCommentText(e.target.value);
+    };
+
+    const handleCommentSubmit = () => {
+        if (commentText.trim()) {
+            const newComment = {
+                text: commentText.trim(),
+                likes: 0,
+                dislikes: 0,
+                liked: false,
+                disliked: false
+            };
+            const updatedComments = [...commentList, newComment];
+            onAddComment(newComment);
+            setCommentList(updatedComments);
+            onUpdateComments(updatedComments);
+            setCommentText('');
         }
     };
 
-    const handleEditComment = (id) => {
-        setEditingCommentId(id);
-        const commentToEdit = comments.find((comment) => comment.id === id);
-        setEditingCommentText(commentToEdit.text);
+    const handleLike = (index) => {
+        const updatedComments = [...commentList];
+        if (updatedComments[index].liked) {
+            updatedComments[index].likes -= 1;
+            updatedComments[index].liked = false;
+        } else {
+            updatedComments[index].likes += 1;
+            updatedComments[index].liked = true;
+            if (updatedComments[index].disliked) {
+                updatedComments[index].dislikes -= 1;
+                updatedComments[index].disliked = false;
+            }
+        }
+        setCommentList(updatedComments);
+        onUpdateComments(updatedComments);
     };
 
-    const handleUpdateComment = () => {
-        setComments(
-            comments.map((comment) =>
-                comment.id === editingCommentId
-                    ? {...comment, text: editingCommentText}
-                    : comment
-            )
-        );
-        setEditingCommentId(null);
-        setEditingCommentText('');
+    const handleDislike = (index) => {
+        const updatedComments = [...commentList];
+        if (updatedComments[index].disliked) {
+            updatedComments[index].dislikes -= 1;
+            updatedComments[index].disliked = false;
+        } else {
+            updatedComments[index].dislikes += 1;
+            updatedComments[index].disliked = true;
+            if (updatedComments[index].liked) {
+                updatedComments[index].likes -= 1;
+                updatedComments[index].liked = false;
+            }
+        }
+        setCommentList(updatedComments);
+        onUpdateComments(updatedComments);
     };
 
-    const handleDeleteComment = (id) => {
-        setComments(comments.filter((comment) => comment.id !== id));
+    const handleEdit = (index) => {
+        const newText = prompt("Edit comment:", commentList[index].text);
+        if (newText !== null) {
+            const updatedComments = [...commentList];
+            updatedComments[index].text = newText;
+            setCommentList(updatedComments);
+            onUpdateComments(updatedComments);
+        }
     };
 
-    const handleLikeComment = (id) => {
-        setComments(
-            comments.map((comment) =>
-                comment.id === id
-                    ? {
-                        ...comment,
-                        likes: comment.liked ? comment.likes - 1 : comment.likes + 1,
-                        dislikes: comment.disliked ? comment.dislikes - 1 : comment.dislikes,
-                        liked: !comment.liked,
-                        disliked: false,
-                    }
-                    : comment
-            )
-        );
-    };
-
-    const handleDislikeComment = (id) => {
-        setComments(
-            comments.map((comment) =>
-                comment.id === id
-                    ? {
-                        ...comment,
-                        dislikes: comment.disliked ? comment.dislikes - 1 : comment.dislikes + 1,
-                        likes: comment.liked ? comment.likes - 1 : comment.likes,
-                        disliked: !comment.disliked,
-                        liked: false,
-                    }
-                    : comment
-            )
-        );
+    const handleDelete = (index) => {
+        const updatedComments = commentList.filter((_, i) => i !== index);
+        setCommentList(updatedComments);
+        onUpdateComments(updatedComments);
     };
 
     return (
         <div className="comments-section">
-            <div className="comments">Comments</div>
+            <h3>Comments</h3>
             <div className="add-comment">
-        <textarea
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-            placeholder="Add a comment"
-        />
-                <button onClick={handleAddComment}>Comment</button>
+                <input
+                    type="text"
+                    value={commentText}
+                    onChange={handleCommentChange}
+                    placeholder="Add a comment"
+                />
+                <button onClick={handleCommentSubmit}>Comment</button>
             </div>
             <div className="comments-list">
-                {comments.map((comment) => (
-                    <div key={comment.id} className="comment">
-                        {editingCommentId === comment.id ? (
-                            <div className="edit-comment">
-                <textarea
-                    value={editingCommentText}
-                    onChange={(e) => setEditingCommentText(e.target.value)}
-                />
-                                <button onClick={handleUpdateComment}>Update</button>
-                            </div>
-                        ) : (
-                            <>
-                                <p>{comment.text}</p>
-                                <div className="comment-actions">
-                                    <button onClick={() => handleLikeComment(comment.id)}>
-                                        <i className={`bi bi-hand-thumbs-up ${comment.liked ? 'liked' : ''}`}></i> {comment.likes}
-                                    </button>
-                                    <button onClick={() => handleDislikeComment(comment.id)}>
-                                        <i className={`bi bi-hand-thumbs-down ${comment.disliked ? 'disliked' : ''}`}></i> {comment.dislikes}
-                                    </button>
-                                    <button onClick={() => handleEditComment(comment.id)}>Edit</button>
-                                    <button onClick={() => handleDeleteComment(comment.id)}>Delete</button>
-                                </div>
-                            </>
-                        )}
+                {commentList.map((comment, index) => (
+                    <div key={index} className="comment-item">
+                        <p>{comment.text}</p>
+                        <div className="comment-actions">
+                            <button className={`my-button ${comment.liked ? 'active' : ''}`} onClick={() => handleLike(index)}>
+                                <i className="bi bi-hand-thumbs-up"></i> {comment.likes}
+                            </button>
+                            <button className={`my-button ${comment.disliked ? 'active' : ''}`} onClick={() => handleDislike(index)}>
+                                <i className="bi bi-hand-thumbs-down"></i> {comment.dislikes}
+                            </button>
+                            <button onClick={() => handleEdit(index)}>Edit</button>
+                            <button onClick={() => handleDelete(index)}>Delete</button>
+                        </div>
                     </div>
                 ))}
             </div>

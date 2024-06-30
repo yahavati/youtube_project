@@ -1,92 +1,82 @@
 [
-    {
-      "id": 1,
-      "title": "Music",
-      "author": "coldplay",
-      "views": "120k",
-      "when": "1 week ago",
-      "img": "/img7.jpg",
-      "videoUrl": "/video1.mp4"
-    },
-    {
-      "id": 2,
-      "title": "Israel",
-      "author": "sport 5",
-      "views": "20m",
-      "when": "2 days ago",
-      "img": "/img9.jpg",
-      "videoUrl": "/video3.mp4"
-    },
-    {
-      "id": 3,
-      "title": "Music",
-      "author": "Eyal Golan",
-      "views": "10m",
-      "when": "4 days ago",
-      "img": "/img8.jpg",
-      "videoUrl": "/video2.mp4"
-    },
-    {
-      "id": 4,
-      "title": "Music",
-      "author": "Alicia Keys",
-      "views": "120k",
-      "when": "1 week ago",
-      "img": "/img4.jpg",
-      "videoUrl": "https://path-to-your-video-file/video3.mp4"
-    },
-    {
-      "id": 5,
-      "title": "Trips",
-      "author": "Yahav Atias",
-      "views": "120k",
-      "when": "2 weeks ago",
-      "img": "/img5.jpg",
-      "videoUrl": "https://path-to-your-video-file/video3.mp4"
-    },
-    {
-      "id": 6,
-      "title": "Food",
-      "author": "Lian",
-      "views": "120k",
-      "when": "1 week ago",
-      "img": "/img6.jpg",
-      "videoUrl": "https://path-to-your-video-file/video1.mp4"
-    },
-    {
-      "id": 7,
-      "title": "News",
-      "author": "13 רשת",
-      "views": "20m",
-      "when": "2 days ago",
-      "img": "/img1.jpg",
-      "videoUrl": "https://path-to-your-video-file/video2.mp4"
-    },
-    {
-      "id": 8,
-      "title": "Maccabi Tel Aviv",
-      "author": "sport 5",
-      "views": "10m",
-      "when": "4 days ago",
-      "img": "/img2.jpg",
-      "videoUrl": "https://path-to-your-video-file/video3.mp4"
-    },
-    {
-      "id": 9,
-      "title": "Music",
-      "author": "Alicia Keys",
-      "views": "120k",
-      "when": "1 week ago",
-      "img": "/img3.jpg",
-      "videoUrl": "https://path-to-your-video-file/video3.mp4"
-    },
-    {
-      "id": 10,
-      "title": "Trips",
-      "author": "Yahav Atias",
-      "views": "120k",
-      "when": "2 weeks ago",
-      "img": "/img4.jpg",
-      "videoUrl": "https://path-to-your-video-file/video3.mp4"
-    }
-  ]
+  {
+    "id": 1,
+    "title": "Music",
+    "author": "coldplay",
+    "views": "120k",
+    "when": "1 week ago",
+    "videoUrl": "/video1.mp4"
+  },
+  {
+    "id": 2,
+    "title": "Israel",
+    "author": "sport 5",
+    "views": "20m",
+    "when": "2 days ago",
+    "videoUrl": "/video2.mp4"
+  },
+  {
+    "id": 3,
+    "title": "Music",
+    "author": "Eyal Golan",
+    "views": "10m",
+    "when": "4 days ago",
+    "videoUrl": "/video3.mp4"
+  },
+  {
+    "id": 4,
+    "title": "Music",
+    "author": "Alicia Keys",
+    "views": "120k",
+    "when": "1 week ago",
+    "videoUrl": "/video4.mp4"
+  },
+  {
+    "id": 5,
+    "title": "Trips",
+    "author": "Yahav Atias",
+    "views": "120k",
+    "when": "2 weeks ago",
+    "videoUrl": "/video5.mp4"
+  },
+  {
+    "id": 6,
+    "title": "Food",
+    "author": "Lian",
+    "views": "120k",
+    "when": "1 week ago",
+    "videoUrl": "/video6.mp4"
+  },
+  {
+    "id": 7,
+    "title": "News",
+    "author": "13 רשת",
+    "views": "20m",
+    "when": "2 days ago",
+    "videoUrl": "/video7.mp4"
+  },
+  {
+    "id": 8,
+    "title": "Maccabi Tel Aviv",
+    "author": "sport 5",
+    "views": "10m",
+    "when": "4 days ago",
+    "videoUrl": "/video8.mp4"
+  },
+  {
+    "id": 9,
+    "title": "Music",
+    "author": "Alicia Keys",
+    "views": "120k",
+    "when": "1 week ago",
+    "videoUrl": "/video9.mp4"
+  },
+  {
+    "id": 10,
+    "title": "Trips",
+    "author": "Yahav Atias",
+    "views": "120k",
+    "when": "2 weeks ago",
+    "videoUrl": "/video10.mp4"
+  }
+]
