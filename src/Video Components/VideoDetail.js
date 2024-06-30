@@ -1,9 +1,9 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import VideoPlayer from './VideoPlayer';
-import VideoInfo from './VIdeoInfo';
-import CommentsSection from './CommentsSection';
-import VideoRecommendation from './VideoRecommendation';
+import VideoPlayer from '../Video Components/VideoPlayer'; // Correct import path
+import VideoInfo from './VideoInfo'; // Correct import path
+import CommentsSection from '../Comment Component/CommentsSection'; // Correct import path
+import VideoRecommendation from '../Video Components/VideoRecommendation'; // Correct import path
 import './VideoDetail.css';
 
 function VideoDetail({ videos }) {

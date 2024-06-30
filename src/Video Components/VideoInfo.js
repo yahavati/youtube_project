@@ -1,6 +1,6 @@
 // VideoInfo.js
 import React, {useState} from 'react';
-import ShareModal from './ShareModal';
+import ShareModal from '../Upload and Share Components/ShareModal';
 import './VideoInfo.css'
 
 function VideoInfo({video}) {

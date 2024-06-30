@@ -1,6 +1,4 @@
-// ShareModal.js
 import React from 'react';
-import './App.css'; // Updated to import the CSS directly from App.css
 
 const ShareModal = ({ isOpen, onClose, videoUrl }) => {
   if (!isOpen) {
@@ -18,19 +16,19 @@ const ShareModal = ({ isOpen, onClose, videoUrl }) => {
       <button className="close-button" onClick={onClose}>×</button>
         <div className="share-options">
           <button className="share-option">
-          <i class="bi bi-whatsapp"></i>
+          <i className="bi bi-whatsapp"></i>
             WhatsApp</button>
           <button className="share-option">
-          <i class="bi bi-facebook"></i>
+          <i className="bi bi-facebook"></i>
             Facebook</button>
           <button className="share-option">
-          <i class="bi bi-meta"></i>
+          <i className="bi bi-meta"></i>
             Meta</button>
           <button className="share-option">
-          <i class="bi bi-envelope-at"></i>
+          <i className="bi bi-envelope-at"></i>
             Email</button>
           <button className="share-option">
-          <i class="bi bi-messenger"></i>
+          <i className="bi bi-messenger"></i>
             Messenger</button>
         </div>
         <div className="share-url">

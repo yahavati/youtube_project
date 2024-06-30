@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './YourVideos.css';
-import UploadModal from './UploadModal';
+import UploadModal from '../Upload and Share Components/UploadModal';
 import { useNavigate } from 'react-router-dom';
 
 const YourVideos = ({ setUploadedVideos }) => {

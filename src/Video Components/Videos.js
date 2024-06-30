@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Videos.css';
-import EditModal from './EditModal';
+import EditModal from '../Comment Component/EditModal'; // Correct import path based on the structure shown
 
 const Videos = ({ uploadedVideos, setUploadedVideos }) => {
   const [showEditModal, setShowEditModal] = useState(false);

@@ -2,17 +2,17 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import React, { useState, useEffect } from 'react';
 import { useLocation, Routes, Route, useNavigate } from 'react-router-dom';
-import VideoList from './VideoList';
-import VideoDetail from './VideoDetail';
-import LeftMenu from './LeftMenu';
-import MidMenu from './MidMenu';
-import Search from './Search';
-import YourVideos from './YourVideos';
-import Videos from './Videos';
-import UploadModal from './UploadModal';
-import ShareModal from './ShareModal';
-import useWindowWidth from './WindoWidth';
-import './App.css';
+import VideoList from '../Video Components/VideoList';
+import VideoDetail from '../Video Components/VideoDetail';
+import LeftMenu from '../Navigation Components/LeftMenu';
+import MidMenu from '../Navigation Components/MidMenu';
+import Search from '../Search Component/Search';
+import YourVideos from '../Your Video Component/YourVideos';
+import Videos from '../Video Components/Videos';
+import UploadModal from '../Upload and Share Components/UploadModal';
+import ShareModal from '../Upload and Share Components/ShareModal';
+import useWindowWidth from '../WindoWidth';
+import './App.css'; // Ensure this file exists
 
 function App() {
   const [videos, setVideos] = useState([]);

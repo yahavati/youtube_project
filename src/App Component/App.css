@@ -303,55 +303,7 @@
   flex: 1;
 }
 
-/* Styles for when screen width is greater than 750px */
-@media (min-width: 751px) {
-  .search-container {
-      display: flex;
-      align-items: center;
-      width: 60%;
-  }
 
-  .search-container form {
-      display: flex;
-      flex: 1;
-  }
-
-  .color-buttons,
-  .microphone-button {
-      display: inline-block;
-  }
-}
-
-/* Styles for when screen width is less than 750px */
-@media (max-width: 750px) {
-  .search-container {
-      display: flex;
-      align-items: center;
-  }
-
-  .search-container form {
-      display: none;
-  }
-
-  .search-container.show-input form {
-      display: flex;
-      flex: 1;
-  }
-
-  .color-buttons,
-  .microphone-button {
-      display: none;
-  }
-
-  .search-container.show-input .color-buttons,
-  .search-container.show-input .microphone-button {
-      display: none;
-  }
-
-  .search-container.show-input form input {
-      width: 100%;
-  }
-}
 
 /* Fire animation using emoji */
 @keyframes fireAnimation {
