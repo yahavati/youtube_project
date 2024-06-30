@@ -1,0 +1,15 @@
+.comments-section {
+    font-size: x-large;
+    text-align: start;
+    padding-left: 10px;
+    padding-bottom: 10px;
+
+}
+
+.add-comment {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 1rem;
+    padding: 0;
+}

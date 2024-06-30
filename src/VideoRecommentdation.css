@@ -1,0 +1,33 @@
+.video-recommendation {
+    margin-bottom: 20px;
+    padding-left: 20px;
+}
+
+.flexi {
+    display: flex;
+    flex-direction: row;
+}
+
+.recommendation-img {
+    width: 100px; /* Set desired width for recommendation images */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.card-body {
+    padding: 10px;
+}
+
+.card-title {
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+.card-subtitle {
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+.card-text {
+    font-size: 0.75rem;
+    color: #6c757d;
+}

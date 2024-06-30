@@ -1,5 +1,6 @@
 import React from 'react';
 import Video from './Video';
+import './VideoList.css';
 
 function VideoList({ videos, searchQuery }) {
   const filteredVideos = videos.filter(video =>

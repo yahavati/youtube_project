@@ -1,7 +1,23 @@
 /* Existing styles in App.css */
 
+.container_full {
+  display: flex;
+}
+
+.left_section {
+  flex: 1;
+  border-right: 1px solid gray;
+}
+
+.right_section {
+  flex: 5;
+  padding-top: 40px;
+  padding-left: 20px;
+}
+
 .App {
   text-align: center;
+  font-family: "Segoe UI", sans-serif;
 }
 
 .App-logo {
@@ -11,7 +27,7 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+      animation: App-logo-spin infinite 20s linear;
   }
 }
 
@@ -32,10 +48,10 @@
 
 @keyframes App-logo-spin {
   from {
-    transform: rotate(0deg);
+      transform: rotate(0deg);
   }
   to {
-    transform: rotate(360deg);
+      transform: rotate(360deg);
   }
 }
 
@@ -77,7 +93,7 @@
 }
 
 .bg-light {
-  --bs-bg-opacity: ;
+  --bs-bg-opacity: 1;
 }
 
 .line {
@@ -150,22 +166,7 @@
 .video-title {
   align-self: flex-start;
   margin-top: 0;
-  margin-bottom: 1rem;
-}
-
-.video-details {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.video-metadata {
-  flex-grow: 1;
-}
-
-.video-actions {
-  display: flex;
-  gap: 10px;
+  /*margin-bottom: 1rem;*/
 }
 
 .btn-container {
@@ -253,7 +254,6 @@
   align-items: center;
   padding: 5px;
   cursor: pointer;
-  margin-left: 60px;
 }
 
 .youtube-icon {
@@ -263,8 +263,9 @@
 
 .youtube-text {
   font-size: large;
-  font-style: oblique;
   margin: 8px;
+  font-family: "Segoe UI", sans-serif;
+  padding-bottom: 6px;
 }
 
 .fixed-left-menu {
@@ -279,6 +280,7 @@
   flex-direction: column;
   padding-top: 20px;
 }
+
 .fixed-left-menu.sm-screen {
   height: auto;
   bottom: 0;
@@ -293,7 +295,7 @@
 /* Hide the left menu on smaller screens */
 @media (max-width: 991px) {
   .fixed-left-menu {
-    display: none;
+      display: none;
   }
 }
 
@@ -304,84 +306,91 @@
 /* Styles for when screen width is greater than 750px */
 @media (min-width: 751px) {
   .search-container {
-    display: flex;
-    align-items: center;
-    width: 60%;
+      display: flex;
+      align-items: center;
+      width: 60%;
   }
+
   .search-container form {
-    display: flex;
-    flex: 1;
+      display: flex;
+      flex: 1;
   }
+
   .color-buttons,
   .microphone-button {
-    display: inline-block;
+      display: inline-block;
   }
 }
 
 /* Styles for when screen width is less than 750px */
 @media (max-width: 750px) {
   .search-container {
-    display: flex;
-    align-items: center;
+      display: flex;
+      align-items: center;
   }
+
   .search-container form {
-    display: none;
+      display: none;
   }
+
   .search-container.show-input form {
-    display: flex;
-    flex: 1;
+      display: flex;
+      flex: 1;
   }
+
   .color-buttons,
   .microphone-button {
-    display: none;
+      display: none;
   }
+
   .search-container.show-input .color-buttons,
   .search-container.show-input .microphone-button {
-    display: none;
+      display: none;
   }
+
   .search-container.show-input form input {
-    width: 100%;
+      width: 100%;
   }
 }
 
 /* Fire animation using emoji */
 @keyframes fireAnimation {
   0% {
-    content: "🔥";
-    font-size: 0;
-    opacity: 0;
+      content: "🔥";
+      font-size: 0;
+      opacity: 0;
   }
   50% {
-    content: "🔥";
-    font-size: 100px;
-    opacity: 0.8;
+      content: "🔥";
+      font-size: 100px;
+      opacity: 0.8;
   }
   100% {
-    content: "🔥";
-    font-size: 0;
-    opacity: 0;
+      content: "🔥";
+      font-size: 0;
+      opacity: 0;
   }
 }
 
-@keyframes cryAnimation  {
+@keyframes cryAnimation {
   0% {
-    content: "😭";
-    font-size: 0;
-    opacity: 0;
+      content: "😭";
+      font-size: 0;
+      opacity: 0;
   }
   50% {
-    content: "😭";
-    font-size: 100px;
-    opacity: 0.8;
+      content: "😭";
+      font-size: 100px;
+      opacity: 0.8;
   }
   100% {
-    content: "😭";
-    font-size: 0;
-    opacity: 0;
+      content: "😭";
+      font-size: 0;
+      opacity: 0;
   }
 }
 
-.fire-overlay , .cry-overlay {
+.fire-overlay, .cry-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -492,11 +501,17 @@
   margin-top: 2rem;
 }
 
-.add-comment {
+.flexi {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 1rem;
+  flex-direction: row;
+}
+
+.sandwich-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-right: 10px;
 }
 
 .add-comment textarea {
@@ -561,3 +576,122 @@
   cursor: pointer;
 }
 
+
+/* New styles */
+.left_section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 250px; /* Adjust as needed */
+  background-color: #f8f9fa; /* Adjust as needed */
+  transition: transform 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.left_section.closed {
+  transform: translateX(-100%);
+}
+
+.left_section.open {
+  transform: translateX(0);
+}
+
+.right_section {
+  margin-left: 250px; /* Should match the width of .left_section */
+  transition: margin-left 0.3s ease-in-out;
+}
+
+.left_section.closed + .right_section {
+  margin-left: 0;
+}
+
+.sandwich-button {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1001;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Modified existing style */
+.youtube-button {
+  margin-left: 50px; /* Gives space for the sandwich button */
+}
+
+/* Existing styles in App.css */
+
+/* Ensure the left menu is hidden on smaller screens */
+.left_section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 250px; /* Adjust as needed */
+  background-color: #f8f9fa; /* Adjust as needed */
+  transition: transform 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.left_section.closed {
+  transform: translateX(-100%);
+}
+
+.left_section.open {
+  transform: translateX(0);
+}
+
+.right_section {
+  transition: margin-left 0.3s ease-in-out;
+  margin-left: 250px; /* Should match the width of .left_section */
+}
+
+.left_section.closed + .right_section,
+@media (max-width: 991px) {
+  .left_section {
+    display: none;
+  }
+  .left_section.open {
+    display: block;
+    transform: translateX(0);
+  }
+  .right_section {
+    margin-left: 0; /* Ensure content takes full width on smaller screens */
+  }
+  .youtube-button {
+    margin-left: 50px; /* Gives space for the sandwich button */
+  }
+}
+
+/* Ensure the left menu button is always visible */
+.sandwich-button {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1001;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Hide the left menu items on smaller screens */
+@media (max-width: 991px) {
+  .left_section {
+    display: none;
+  }
+  .left_section.open {
+    display: block;
+    transform: translateX(0);
+  }
+  .left_section .left-menu-content {
+    display: none; /* Hide the content */
+  }
+  .left_section .left-menu-top {
+    display: flex; /* Ensure the top section is visible */
+    flex-direction: column;
+  }
+}
