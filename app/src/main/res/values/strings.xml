@@ -1,4 +1,14 @@
 <resources>
-    <string name="app_name">youtube1</string>
-    <string name="youtube_button_description">YouTube Button</string>
+    <string name="app_name">YouTube Project</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="login">Login</string>
+    <string name="username_error_message">Username must contain at least 5 characters, at least 1 letter, and at least 1 number</string>
+    <string name="password_error_message">Password must contain at least 8 characters, at least 1 letter, and at least 1 number</string>
+    <string name="confirm_password_error_message">Passwords do not match</string>
+    <string name="user_registered_successfully">User registered successfully</string>
+    <string name="username_exists_error_message">Username already exists</string>
+    <string name="login_user">Login</string> <!-- Add this line -->
 </resources>
