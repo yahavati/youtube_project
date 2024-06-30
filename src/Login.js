@@ -1,11 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from './UserContext';
 import './Login.css';
-
-const users = {
-    'user1': 'password123',
-    'user2': 'password456'
-};
 
 function Login() {
     const [username, setUsername] = useState('');
@@ -13,6 +9,7 @@ function Login() {
     const [error, setError] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
+    const { user } = useContext(UserContext);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -20,11 +17,11 @@ function Login() {
             setError('All fields are required.');
             return;
         }
-        if (!users[username]) {
+        if (!user || user.username !== username) {
             setError('Username does not exist.');
             return;
         }
-        if (users[username] !== password) {
+        if (user.password !== password) {
             setError('Password does not match.');
             return;
         }
@@ -59,15 +56,6 @@ function Login() {
                             onChange={(e) => setPassword(e.target.value)}
                             autoComplete="off"
                         />
-                    </div>
-                    <div className="show-password-checkbox">
-                        <input
-                            type="checkbox"
-                            id="show-password"
-                            checked={showPassword}
-                            onChange={() => setShowPassword(!showPassword)}
-                        />
-                        <label htmlFor="show-password">Show Password</label>
                     </div>
                     {error && <p className="error">{error}</p>}
                     <button type="submit">Login</button>

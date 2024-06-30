@@ -16,7 +16,7 @@
 }
 
 .logo {
-    width: 120px;
+    width: 160px;
     margin-bottom: 15px;
 }
 
@@ -89,7 +89,7 @@ button {
     width: 100%;
 }
 
-.show-password-checkbox {
+/* .show-password-checkbox {
     display: flex;
     align-items: center;
     margin-top: 5px;
@@ -100,7 +100,7 @@ button {
 
     .show-password-checkbox input {
         margin-right: 10px;
-    }
+    } */
 
 .login-message {
     background-color: #ff4444;
