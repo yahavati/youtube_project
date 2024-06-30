@@ -1,6 +1,5 @@
 package com.example.youtube1;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +25,6 @@ public class BottomNavigationFragment extends Fragment {
         buttonHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Handle Home button click
                 ((MainActivity) getActivity()).loadFragment(new HomeFragment());
             }
         });
@@ -34,16 +32,13 @@ public class BottomNavigationFragment extends Fragment {
         buttonShorts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Handle Shorts button click
-                Intent intent = new Intent(getActivity(), ShortsActivity.class);
-                startActivity(intent);
+                ((MainActivity) getActivity()).loadFragment(new ShortsFragment());
             }
         });
 
         buttonSubscriptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Handle Subscriptions button click
                 ((MainActivity) getActivity()).loadFragment(new SubscriptionsFragment());
             }
         });
@@ -51,7 +46,6 @@ public class BottomNavigationFragment extends Fragment {
         buttonYou.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Handle You button click
                 ((MainActivity) getActivity()).loadFragment(new YouFragment());
             }
         });

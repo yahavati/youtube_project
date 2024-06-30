@@ -1,12 +1,13 @@
 package com.example.youtube1;
 
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 import androidx.annotation.NonNull;
@@ -20,6 +21,14 @@ public class VideoDetailFragment extends Fragment {
     private TextView videoTitle;
     private TextView videoDetails;
     private RecyclerView recyclerView;
+    private LinearLayout likeButton;
+    private LinearLayout dislikeButton;
+    private LinearLayout shareButton;
+    private LinearLayout saveButton;
+    private TextView likeCountText;
+    private TextView dislikeCountText;
+    private int likeCount = 0;
+    private int dislikeCount = 0;
 
     public VideoDetailFragment() {
         // Required empty public constructor
@@ -34,6 +43,12 @@ public class VideoDetailFragment extends Fragment {
         videoTitle = view.findViewById(R.id.video_title);
         videoDetails = view.findViewById(R.id.video_details);
         recyclerView = view.findViewById(R.id.recycler_view);
+        likeButton = view.findViewById(R.id.button_like);
+        dislikeButton = view.findViewById(R.id.button_dislike);
+        shareButton = view.findViewById(R.id.button_share);
+        saveButton = view.findViewById(R.id.button_save);
+        likeCountText = view.findViewById(R.id.like_count);
+        dislikeCountText = view.findViewById(R.id.dislike_count);
 
         // Retrieve video details from arguments
         Bundle args = getArguments();
@@ -64,7 +79,42 @@ public class VideoDetailFragment extends Fragment {
         view.findViewById(R.id.comments_section).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Handle opening comments section
+                openCommentsFragment();
+            }
+        });
+
+        // Set click listeners for buttons
+        likeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                likeCount++;
+                likeCountText.setText(String.valueOf(likeCount));
+                likeButton.setBackgroundColor(Color.GREEN);
+                dislikeButton.setBackgroundColor(Color.TRANSPARENT);
+            }
+        });
+
+        dislikeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dislikeCount++;
+                dislikeCountText.setText(String.valueOf(dislikeCount));
+                dislikeButton.setBackgroundColor(Color.RED);
+                likeButton.setBackgroundColor(Color.TRANSPARENT);
+            }
+        });
+
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle share button click
+            }
+        });
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle save button click
             }
         });
 
@@ -93,5 +143,12 @@ public class VideoDetailFragment extends Fragment {
         if (videoView != null) {
             videoView.stopPlayback();
         }
+    }
+
+    private void openCommentsFragment() {
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, new CommentsFragment())
+                .addToBackStack(null)
+                .commit();
     }
 }

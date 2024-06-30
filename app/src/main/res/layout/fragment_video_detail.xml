@@ -38,53 +38,115 @@
         android:layout_marginBottom="16dp" />
 
     <!-- Row of Buttons -->
+
+    <!-- Row of Buttons -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="8dp"
-        android:gravity="center">
+        android:gravity="center"
+        android:weightSum="4">
 
-        <ImageButton
+        <LinearLayout
             android:id="@+id/button_like"
-            android:layout_width="58dp"
+            android:layout_width="0dp"
             android:layout_height="46dp"
-            android:background="@null"
-            android:contentDescription="Like"
-            android:padding="16dp"
-            android:src="@drawable/like"
-            app:tint="@android:color/white" />
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="8dp"
+            android:background="@android:drawable/button_onoff_indicator_off">
 
-        <ImageButton
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/like"
+                app:tint="@color/black" />
+
+            <TextView
+                android:id="@+id/like_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/button_dislike"
-            android:layout_width="57dp"
-            android:layout_height="49dp"
-            android:background="@null"
-            android:contentDescription="Dislike"
-            android:padding="16dp"
-            android:src="@drawable/dislike"
-            app:tint="@android:color/white" />
+            android:layout_width="0dp"
+            android:layout_height="46dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="8dp"
+            android:background="@android:drawable/button_onoff_indicator_off">
 
-        <ImageButton
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/dislike"
+                app:tint="@color/black" />
+
+            <TextView
+                android:id="@+id/dislike_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/button_share"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/share"
-            android:contentDescription="Share"
-            android:padding="16dp"
-            android:background="@null"
-            app:tint="@android:color/white" />
+            android:layout_width="0dp"
+            android:layout_height="46dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="8dp"
+            android:background="@android:drawable/button_onoff_indicator_off">
 
-        <ImageButton
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/share"
+                app:tint="@android:color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Share"
+                android:layout_marginStart="8dp"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/button_save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/download"
-            android:contentDescription="Save"
-            android:padding="16dp"
-            android:background="@null"
-            app:tint="@android:color/white" />
+            android:layout_width="0dp"
+            android:layout_height="46dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="8dp"
+            android:background="@android:drawable/button_onoff_indicator_off">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/download"
+                app:tint="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/black" />
+        </LinearLayout>
     </LinearLayout>
+
 
     <!-- Comment Section -->
     <LinearLayout
