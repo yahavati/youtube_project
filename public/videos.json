@@ -9,18 +9,18 @@
   },
   {
     "id": 2,
-    "title": "Israel",
-    "author": "sport 5",
-    "views": "20m",
-    "when": "2 days ago",
-    "videoUrl": "/video2.mp4"
-  },
-  {
-    "id": 3,
     "title": "Music",
     "author": "Eyal Golan",
     "views": "10m",
     "when": "4 days ago",
+    "videoUrl": "/video2.mp4"
+  },
+  {
+    "id": 3,
+    "title": "Israel",
+    "author": "sport 5",
+    "views": "20m",
+    "when": "2 days ago",
     "videoUrl": "/video3.mp4"
   },
   {
@@ -41,7 +41,7 @@
   },
   {
     "id": 6,
-    "title": "Food",
+    "title": "University",
     "author": "Lian",
     "views": "120k",
     "when": "1 week ago",

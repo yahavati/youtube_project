@@ -1,17 +1,40 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import './VideoRecommendation.css';
 
 function VideoRecommendation({ id, title, author, views, when, videoUrl }) {
+    const [isPlaying, setIsPlaying] = useState(false);
+    const videoRef = useRef(null);
+
+    const handleMouseOver = () => {
+        const video = videoRef.current;
+        if (video.readyState >= 2) {
+            setIsPlaying(true);
+            video.play().catch(error => {
+                if (error.name !== "AbortError") {
+                    console.error("Playback failed:", error);
+                }
+            });
+        }
+    };
+
+    const handleMouseOut = () => {
+        setIsPlaying(false);
+        if (videoRef.current && !videoRef.current.paused) {
+            videoRef.current.pause();
+        }
+    };
+
     return (
         <Link to={`/video/${id}`} className="video-recommendation-item">
             <div className="video-thumbnail">
                 <video
+                    ref={videoRef}
                     src={videoUrl}
                     preload="metadata"
                     muted
-                    onMouseOver={event => event.target.play()}
-                    onMouseOut={event => event.target.pause()}
+                    onMouseOver={handleMouseOver}
+                    onMouseOut={handleMouseOut}
                 >
                     Your browser does not support the video tag.
                 </video>

@@ -1,40 +1,43 @@
 import React, { useState } from 'react';
-import './EditModal.css'; // Ensure this file exists in the same directory
+import './EditModal.css';
 
 const EditModal = ({ show, handleClose, video, handleSave }) => {
-  const [title, setTitle] = useState(video ? video.name : '');
-  const [description, setDescription] = useState(video ? video.description : '');
+    const [title, setTitle] = useState(video ? video.name : '');
+    const [description, setDescription] = useState(video ? video.description : '');
 
-  const handleTitleChange = (e) => setTitle(e.target.value);
-  const handleDescriptionChange = (e) => setDescription(e.target.value);
+    const handleSubmit = () => {
+        handleSave(video.id, title, description);
+        handleClose();
+    };
 
-  const handleSubmit = () => {
-    handleSave(video.id, title, description);
-  };
+    if (!show) return null;
 
-  if (!show) {
-    return null;
-  }
-
-  return (
-    <div className="modal">
-      <div className="modal-content">
-        <span className="close" onClick={handleClose}>&times;</span>
-        <h2>Edit Video</h2>
-        <form>
-          <div className="form-group">
-            <label>Title</label>
-            <input type="text" value={title} onChange={handleTitleChange} />
-          </div>
-          <div className="form-group">
-            <label>Description</label>
-            <textarea value={description} onChange={handleDescriptionChange} />
-          </div>
-          <button type="button" onClick={handleSubmit}>Save</button>
-        </form>
-      </div>
-    </div>
-  );
+    return (
+        <div className="edit-modal">
+            <div className="edit-modal-content">
+                <h2>Edit Video Details</h2>
+                <div className="form-group">
+                    <label htmlFor="title">Title</label>
+                    <input
+                        type="text"
+                        id="title"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="description">Description</label>
+                    <textarea
+                        id="description"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                    />
+                </div>
+                <button className="save-button" onClick={handleSubmit}>Save</button>
+                <button className="cancel-button" onClick={handleClose}>Cancel</button>
+            </div>
+        </div>
+    );
 };
 
 export default EditModal;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './VideoList.css';
 
@@ -7,6 +7,28 @@ function VideoList({ videos, searchQuery }) {
         video.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         video.author.toLowerCase().includes(searchQuery.toLowerCase())
     );
+
+    const [playingStates, setPlayingStates] = useState({});
+
+    const handleMouseOver = (videoId, event) => {
+        const video = event.target;
+        if (video.readyState >= 2) {
+            setPlayingStates(prev => ({ ...prev, [videoId]: true }));
+            video.play().catch(error => {
+                if (error.name !== "AbortError") {
+                    console.error("Playback failed:", error);
+                }
+            });
+        }
+    };
+
+    const handleMouseOut = (videoId, event) => {
+        const video = event.target;
+        setPlayingStates(prev => ({ ...prev, [videoId]: false }));
+        if (!video.paused) {
+            video.pause();
+        }
+    };
 
     return (
         <div className="video-list">
@@ -18,8 +40,8 @@ function VideoList({ videos, searchQuery }) {
                             poster={video.img}
                             preload="metadata"
                             muted
-                            onMouseOver={event => event.target.play()}
-                            onMouseOut={event => event.target.pause()}
+                            onMouseOver={(e) => handleMouseOver(video.id, e)}
+                            onMouseOut={(e) => handleMouseOut(video.id, e)}
                         >
                             Your browser does not support the video tag.
                         </video>
