@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import HomeScreen from './HomeScreen';
+import HomeScreen from './App Component/HomeScreen';
 import YourVideos from './YourVideos';
 import Videos from './Videos';
 
