@@ -1,15 +1,14 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from './UserContext';
-import './Login.css';
+import './Login.css'; 
 
 function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
-    const { user } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -49,7 +48,7 @@ function Login() {
                     </div>
                     <div className="form-group">
                         <input
-                            type={showPassword ? 'text' : 'password'}
+                            type="password"
                             id="password"
                             placeholder="Password"
                             value={password}
