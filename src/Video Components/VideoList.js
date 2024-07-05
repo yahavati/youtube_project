@@ -33,7 +33,7 @@ function VideoList({ videos, searchQuery }) {
     return (
         <div className="video-list">
             {filteredVideos.map(video => (
-                <Link to={`/video/${video.id}`} key={video.id} className="video-item">
+                <Link to={`/home/video/${video.id}`} key={video.id} className="video-item">
                     <div className="video-thumbnail">
                         <video
                             src={video.videoUrl}

@@ -26,7 +26,7 @@ function VideoRecommendation({ id, title, author, views, when, videoUrl }) {
     };
 
     return (
-        <Link to={`/video/${id}`} className="video-recommendation-item">
+        <Link to={`/home/video/${id}`} className="video-recommendation-item">
             <div className="video-thumbnail">
                 <video
                     ref={videoRef}

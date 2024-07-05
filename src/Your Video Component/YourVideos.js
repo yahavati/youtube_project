@@ -38,7 +38,7 @@ const YourVideos = ({ setUploadedVideos }) => {
     };
 
     const navigateToVideos = () => {
-        navigate('/videos');
+        navigate('/home/videos');
     };
 
     return (

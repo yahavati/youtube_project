@@ -7,11 +7,11 @@ function LeftMenu() {
     const navigate = useNavigate();
 
     const navigateToHome = () => {
-        navigate('/');
+        navigate('/home');
     };
 
     const navigateToYourVideos = () => {
-        navigate('/your-videos');
+        navigate('/home/your-videos');
     };
 
     const menuItems = [

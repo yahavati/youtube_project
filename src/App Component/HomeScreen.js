@@ -55,7 +55,7 @@ function HomeScreen() {
     }, []);
 
     const navigateToHome = () => {
-        navigate('/');
+        navigate('/home');
     };
 
     const handleVideoUpdate = (id, updates) => {
