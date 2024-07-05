@@ -1,0 +1,35 @@
+.upload-icon {
+    margin-bottom: 20px;
+}
+
+.upload-button {
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal-body p {
+    margin: 10px 0;
+    color: #666;
+}
+
+.modal-body input[type="file"] {
+    display: none;
+}
+
+.modal-footer small {
+    font-size: 0.8rem;
+    color: #999;
+}
+
+.modal-footer a {
+    color: #1a73e8;
+    text-decoration: none;
+}
+
+.modal-footer a:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,57 @@
+.video-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.video-metadata {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.video-metadata > div {
+    width: 100%;
+}
+
+.video-actions {
+    display: flex;
+}
+
+.my-button {
+    margin-right: 10px;
+    border-radius: 9999px;
+    padding: 0 60px 0;
+}
+
+.description-container {
+    background-color: #dddddd;
+    border-radius: 10px;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+.upper-container {
+    margin-bottom: 20px;
+    text-align: start;
+}
+
+.expand-button {
+    background: none;
+    border: none;
+    color: blue;
+    cursor: pointer;
+    padding: 0;
+    font: inherit;
+    outline: inherit;
+    margin-left: 5px;
+}
+
+.expand-button:hover {
+    text-decoration: underline;
+}
+
+.description {
+    text-align: start;
+}

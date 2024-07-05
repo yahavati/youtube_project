@@ -1,14 +1,14 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from './UserContext';
-import './Login.css'; 
+import './Login.css';
 
 function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
-    const { user, setUser } = useContext(UserContext);
+    const { user, setUser, setAuthenticated } = useContext(UserContext);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -24,6 +24,7 @@ function Login() {
             setError('Password does not match.');
             return;
         }
+        setAuthenticated(true); // Update authentication state
         navigate('/home');
     };
 
