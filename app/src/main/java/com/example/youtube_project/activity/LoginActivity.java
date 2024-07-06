@@ -16,6 +16,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.youtube_project.R;
+import com.example.youtube_project.home.HomeScreenActivity;
 import com.example.youtube_project.user.UserManager;
 
 public class LoginActivity extends AppCompatActivity {
@@ -54,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
                 String password = passwordField.getText().toString().trim();
 
                 if (userManager.validateUser(username, password)) {
-                    Intent i = new Intent(LoginActivity.this, Home_screen.class);
+                    Intent i = new Intent(this, HomeScreenActivity.class);
                     startActivity(i);
                 } else {
                     showErrorMessage("Error: You have entered incorrect username or password.");
@@ -63,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         signup.setOnClickListener(v -> {
-            Intent i = new Intent(LoginActivity.this, SignUpActivity.class);
+            Intent i = new Intent(this, SignUpActivity.class);
             startActivity(i);
         });
 

@@ -17,5 +17,6 @@
     <string name="verifycodebutton">verifyCodeButton</string>
     <string name="enter_verification_code">Enter verification code</string>
     <string name="verify_code">Verify Code</string>
+   <string name="youtube_button_description">YouTube Button</string>
 
 </resources>

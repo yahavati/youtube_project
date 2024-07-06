@@ -24,6 +24,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import com.example.youtube_project.R;
+import com.example.youtube_project.home.HomeScreenActivity;
 import com.example.youtube_project.user.UserDetails;
 import com.example.youtube_project.user.UserManager;
 
@@ -141,7 +142,7 @@ public class SignUpActivity extends AppCompatActivity {
                     userManager.addUser(username, userDetails);
                     Toast.makeText(SignUpActivity.this, R.string.user_registered_successfully, Toast.LENGTH_SHORT).show();
                     // Redirect to BlankActivity
-                    Intent intent = new Intent(SignUpActivity.this, Home_screen.class);
+                    Intent intent = new Intent(this, LoginActivity.class);
                     startActivity(intent);
                     finish();
                 } else {

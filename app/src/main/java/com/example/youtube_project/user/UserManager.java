@@ -34,8 +34,8 @@ public class UserManager {
         users.put(username, userDetails);
     }
 
-    public String getCurrentUser() {
-        return currentUser;
+    public UserDetails getCurrentUser() {
+        return users.get(currentUser);
     }
 
     public void logout() {
