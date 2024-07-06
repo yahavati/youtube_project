@@ -1,3 +1,4 @@
+// Login.js
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from './UserContext';
@@ -8,7 +9,7 @@ function Login() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
-    const { user, setUser, setAuthenticated } = useContext(UserContext);
+    const { loginUser } = useContext(UserContext);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -16,16 +17,11 @@ function Login() {
             setError('All fields are required.');
             return;
         }
-        if (!user || user.username !== username) {
-            setError('Username does not exist.');
-            return;
+        if (loginUser(username, password)) {
+            navigate('/home');
+        } else {
+            setError('Invalid username or password.');
         }
-        if (user.password !== password) {
-            setError('Password does not match.');
-            return;
-        }
-        setAuthenticated(true); // Update authentication state
-        navigate('/home');
     };
 
     const handleSignUp = () => {

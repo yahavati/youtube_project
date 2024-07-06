@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+// Search.js
+import React, { useState, useContext } from 'react';
 import './Search.css'; // Ensure this file exists in the same directory as Search.js
+import { UserContext } from '../UserContext'; // Import UserContext
 
 function Search({ onSearch, setBgColor }) {
   const [query, setQuery] = useState('');
   const [showSearchInput, setShowSearchInput] = useState(false);
+  const { authenticatedUser } = useContext(UserContext); // Use UserContext
 
   const handleInputChange = (e) => {
     const value = e.target.value;
@@ -55,8 +58,7 @@ function Search({ onSearch, setBgColor }) {
             onChange={handleInputChange}
           />
         </form>
-        <button className="btn btn-outline-secondary" type="button" id="search-button"
-                onClick={handleSearchButtonClick}>
+        <button className="btn btn-outline-secondary" type="button" id="search-button" onClick={handleSearchButtonClick}>
           <i className="bi bi-search"></i>
         </button>
         <button className="record-button icon-button">
@@ -70,9 +72,16 @@ function Search({ onSearch, setBgColor }) {
         <button className="icon-button">
           <i className="bi bi-bell"></i>
         </button>
-        <button className="icon-button">
-          <i className="bi bi-person-circle"></i>
-        </button>
+        {authenticatedUser ? (
+          <div className="user-info">
+            <img src={URL.createObjectURL(authenticatedUser.picture)} alt="User" className="user-avatar" />
+            <span className="user-name">{authenticatedUser.username}</span>
+          </div>
+        ) : (
+          <button className="icon-button">
+            <i className="bi bi-person-circle"></i>
+          </button>
+        )}
       </div>
     </div>
   );

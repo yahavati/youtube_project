@@ -1,12 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './CommentsSection.css';
+import { UserContext } from '../UserContext';
+import { VideosContext } from '../VideosContext';
 
-function CommentsSection({ comments, onAddComment, onUpdateComments }) {
+function CommentsSection({ videoId, comments = [], onAddComment, onUpdateComments }) {
     const [commentText, setCommentText] = useState('');
     const [commentList, setCommentList] = useState(comments);
+    const { authenticatedUser } = useContext(UserContext);
+    const { updateVideo } = useContext(VideosContext);
 
     useEffect(() => {
-        setCommentList(comments);
+        if (Array.isArray(comments)) {
+            setCommentList(comments);
+        }
     }, [comments]);
 
     const handleCommentChange = (e) => {
@@ -16,16 +22,19 @@ function CommentsSection({ comments, onAddComment, onUpdateComments }) {
     const handleCommentSubmit = () => {
         if (commentText.trim()) {
             const newComment = {
+                username: authenticatedUser.username,
+                avatar: URL.createObjectURL(authenticatedUser.picture),
                 text: commentText.trim(),
                 likes: 0,
                 dislikes: 0,
                 liked: false,
-                disliked: false
+                disliked: false,
+                timestamp: new Date().toISOString()
             };
             const updatedComments = [...commentList, newComment];
-            onAddComment(newComment);
             setCommentList(updatedComments);
-            onUpdateComments(updatedComments);
+            onAddComment(newComment);
+            updateVideo(videoId, { comments: updatedComments });
             setCommentText('');
         }
     };
@@ -44,7 +53,8 @@ function CommentsSection({ comments, onAddComment, onUpdateComments }) {
             }
         }
         setCommentList(updatedComments);
-        onUpdateComments(updatedComments);
+        onUpdateComments(videoId, updatedComments);
+        updateVideo(videoId, { comments: updatedComments });
     };
 
     const handleDislike = (index) => {
@@ -61,7 +71,8 @@ function CommentsSection({ comments, onAddComment, onUpdateComments }) {
             }
         }
         setCommentList(updatedComments);
-        onUpdateComments(updatedComments);
+        onUpdateComments(videoId, updatedComments);
+        updateVideo(videoId, { comments: updatedComments });
     };
 
     const handleEdit = (index) => {
@@ -70,14 +81,21 @@ function CommentsSection({ comments, onAddComment, onUpdateComments }) {
             const updatedComments = [...commentList];
             updatedComments[index].text = newText;
             setCommentList(updatedComments);
-            onUpdateComments(updatedComments);
+            onUpdateComments(videoId, updatedComments);
+            updateVideo(videoId, { comments: updatedComments });
         }
     };
 
     const handleDelete = (index) => {
         const updatedComments = commentList.filter((_, i) => i !== index);
         setCommentList(updatedComments);
-        onUpdateComments(updatedComments);
+        onUpdateComments(videoId, updatedComments);
+        updateVideo(videoId, { comments: updatedComments });
+    };
+
+    const formatTimestamp = (timestamp) => {
+        const date = new Date(timestamp);
+        return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
     };
 
     return (
@@ -93,8 +111,15 @@ function CommentsSection({ comments, onAddComment, onUpdateComments }) {
                 <button onClick={handleCommentSubmit}>Comment</button>
             </div>
             <div className="comments-list">
-                {commentList.map((comment, index) => (
+                {commentList.length > 0 && commentList.map((comment, index) => (
                     <div key={index} className="comment-item">
+                        <div className="comment-header">
+                            <img src={comment.avatar} alt={comment.username} className="comment-avatar" />
+                            <div>
+                                <span className="comment-username">@{comment.username}</span>
+                                <span className="comment-timestamp">{formatTimestamp(comment.timestamp)}</span>
+                            </div>
+                        </div>
                         <p>{comment.text}</p>
                         <div className="comment-actions">
                             <button className={`my-button ${comment.liked ? 'active' : ''}`} onClick={() => handleLike(index)}>
@@ -103,8 +128,12 @@ function CommentsSection({ comments, onAddComment, onUpdateComments }) {
                             <button className={`my-button ${comment.disliked ? 'active' : ''}`} onClick={() => handleDislike(index)}>
                                 <i className="bi bi-hand-thumbs-down"></i> {comment.dislikes}
                             </button>
-                            <button onClick={() => handleEdit(index)}>Edit</button>
-                            <button onClick={() => handleDelete(index)}>Delete</button>
+                            {authenticatedUser.username === comment.username && (
+                                <>
+                                    <button onClick={() => handleEdit(index)}>Edit</button>
+                                    <button onClick={() => handleDelete(index)}>Delete</button>
+                                </>
+                            )}
                         </div>
                     </div>
                 ))}

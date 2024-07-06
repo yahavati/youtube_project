@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react';
+// VideoDetail.js
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import VideoPlayer from '../Video Components/VideoPlayer';
 import VideoInfo from './VideoInfo';
 import CommentsSection from '../Comment Component/CommentsSection';
 import VideoRecommendation from '../Video Components/VideoRecommendation';
 import './VideoDetail.css';
+import { VideosContext } from '../VideosContext';
 
-function VideoDetail({ videos, onVideoUpdate }) {
+function VideoDetail() {
     const { id } = useParams();
+    const { videos, updateVideo } = useContext(VideosContext);
     const [video, setVideo] = useState(null);
     const [likes, setLikes] = useState(0);
     const [dislikes, setDislikes] = useState(0);
@@ -30,24 +33,24 @@ function VideoDetail({ videos, onVideoUpdate }) {
     const handleLikeClick = (change) => {
         const newLikes = likes + change;
         setLikes(newLikes);
-        onVideoUpdate(video.id, { likes: newLikes });
+        updateVideo(video.id, { likes: newLikes });
     };
 
     const handleDislikeClick = (change) => {
         const newDislikes = dislikes + change;
         setDislikes(newDislikes);
-        onVideoUpdate(video.id, { dislikes: newDislikes });
+        updateVideo(video.id, { dislikes: newDislikes });
     };
 
     const handleAddComment = (comment) => {
         const newComments = [...comments, comment];
         setComments(newComments);
-        onVideoUpdate(video.id, { comments: newComments });
+        updateVideo(video.id, { comments: newComments });
     };
 
     const handleUpdateComments = (updatedComments) => {
         setComments(updatedComments);
-        onVideoUpdate(video.id, { comments: updatedComments });
+        updateVideo(video.id, { comments: updatedComments });
     };
 
     return (
@@ -62,6 +65,7 @@ function VideoDetail({ videos, onVideoUpdate }) {
                     onDislike={handleDislikeClick}
                 />
                 <CommentsSection
+                    videoId={video.id}
                     comments={comments}
                     onAddComment={handleAddComment}
                     onUpdateComments={handleUpdateComments}

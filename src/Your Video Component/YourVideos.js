@@ -1,23 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './YourVideos.css';
 import UploadModal from '../Upload and Share Components/UploadModal';
-import EditModal from '../Comment Component/EditModal';  // Adjust this if EditModal is in a different directory
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../UserContext';
 
-const YourVideos = ({ setUploadedVideos }) => {
+const YourVideos = () => {
     const [showUploadModal, setShowUploadModal] = useState(false);
-    const [showEditModal, setShowEditModal] = useState(false);
-    const [selectedVideo, setSelectedVideo] = useState(null);
     const navigate = useNavigate();
+    const { addUploadedVideo } = useContext(UserContext);
 
     const handleUploadClose = () => setShowUploadModal(false);
     const handleUploadShow = () => setShowUploadModal(true);
-
-    const handleEditClose = () => setShowEditModal(false);
-    const handleEditShow = (video) => {
-        setSelectedVideo(video);
-        setShowEditModal(true);
-    };
 
     const handleFileUpload = (file) => {
         const newVideo = {
@@ -27,14 +20,8 @@ const YourVideos = ({ setUploadedVideos }) => {
             file: file,
             description: ''
         };
-        setUploadedVideos(prevVideos => [...prevVideos, newVideo]);
+        addUploadedVideo(newVideo);
         handleUploadClose();
-    };
-
-    const handleSave = (id, title, description) => {
-        setUploadedVideos(prevVideos => prevVideos.map(video =>
-            video.id === id ? { ...video, name: title, description } : video
-        ));
     };
 
     const navigateToVideos = () => {
@@ -53,7 +40,6 @@ const YourVideos = ({ setUploadedVideos }) => {
                 <button className="upload-button" onClick={handleUploadShow}>Upload Videos</button>
             </div>
             <UploadModal show={showUploadModal} handleClose={handleUploadClose} handleFileUpload={handleFileUpload} />
-            <EditModal show={showEditModal} handleClose={handleEditClose} video={selectedVideo} handleSave={handleSave} />
         </div>
     );
 };

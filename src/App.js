@@ -5,18 +5,21 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './Login';
 import SignUp from './Sign_up/SignUp';
 import { UserProvider } from './UserContext';
+import { VideosProvider } from './VideosContext'; // Import VideosProvider
 import HomeScreen from './App Component/HomeScreen';
 
 function App() {
     return (
         <UserProvider>
-            <Router>
-                <Routes>
-                    <Route path="/" element={<Login />} />
-                    <Route path="/signup" element={<SignUp />} />
-                    <Route path="/home/*" element={<HomeScreen />} />
-                </Routes>
-            </Router>
+            <VideosProvider> 
+                <Router>
+                    <Routes>
+                        <Route path="/" element={<Login />} />
+                        <Route path="/signup" element={<SignUp />} />
+                        <Route path="/home/*" element={<HomeScreen />} />
+                    </Routes>
+                </Router>
+            </VideosProvider>
         </UserProvider>
     );
 }

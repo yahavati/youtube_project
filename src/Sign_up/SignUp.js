@@ -1,3 +1,4 @@
+// src/Sign_up/SignUp.js
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Camera from './Camera';
@@ -23,7 +24,7 @@ const SignUp = () => {
     });
     const [isRegistered, setIsRegistered] = useState(false);
 
-    const { user, setUser } = useContext(UserContext);
+    const { users, registerUser } = useContext(UserContext);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -109,7 +110,7 @@ const SignUp = () => {
         const isValid = validateAllFields();
 
         if (isValid) {
-            if (user && user.username === formData.username) {
+            if (users.find(user => user.username === formData.username)) {
                 setValidationMessages((prev) => ({
                     ...prev,
                     general: 'Username already exists. Please choose another username.'
@@ -117,11 +118,11 @@ const SignUp = () => {
                 return;
             }
 
-            setUser(formData);
+            registerUser(formData);
             setIsRegistered(true);
             setTimeout(() => {
                 console.log('User registered successfully:', formData);
-                navigate('/home'); // Redirect to home screen
+                navigate('/'); // Redirect to login screen
             }, 2000); // Simulate a delay
         }
     };
@@ -245,7 +246,7 @@ const SignUp = () => {
                 </Modal>
                 {isRegistered && (
                     <div className="signup-success-message">
-                        Registration successful! Redirecting to the home screen...
+                        Registration successful! Redirecting to the login screen...
                     </div>
                 )}
                 {validationMessages.general && (
