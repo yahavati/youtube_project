@@ -1,4 +1,4 @@
-package com.example.youtube_project;
+package com.example.youtube_project.activity;
 
 import android.Manifest;
 import android.content.Intent;
@@ -23,11 +23,14 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
+import com.example.youtube_project.R;
+import com.example.youtube_project.user.UserDetails;
+import com.example.youtube_project.user.UserManager;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -48,7 +51,7 @@ public class SignUpActivity extends AppCompatActivity {
     private ToggleButton toggleConfirmPasswordButton;
     private Uri photoUri;
 
-    public static HashMap<String, String> users = new HashMap<>();
+    private UserManager userManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,8 @@ public class SignUpActivity extends AppCompatActivity {
         Button signUpButton = findViewById(R.id.sign_up_button);
         togglePasswordButton = findViewById(R.id.toggle_password);
         toggleConfirmPasswordButton = findViewById(R.id.toggle_confirm_password);
+
+        userManager = UserManager.getInstance();
 
         // Request necessary permissions
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
@@ -129,11 +134,14 @@ public class SignUpActivity extends AppCompatActivity {
             }
 
             if (isValid) {
-                if (!users.containsKey(username)) {
-                    users.put(username, password);
+                if (!userManager.validateUser(username, password)) {
+                    UserDetails userDetails = new UserDetails();
+                    userDetails.setPassword(password);
+                    userDetails.setProfilePhoto(photoUri);
+                    userManager.addUser(username, userDetails);
                     Toast.makeText(SignUpActivity.this, R.string.user_registered_successfully, Toast.LENGTH_SHORT).show();
                     // Redirect to BlankActivity
-                    Intent intent = new Intent(SignUpActivity.this, BlankActivity.class);
+                    Intent intent = new Intent(SignUpActivity.this, Home_screen.class);
                     startActivity(intent);
                     finish();
                 } else {
@@ -144,7 +152,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         Button loginButton = findViewById(R.id.login_button);
         loginButton.setOnClickListener(view -> {
-            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+            Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         });
     }
