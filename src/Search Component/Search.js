@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import './Search.css'; // Ensure this file exists in the same directory as Search.js
+import React, { useState } from "react";
+import "./Search.css"; // Ensure this file exists in the same directory as Search.js
+import { Link } from "react-router-dom";
 
 function Search({ onSearch, setBgColor }) {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [showSearchInput, setShowSearchInput] = useState(false);
 
   const handleInputChange = (e) => {
@@ -20,31 +21,38 @@ function Search({ onSearch, setBgColor }) {
   };
 
   return (
-    <div className={`my-search-container search-container ${showSearchInput ? 'show-input' : ''}`}>
+    <div
+      className={`my-search-container search-container ${
+        showSearchInput ? "show-input" : ""
+      }`}
+    >
       <div className="left_buttons color-buttons">
         <button
           className="btn btn-dark rounded-circle me-2"
-          style={{ width: '40px', height: '40px' }}
-          onClick={() => handleColorChange('black')}
+          style={{ width: "40px", height: "40px" }}
+          onClick={() => handleColorChange("black")}
         ></button>
         <button
           className="btn btn-success rounded-circle me-2"
-          style={{ width: '40px', height: '40px' }}
-          onClick={() => handleColorChange('green')}
+          style={{ width: "40px", height: "40px" }}
+          onClick={() => handleColorChange("green")}
         ></button>
         <button
           className="btn btn-primary rounded-circle me-2"
-          style={{ width: '40px', height: '40px' }}
-          onClick={() => handleColorChange('blue')}
+          style={{ width: "40px", height: "40px" }}
+          onClick={() => handleColorChange("blue")}
         ></button>
         <button
           className="btn btn-light rounded-circle"
-          style={{ width: '40px', height: '40px' }}
-          onClick={() => handleColorChange('white')}
+          style={{ width: "40px", height: "40px" }}
+          onClick={() => handleColorChange("white")}
         ></button>
       </div>
       <div className="middle_buttons">
-        <form className="search-text input-group" onSubmit={(e) => e.preventDefault()}>
+        <form
+          className="search-text input-group"
+          onSubmit={(e) => e.preventDefault()}
+        >
           <input
             type="text"
             className="form-control"
@@ -55,8 +63,12 @@ function Search({ onSearch, setBgColor }) {
             onChange={handleInputChange}
           />
         </form>
-        <button className="btn btn-outline-secondary" type="button" id="search-button"
-                onClick={handleSearchButtonClick}>
+        <button
+          className="btn btn-outline-secondary"
+          type="button"
+          id="search-button"
+          onClick={handleSearchButtonClick}
+        >
           <i className="bi bi-search"></i>
         </button>
         <button className="record-button icon-button">
@@ -70,9 +82,11 @@ function Search({ onSearch, setBgColor }) {
         <button className="icon-button">
           <i className="bi bi-bell"></i>
         </button>
-        <button className="icon-button">
-          <i className="bi bi-person-circle"></i>
-        </button>
+        <Link to="/login">
+          <button className="icon-button">
+            <i className="bi bi-person-circle"></i>
+          </button>
+        </Link>
       </div>
     </div>
   );

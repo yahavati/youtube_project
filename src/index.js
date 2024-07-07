@@ -1,13 +1,12 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client';
-import { BrowserRouter as Router } from 'react-router-dom';
-import HomeScreen from './App Component/HomeScreen'; 
+import React from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App";
 
-const root = createRoot(document.getElementById('root'));
+const container = document.getElementById("root");
+const root = createRoot(container);
+
 root.render(
   <React.StrictMode>
-    <Router>
-      <HomeScreen />
-    </Router>
+    <App />
   </React.StrictMode>
 );
