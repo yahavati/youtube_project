@@ -1,4 +1,12 @@
-.container {
+.signup-body,
+.signup-html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.signup-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -6,7 +14,7 @@
   background: linear-gradient(to bottom, #131212, #b22b2b);
 }
 
-.form-wrapper {
+.signup-form-wrapper {
   background: rgb(16, 16, 16);
   padding: 40px;
   border-radius: 10px;
@@ -15,24 +23,24 @@
   width: 300px;
 }
 
-.title {
+.signup-title {
   font-size: 24px;
   color: #cd1d23;
   margin-bottom: 8px;
 }
 
-.subtitle {
+.signup-subtitle {
   font-size: 14px;
   color: #ea0b0b;
   margin-bottom: 20px;
 }
 
-.input-wrapper {
+.signup-input-wrapper {
   position: relative;
   margin-bottom: 20px;
 }
 
-.input {
+.signup-input {
   width: 100%;
   padding: 10px 10px 10px 40px; /* Increased left padding for icons */
   border-radius: 5px;
@@ -41,7 +49,7 @@
   box-sizing: border-box; /* Ensure padding and border are included in the width */
 }
 
-.icon {
+.signup-icon {
   position: absolute;
   top: 50%;
   left: 10px; /* Adjusted left position for better alignment */
@@ -50,7 +58,7 @@
   pointer-events: none; /* Prevent icon from blocking input field */
 }
 
-.button {
+.signup-button {
   width: 100%;
   padding: 10px;
   background: #c60505;
@@ -63,11 +71,11 @@
   margin-top: 10px; /* Reduced margin to bring buttons closer together */
 }
 
-.button:hover {
+.signup-button:hover {
   background: #bc4545;
 }
 
-.link {
+.signup-link {
   display: block;
   margin-top: 20px;
   font-size: 14px;
@@ -75,11 +83,11 @@
   text-decoration: none;
 }
 
-.link:hover {
+.signup-link:hover {
   text-decoration: underline;
 }
 
-.image-preview img {
+.signup-image-preview img {
   width: 100%;
   max-height: 300px; /* Ensure the image does not exceed this height */
   object-fit: cover; /* Maintain aspect ratio and fit the image within the container */
@@ -87,12 +95,12 @@
   border: 1px solid #ddd;
 }
 
-.file-input-wrapper {
+.signup-file-input-wrapper {
   position: relative;
   width: 100%;
 }
 
-.file-input-wrapper::before {
+.signup-file-input-wrapper::before {
   content: "Choose Photo";
   position: absolute;
   top: 50%;
@@ -103,7 +111,7 @@
   font-size: 14px;
 }
 
-.file-input-wrapper input[type="file"] {
+.signup-file-input-wrapper input[type="file"] {
   width: 100%;
   padding: 10px;
   border-radius: 5px;
@@ -114,11 +122,11 @@
   cursor: pointer;
 }
 
-.file-input-wrapper input[type="file"]::-webkit-file-upload-button {
+.signup-file-input-wrapper input[type="file"]::-webkit-file-upload-button {
   visibility: hidden;
 }
 
-.validation-container {
+.signup-validation-container {
   background: #e4a794;
   border-radius: 10px;
   padding: 10px;
@@ -126,19 +134,19 @@
   text-align: left;
 }
 
-.validation-title {
+.signup-validation-title {
   color: #de1616;
   font-weight: bold;
   margin-bottom: 5px;
 }
 
-.validation-message {
+.signup-validation-message {
   color: #333;
   font-size: 0.875rem;
   margin-top: 5px;
 }
 
-.error-message {
+.signup-error-message {
   background-color: #f8d7da;
   color: #721c24;
   border: 1px solid #f5c6cb;
@@ -148,7 +156,7 @@
   text-align: left;
 }
 
-.success-message {
+.signup-success-message {
   background-color: #d4edda;
   color: #155724;
   border: 1px solid #c3e6cb;

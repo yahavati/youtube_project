@@ -5,7 +5,7 @@ function Video({ id, title, author, views, when, img }) {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate(`/video/${id}`);
+        navigate(`/home/video/${id}`);
     };
 
     return (

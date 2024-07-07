@@ -1,3 +1,4 @@
+// Login.js
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
@@ -8,7 +9,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { user, setUser } = useContext(UserContext);
+  const { loginUser } = useContext(UserContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,15 +17,11 @@ function Login() {
       setError("All fields are required.");
       return;
     }
-    if (!user || user.username !== username) {
-      setError("Username does not exist.");
-      return;
+    if (loginUser(username, password)) {
+      navigate("/");
+    } else {
+      setError("Invalid username or password.");
     }
-    if (user.password !== password) {
-      setError("Password does not match.");
-      return;
-    }
-    navigate("/");
   };
 
   const handleSignUp = () => {
@@ -34,9 +31,13 @@ function Login() {
   return (
     <div className="login-container">
       <div className="login-box">
-        <img src="/youtube-logo.png" alt="YouTube Logo" className="logo" />
+        <img
+          src="/youtube-logo.png"
+          alt="YouTube Logo"
+          className="login-logo"
+        />
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
+          <div className="login-form-group">
             <input
               type="text"
               id="username"
@@ -44,9 +45,10 @@ function Login() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               autoComplete="off"
+              className="login-input"
             />
           </div>
-          <div className="form-group">
+          <div className="login-form-group">
             <input
               type="password"
               id="password"
@@ -54,13 +56,16 @@ function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               autoComplete="off"
+              className="login-input"
             />
           </div>
-          {error && <p className="error">{error}</p>}
-          <button type="submit">Login</button>
+          {error && <p className="login-error">{error}</p>}
+          <button type="submit" className="login-button">
+            Login
+          </button>
           <button
             type="button"
-            className="signup-button"
+            className="login-signup-button"
             onClick={handleSignUp}
           >
             Sign Up

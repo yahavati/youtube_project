@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "./Search.css"; // Ensure this file exists in the same directory as Search.js
+import { UserContext } from "../UserContext";
 import { Link } from "react-router-dom";
 
 function Search({ onSearch, setBgColor }) {
   const [query, setQuery] = useState("");
   const [showSearchInput, setShowSearchInput] = useState(false);
+  const { authenticatedUser } = useContext(UserContext);
+
+  useEffect(() => {
+    if (authenticatedUser) {
+      console.log("Authenticated user changed:", authenticatedUser);
+    }
+  }, [authenticatedUser]);
 
   const handleInputChange = (e) => {
     const value = e.target.value;
@@ -82,11 +90,23 @@ function Search({ onSearch, setBgColor }) {
         <button className="icon-button">
           <i className="bi bi-bell"></i>
         </button>
-        <Link to="/login">
-          <button className="icon-button">
-            <i className="bi bi-person-circle"></i>
-          </button>
-        </Link>
+
+        {authenticatedUser ? (
+          <div className="user-info">
+            <img
+              src={URL.createObjectURL(authenticatedUser.picture)}
+              alt="User"
+              className="user-avatar"
+            />
+            <span className="user-name">{authenticatedUser.username}</span>
+          </div>
+        ) : (
+          <Link to="/login">
+            <button className="icon-button">
+              <i className="bi bi-person-circle"></i>
+            </button>
+          </Link>
+        )}
       </div>
     </div>
   );

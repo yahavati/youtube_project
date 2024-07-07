@@ -1,5 +1,5 @@
 .comments-section {
-    font-size: x-large;
+    font-size: medium;
     text-align: start;
     padding-left: 10px;
     padding-bottom: 10px;
@@ -13,25 +13,25 @@
     padding: 0;
 }
 
-    .add-comment input {
-        flex: 1;
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
+.add-comment input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
 
-    .add-comment button {
-        padding: 8px 16px;
-        border: none;
-        background-color: #007bff;
-        color: white;
-        border-radius: 4px;
-        cursor: pointer;
-    }
+.add-comment button {
+    padding: 8px 16px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
 
-        .add-comment button:hover {
-            background-color: #0056b3;
-        }
+.add-comment button:hover {
+    background-color: #0056b3;
+}
 
 .comments-list {
     display: flex;
@@ -45,32 +45,54 @@
     border-radius: 4px;
 }
 
+.comment-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.comment-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.comment-username {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.comment-timestamp {
+    color: gray;
+    font-size: small;
+}
+
 .comment-actions {
     display: flex;
     gap: 10px;
     margin-top: 10px;
 }
 
-    .comment-actions button {
-        border: none;
-        background: none;
-        cursor: pointer;
-        color: #007bff;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-    }
+.comment-actions button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #007bff;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
 
-        .comment-actions button:hover {
-            text-decoration: underline;
-        }
+.comment-actions button:hover {
+    text-decoration: underline;
+}
 
-    .comment-actions .my-button {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-    }
+.comment-actions .my-button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
 
-        .comment-actions .my-button.active {
-            color: green;
-        }
+.comment-actions .my-button.active {
+    color: green;
+}

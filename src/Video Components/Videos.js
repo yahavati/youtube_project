@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './Videos.css';
 import EditModal from '../Comment Component/EditModal';
+import { UserContext } from '../UserContext';
 
-const Videos = ({ uploadedVideos, setUploadedVideos }) => {
+const Videos = () => {
+    const { authenticatedUser, updateUploadedVideo, deleteUploadedVideo } = useContext(UserContext);
     const [showEditModal, setShowEditModal] = useState(false);
     const [currentVideo, setCurrentVideo] = useState(null);
 
@@ -17,24 +19,13 @@ const Videos = ({ uploadedVideos, setUploadedVideos }) => {
     };
 
     const handleSaveEdit = (id, newName, newDescription) => {
-        const updatedVideos = uploadedVideos.map(video => {
-            if (video.id === id) {
-                return { ...video, name: newName, description: newDescription };
-            }
-            return video;
-        });
-        setUploadedVideos(updatedVideos);
+        updateUploadedVideo(id, { ...currentVideo, name: newName, description: newDescription });
         handleCloseEditModal();
-    };
-
-    const handleDelete = (id) => {
-        const updatedVideos = uploadedVideos.filter(video => video.id !== id);
-        setUploadedVideos(updatedVideos);
     };
 
     return (
         <div className="videos-list">
-            {uploadedVideos && uploadedVideos.map(video => (
+            {authenticatedUser?.videos.map(video => (
                 <div className="video-item" key={video.id}>
                     <video width="200" controls>
                         <source src={video.url} type="video/mp4" />
@@ -43,7 +34,7 @@ const Videos = ({ uploadedVideos, setUploadedVideos }) => {
                     <p>{video.name}</p>
                     <p>{video.description}</p>
                     <button className="edit-button" onClick={() => handleEditClick(video)}>Edit</button>
-                    <button className="delete-button" onClick={() => handleDelete(video.id)}>Delete</button>
+                    <button className="delete-button" onClick={() => deleteUploadedVideo(video.id)}>Delete</button>
                 </div>
             ))}
             {currentVideo && (
