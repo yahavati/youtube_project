@@ -6,10 +6,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
 import com.example.youtube_project.R;
+
+import java.util.List;
+
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> {
 
     private List<VideoItem> videoList;
@@ -27,14 +30,15 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
         this.videoList = videoList;
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.video_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         VideoItem video = videoList.get(position);
         holder.bind(video, onItemClickListener);
     }

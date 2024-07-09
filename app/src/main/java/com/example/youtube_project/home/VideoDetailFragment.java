@@ -13,8 +13,14 @@ import android.widget.VideoView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.youtube_project.R;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class VideoDetailFragment extends Fragment {
 
     private VideoView videoView;
@@ -53,35 +59,29 @@ public class VideoDetailFragment extends Fragment {
         // Retrieve video details from arguments
         Bundle args = getArguments();
         if (args != null) {
-            int videoResId = args.getInt("VIDEO_RES_ID");
-            String title = args.getString("VIDEO_TITLE");
-            String author = args.getString("VIDEO_AUTHOR");
-            String date = args.getString("VIDEO_DATE");
-            String views = args.getString("VIDEO_VIEWS");
-
-            // Set video and details
-            String videoPath = "android.resource://" + getActivity().getPackageName() + "/" + videoResId;
-            videoView.setVideoPath(videoPath);
-            videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @Override
-                public void onPrepared(MediaPlayer mp) {
-                    mp.start();
-                }
-            });
-
-            videoTitle.setText(title);
-            videoDetails.setText(author + " • " + date + " • " + views);
+            updateVideoDetails(args);
         }
 
         // Initialize RecyclerView
-        // Load related videos and set up RecyclerView adapter
+        List<VideoItem> videoList = new ArrayList<>();
+        // Populate videoList with your video data
+        videoList.add(new VideoItem(R.raw.videoapp1, "Music", R.drawable.img7, "coldplay", "01 Jan 2022", "1000 views"));
+        videoList.add(new VideoItem(R.raw.videoapp3, "SPORT", R.drawable.img6, "sport5", "02 Jan 2022", "2000 views"));
+        videoList.add(new VideoItem(R.raw.videoapp2, "Music", R.drawable.img7, "coldplay", "08 Jan 2023", "1000 views"));
+        videoList.add(new VideoItem(R.raw.videoapp2, "Video 2", R.drawable.one, "Author 2", "02 Jan 2022", "2000 views"));
+        videoList.add(new VideoItem(R.raw.videoapp1, "Video 1", R.drawable.two, "Author 1", "01 Jan 2022", "1000 views"));
+        videoList.add(new VideoItem(R.raw.videoapp2, "Video 2", R.drawable.three, "Author 2", "02 Jan 2022", "2000 views"));
+        // Add more videos as needed
 
-        view.findViewById(R.id.comments_section).setOnClickListener(new View.OnClickListener() {
+        VideoAdapter videoAdapter = new VideoAdapter(videoList);
+        videoAdapter.setOnItemClickListener(new VideoAdapter.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                openCommentsFragment();
+            public void onItemClick(VideoItem video) {
+                playVideo(video);
             }
         });
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(videoAdapter);
 
         // Set click listeners for buttons
         likeButton.setOnClickListener(new View.OnClickListener() {
@@ -143,6 +143,38 @@ public class VideoDetailFragment extends Fragment {
         if (videoView != null) {
             videoView.stopPlayback();
         }
+    }
+
+    private void playVideo(VideoItem video) {
+        updateVideoDetails(video);
+        String videoPath = "android.resource://" + getActivity().getPackageName() + "/" + video.getVideoResId();
+        videoView.setVideoPath(videoPath);
+        videoView.start();
+    }
+
+    private void updateVideoDetails(Bundle args) {
+        int videoResId = args.getInt("VIDEO_RES_ID");
+        String title = args.getString("VIDEO_TITLE");
+        String author = args.getString("VIDEO_AUTHOR");
+        String date = args.getString("VIDEO_DATE");
+        String views = args.getString("VIDEO_VIEWS");
+
+        String videoPath = "android.resource://" + getActivity().getPackageName() + "/" + videoResId;
+        videoView.setVideoPath(videoPath);
+        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.start();
+            }
+        });
+
+        videoTitle.setText(title);
+        videoDetails.setText(author + " • " + date + " • " + views);
+    }
+
+    private void updateVideoDetails(VideoItem video) {
+        videoTitle.setText(video.getTitle());
+        videoDetails.setText(video.getAuthor() + " • " + video.getDate() + " • " + video.getViews());
     }
 
     private void openCommentsFragment() {

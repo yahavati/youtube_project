@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 import com.example.youtube_project.R;
+
 public class HomeFragment extends Fragment implements VideoAdapter.OnItemClickListener {
 
     @Nullable
@@ -94,11 +95,13 @@ public class HomeFragment extends Fragment implements VideoAdapter.OnItemClickLi
 
     private List<VideoItem> getVideos() {
         List<VideoItem> videos = new ArrayList<>();
-        videos.add(new VideoItem(R.raw.sample_video1, "Video 1", R.drawable.one, "Author 1", "01 Jan 2022", "1000 views"));
-        videos.add(new VideoItem(R.raw.sample_video2, "Video 2", R.drawable.two, "Author 2", "02 Jan 2022", "2000 views"));
-        videos.add(new VideoItem(R.raw.sample_video1, "Video 3", R.drawable.three, "Author 3", "03 Jan 2022", "3000 views"));
-        videos.add(new VideoItem(R.raw.sample_video2, "Video 4", R.drawable.one, "Author 4", "04 Jan 2022", "4000 views"));
-        videos.add(new VideoItem(R.raw.sample_video1, "Video 5", R.drawable.two, "Author 5", "05 Jan 2022", "5000 views"));
+        videos.add(new VideoItem(R.raw.videoapp1, "Music", R.drawable.img7, "coldplay", "01 Jan 2022", "1000 views"));
+        videos.add(new VideoItem(R.raw.videoapp3, "SPORT", R.drawable.img6, "sport5", "02 Jan 2022", "2000 views"));
+        videos.add(new VideoItem(R.raw.videoapp2, "Music", R.drawable.img7, "coldplay", "08 Jan 2023", "1000 views"));
+        videos.add(new VideoItem(R.raw.videoapp2, "Video 2", R.drawable.one, "Author 2", "02 Jan 2022", "2000 views"));
+        videos.add(new VideoItem(R.raw.videoapp1, "Video 1", R.drawable.two, "Author 1", "01 Jan 2022", "1000 views"));
+        videos.add(new VideoItem(R.raw.videoapp2, "Video 2", R.drawable.three, "Author 2", "02 Jan 2022", "2000 views"));
+        // Add more videos as needed
         return videos;
     }
 }
