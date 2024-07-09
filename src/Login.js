@@ -32,9 +32,11 @@ function Login() {
     <div className="login-container">
       <div className="login-box">
         <img
+          onClick={() => navigate("/")}
           src="/youtube-logo.png"
           alt="YouTube Logo"
           className="login-logo"
+          style={{ cursor: "pointer" }}
         />
         <form onSubmit={handleSubmit}>
           <div className="login-form-group">

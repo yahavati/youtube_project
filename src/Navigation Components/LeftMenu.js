@@ -1,10 +1,13 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./LeftMenu.css";
+import { UserContext } from "../UserContext";
+import { NavItem } from "react-bootstrap";
 
 function LeftMenu() {
   const menuRef = useRef(null);
   const navigate = useNavigate();
+  const { authenticatedUser } = useContext(UserContext);
 
   const navigateToHome = () => {
     navigate("/");
@@ -77,6 +80,9 @@ function LeftMenu() {
         className="list-group list-group-flush flex-grow-1 overflow-auto"
       >
         {menuItems.map((item, index) => {
+          if (item.text === "Your videos" && !authenticatedUser) {
+            return null;
+          }
           if (item.type === "separator") {
             return (
               <div key={index} className="separator-container">

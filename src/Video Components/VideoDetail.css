@@ -1,24 +1,47 @@
 .video-detail {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .video-content {
-    flex: 3;
+  flex: 3;
 }
 
 .video-recommendations {
-    flex: 1;
-    margin-left: 20px;
+  flex: 1;
+  margin-left: 20px;
+}
+
+.youtube-button {
+  background: none;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  cursor: pointer;
+  margin-left: 50px; /* Gives space for the sandwich button */
+}
+
+.youtube-icon {
+  font-size: 2rem;
+  color: red;
+}
+
+.youtube-text {
+  font-size: large;
+  margin: 8px;
+  font-family: "Segoe UI", sans-serif;
+  padding-bottom: 6px;
 }
 
 @media (max-width: 768px) {
-    .video-detail {
-        flex-direction: column;
-    }
-    
-    .video-recommendations {
-        margin-left: 0;
-        margin-top: 20px;
-    }
+  .video-detail {
+    flex-direction: column;
+  }
+
+  .video-recommendations {
+    margin-left: 0;
+    margin-top: 20px;
+  }
 }

@@ -1,12 +1,16 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import "./Search.css"; // Ensure this file exists in the same directory as Search.js
 import { UserContext } from "../UserContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Search({ onSearch, setBgColor }) {
   const [query, setQuery] = useState("");
   const [showSearchInput, setShowSearchInput] = useState(false);
-  const { authenticatedUser } = useContext(UserContext);
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // State for controlling user menu
+  const { authenticatedUser, setFakeUser, logout } = useContext(UserContext);
+  const menuRef = useRef(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (authenticatedUser) {
@@ -27,6 +31,32 @@ function Search({ onSearch, setBgColor }) {
   const handleColorChange = (color) => {
     setBgColor(color);
   };
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleClickOutside = (event) => {
+    if (menuRef.current && !menuRef.current.contains(event.target)) {
+      setIsMenuOpen(false);
+    }
+  };
+
+  const handleLogout = () => {
+    logout();
+    setIsMenuOpen(false);
+  };
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isMenuOpen]);
 
   return (
     <div
@@ -83,8 +113,16 @@ function Search({ onSearch, setBgColor }) {
           <i className="bi bi-mic-fill"></i>
         </button>
       </div>
-      <div className="right_buttons extra-buttons">
-        <button className="icon-button">
+      <div className="right_buttons extra-buttons" ref={menuRef}>
+        <div onClick={setFakeUser}>set fake user</div>
+        <button
+          className="icon-button"
+          onClick={
+            authenticatedUser
+              ? () => navigate("/your-videos")
+              : () => navigate("/login")
+          }
+        >
           <i className="bi bi-plus-square"></i>
         </button>
         <button className="icon-button">
@@ -92,7 +130,7 @@ function Search({ onSearch, setBgColor }) {
         </button>
 
         {authenticatedUser ? (
-          <div className="user-info">
+          <div className="user-info" onClick={toggleMenu}>
             <img
               src={URL.createObjectURL(authenticatedUser.picture)}
               alt="User"
@@ -106,6 +144,26 @@ function Search({ onSearch, setBgColor }) {
               <i className="bi bi-person-circle"></i>
             </button>
           </Link>
+        )}
+        {authenticatedUser && isMenuOpen && (
+          <div className="user-menu">
+            <div className="user-menu-item user-info-row">
+              <img
+                src={URL.createObjectURL(authenticatedUser.picture)}
+                alt="User Avatar"
+                className="user-avatar-large"
+              />
+              <span>{authenticatedUser.username}</span>
+            </div>
+            <div className="user-menu-item">
+              <button className="user-option-button">User Settings</button>
+            </div>
+            <div className="user-menu-item">
+              <button className="logout-button" onClick={handleLogout}>
+                Logout
+              </button>
+            </div>
+          </div>
         )}
       </div>
     </div>

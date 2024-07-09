@@ -10,6 +10,24 @@ export const UserProvider = ({ children }) => {
     setUsers([...users, { ...user, videos: [] }]);
   };
 
+  const urlToFile = async (url, filename, mimeType) => {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    return new File([blob], filename, { type: mimeType });
+  };
+
+  const setFakeUser = async () => {
+    const file = await urlToFile("/avatar.png", "avatar.png", "image/png");
+    const fakeUser = {
+      username: "fakeUser",
+      password: "fakePass",
+      picture: file,
+      general: "",
+      videos: [],
+    };
+    setAuthenticatedUser(fakeUser);
+  };
+
   const loginUser = (username, password) => {
     const user = users.find(
       (u) => u.username === username && u.password === password
@@ -25,7 +43,7 @@ export const UserProvider = ({ children }) => {
     setAuthenticatedUser((prevUser) => {
       const updatedUser = {
         ...prevUser,
-        videos: [...prevUser.videos, video],
+        videos: [...prevUser?.videos, video],
       };
       updateUser(updatedUser);
       return updatedUser;
@@ -64,16 +82,22 @@ export const UserProvider = ({ children }) => {
     );
   };
 
+  const logout = () => {
+    setAuthenticatedUser(null);
+  };
+
   return (
     <UserContext.Provider
       value={{
         users,
         registerUser,
         loginUser,
+        setFakeUser,
         authenticatedUser,
         addUploadedVideo,
         updateUploadedVideo,
         deleteUploadedVideo,
+        logout,
       }}
     >
       {children}
