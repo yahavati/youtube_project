@@ -41,9 +41,11 @@ public class SignUpActivity extends AppCompatActivity {
     private static final int REQUEST_CAMERA_PERMISSION = 200;
 
     private EditText usernameEditText;
+    private EditText nicknameEditText;
     private EditText passwordEditText;
     private EditText confirmPasswordEditText;
     private TextView usernameErrorTextView;
+    private TextView nicknameErrorTextView;
     private TextView passwordErrorTextView;
     private TextView confirmPasswordErrorTextView;
     private TextView photoErrorTextView;
@@ -60,9 +62,11 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         usernameEditText = findViewById(R.id.username);
+        nicknameEditText = findViewById(R.id.nickname);
         passwordEditText = findViewById(R.id.password);
         confirmPasswordEditText = findViewById(R.id.confirm_password);
         usernameErrorTextView = findViewById(R.id.username_error);
+        nicknameErrorTextView = findViewById(R.id.nickname_error);
         passwordErrorTextView = findViewById(R.id.password_error);
         confirmPasswordErrorTextView = findViewById(R.id.confirm_password_error);
         photoErrorTextView = findViewById(R.id.photo_error);
@@ -101,6 +105,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         signUpButton.setOnClickListener(view -> {
             String username = usernameEditText.getText().toString().trim();
+            String nickname = nicknameEditText.getText().toString().trim();
             String password = passwordEditText.getText().toString().trim();
             String confirmPassword = confirmPasswordEditText.getText().toString().trim();
 
@@ -111,6 +116,13 @@ public class SignUpActivity extends AppCompatActivity {
                 isValid = false;
             } else {
                 usernameErrorTextView.setText("");
+            }
+
+            if (!validateNickname(nickname)) {
+                nicknameErrorTextView.setText(R.string.nickname_error_message);
+                isValid = false;
+            } else {
+                nicknameErrorTextView.setText("");
             }
 
             if (!validatePassword(password)) {
@@ -138,10 +150,10 @@ public class SignUpActivity extends AppCompatActivity {
                 if (!userManager.validateUser(username, password)) {
                     UserDetails userDetails = new UserDetails();
                     userDetails.setPassword(password);
+                    userDetails.setNickName(nickname);
                     userDetails.setProfilePhoto(photoUri);
                     userManager.addUser(username, userDetails);
                     Toast.makeText(SignUpActivity.this, R.string.user_registered_successfully, Toast.LENGTH_SHORT).show();
-                    // Redirect to BlankActivity
                     Intent intent = new Intent(this, LoginActivity.class);
                     startActivity(intent);
                     finish();
@@ -221,6 +233,10 @@ public class SignUpActivity extends AppCompatActivity {
     private boolean validateUsername(String username) {
         return username.length() >= 5 && username.matches(".*[a-zA-Z].*") && username.matches(".*\\d.*");
     }
+    private boolean validateNickname(String nickname) {
+        return nickname.length() >= 1 && nickname.matches("[a-zA-Z0-9]*");
+    }
+
 
     private boolean validatePassword(String password) {
         return password.length() >= 8 && password.matches(".*[a-zA-Z].*") && password.matches(".*\\d.*");
