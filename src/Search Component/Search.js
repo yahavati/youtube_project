@@ -114,7 +114,7 @@ function Search({ onSearch, setBgColor }) {
         </button>
       </div>
       <div className="right_buttons extra-buttons" ref={menuRef}>
-        <div onClick={setFakeUser}>set fake user</div>
+        {/* <div onClick={setFakeUser}>set fake user</div> */}
         <button
           className="icon-button"
           onClick={

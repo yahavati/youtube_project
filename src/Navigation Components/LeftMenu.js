@@ -2,7 +2,6 @@ import React, { useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./LeftMenu.css";
 import { UserContext } from "../UserContext";
-import { NavItem } from "react-bootstrap";
 
 function LeftMenu() {
   const menuRef = useRef(null);

@@ -1,68 +1,12 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useContext } from "react";
 import VideoList from "../Video Components/VideoList";
-import LeftMenu from "../Navigation Components/LeftMenu";
-import MidMenu from "../Navigation Components/MidMenu";
-import Search from "../Search Component/Search";
-
-import useWindowWidth from "../WindoWidth";
-import "./HomeScreen.css";
 import { VideosContext } from "../VideosContext";
+import { SearchQueryContext } from "../SearchQueryContext";
 
-function HomeScreen() {
+const HomeScreen = () => {
   const { videos } = useContext(VideosContext);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [bgColor, setBgColor] = useState("white");
-  const windowWidth = useWindowWidth();
-  const location = useLocation();
-  const navigate = useNavigate();
-  const isVideoDetail = location.pathname.startsWith("/video/");
-  const isLargeScreen = windowWidth >= 992;
-  const [isLeftMenuOpen, setIsLeftMenuOpen] = useState(isLargeScreen);
-
-  console.log(videos);
-
-  const toggleLeftMenu = () => {
-    setIsLeftMenuOpen(!isLeftMenuOpen);
-  };
-
-  const navigateToHome = () => {
-    navigate("/");
-  };
-
-  return (
-    <div className="container-fluid App container_full">
-      <button className="sandwich-button" onClick={toggleLeftMenu}>
-        <i className="bi bi-list"></i>
-      </button>
-      <div className={`left_section ${isLeftMenuOpen ? "open" : "closed"}`}>
-        <div className="left-menu-top">
-          <button className="youtube-button" onClick={navigateToHome}>
-            <i className="bi bi-youtube youtube-icon"></i>
-            <span className="youtube-text">YouTube</span>
-          </button>
-        </div>
-        <div className="left-menu-content">{isLargeScreen && <LeftMenu />}</div>
-      </div>
-      <div
-        className={`right_section ${
-          isLeftMenuOpen ? "with-menu" : "full-width"
-        }`}
-      >
-        <div
-          className={`col ${
-            isLargeScreen && isVideoDetail ? "main-content" : "main-content"
-          }`}
-        >
-          <div style={{ backgroundColor: bgColor, minHeight: "100vh" }}>
-            <Search onSearch={setSearchQuery} setBgColor={setBgColor} />
-            <div className="row bg-white">{!isVideoDetail && <MidMenu />}</div>
-            <VideoList videos={videos} searchQuery={searchQuery} />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+  const { searchQuery } = useContext(SearchQueryContext);
+  return <VideoList videos={videos} searchQuery={searchQuery} />;
+};
 
 export default HomeScreen;

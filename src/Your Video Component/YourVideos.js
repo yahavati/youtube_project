@@ -4,30 +4,25 @@ import UploadModal from "../Upload and Share Components/UploadModal";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../UserContext";
 import { VideosContext } from "../VideosContext";
-import VideoItem from "../Video Components/VideoItem";
 
 const YourVideos = () => {
   const [showUploadModal, setShowUploadModal] = useState(false);
   const { addUploadedVideo } = useContext(UserContext);
-  const { videos, addVideo } = useContext(VideosContext);
+  const { addVideo } = useContext(VideosContext);
   const { authenticatedUser } = useContext(UserContext);
   const navigate = useNavigate();
-
-  const userVideos = videos.filter(
-    (video) => video.author === authenticatedUser.username
-  );
 
   const handleUploadClose = () => setShowUploadModal(false);
   const handleUploadShow = () => setShowUploadModal(true);
 
-  const handleFileUpload = (file, title, description, resetUpload) => {
+  const handleFileUpload = (file, resetUpload) => {
     const newVideo = {
       id: Date.now(),
       author: authenticatedUser.username,
       videoUrl: URL.createObjectURL(file),
       file: file,
-      title: title,
-      description: description,
+      title: file.name,
+      description: "",
       likes: 0,
       dislikes: 0,
       views: 0,
@@ -39,7 +34,7 @@ const YourVideos = () => {
   };
 
   const navigateToVideos = () => {
-    navigate("/");
+    navigate("/videos");
   };
 
   return (
@@ -50,22 +45,14 @@ const YourVideos = () => {
           View All Videos
         </button>
       </div>
-      {userVideos.length === 0 ? (
-        <div className="no-content">
-          <img
-            src="/myvideoesicon.png"
-            alt="No content available"
-            className="no-content-image"
-          />
-          <p>No content available</p>
-        </div>
-      ) : (
-        <div className="videos-list-your">
-          {userVideos.map((video) => (
-            <VideoItem key={video.id} video={video} myVideo={true} />
-          ))}
-        </div>
-      )}
+      <div className="no-content">
+        <img
+          src="/myvideoesicon.png"
+          alt="No content available"
+          className="no-content-image"
+        />
+        <p>No content available</p>
+      </div>
       <UploadModal
         show={showUploadModal}
         handleClose={handleUploadClose}
