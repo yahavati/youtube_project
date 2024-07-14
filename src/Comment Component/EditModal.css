@@ -1,3 +1,4 @@
+/* EditModal.css */
 .edit-modal {
     position: fixed;
     top: 0;
@@ -32,6 +33,13 @@
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
+}
+
+.thumbnail-preview {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-top: 10px;
 }
 
 .save-button,

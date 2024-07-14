@@ -1,3 +1,4 @@
+// CommentsSection.js
 import React, { useState, useEffect, useContext } from "react";
 import "./CommentsSection.css";
 import { UserContext } from "../UserContext";
@@ -34,7 +35,7 @@ function CommentsSection({
 
     if (commentText.trim()) {
       const newComment = {
-        username: authenticatedUser.username,
+        nickname: authenticatedUser.nickname,  // Changed to nickname
         avatar: URL.createObjectURL(authenticatedUser.picture),
         text: commentText.trim(),
         likes: 0,
@@ -139,11 +140,11 @@ function CommentsSection({
               <div className="comment-header">
                 <img
                   src={comment.avatar}
-                  alt={comment.username}
+                  alt={comment.nickname}  // Changed to nickname
                   className="comment-avatar"
                 />
                 <div>
-                  <span className="comment-username">@{comment.username}</span>
+                  <span className="comment-username">@{comment.nickname}</span>  
                   <span className="comment-timestamp">
                     {formatTimestamp(comment.timestamp)}
                   </span>
@@ -163,7 +164,7 @@ function CommentsSection({
                 >
                   <i className="bi bi-hand-thumbs-down"></i> {comment.dislikes}
                 </button>
-                {authenticatedUser?.username === comment.username && (
+                {authenticatedUser?.nickname === comment.nickname && (  
                   <>
                     <button onClick={() => handleEdit(index)}>Edit</button>
                     <button onClick={() => handleDelete(index)}>Delete</button>

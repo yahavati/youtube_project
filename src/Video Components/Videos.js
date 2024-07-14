@@ -21,16 +21,16 @@ const Videos = () => {
     setCurrentVideo(null);
   };
 
-  const handleSaveEdit = (id, newTitle, newDescription) => {
-    updateUploadedVideo(id, {
+  const handleSaveEdit = (id, newTitle, newDescription, newThumbnail, thumbnailFile) => {
+    const updatedVideo = {
       ...currentVideo,
       title: newTitle,
       description: newDescription,
-    });
-    updateVideo(id, {
-      title: newTitle,
-      description: newDescription,
-    });
+      img: newThumbnail,
+      thumbnailFile: thumbnailFile,
+    };
+    updateUploadedVideo(id, updatedVideo);
+    updateVideo(id, updatedVideo);
     handleCloseEditModal();
   };
 

@@ -11,6 +11,7 @@ const SignUp = () => {
     username: "",
     password: "",
     confirmPassword: "",
+    nickname: "",  // Added nickname
     picture: null,
     picturePreview: "",
   });
@@ -19,6 +20,7 @@ const SignUp = () => {
     username: "",
     password: "",
     confirmPassword: "",
+    nickname: "",  // Added validation for nickname
     picture: "",
     general: "",
   });
@@ -77,6 +79,16 @@ const SignUp = () => {
       }
     }
 
+    // Validate nickname
+    if (name === "nickname") {
+      const nicknameValid = /^[a-zA-Z0-9]{3,}$/.test(value);
+      if (!nicknameValid) {
+        messages.nickname = "Nickname must be at least 3 characters long.";
+      } else {
+        messages.nickname = "";
+      }
+    }
+
     setValidationMessages(messages);
   };
 
@@ -130,7 +142,7 @@ const SignUp = () => {
   };
 
   const validateAllFields = () => {
-    const { username, password, confirmPassword, picture } = formData;
+    const { username, password, confirmPassword, picture, nickname } = formData;
     let isValid = true;
 
     if (!/^[a-zA-Z0-9]{5,}$/.test(username) || !/\d/.test(username)) {
@@ -159,6 +171,14 @@ const SignUp = () => {
       setValidationMessages((prev) => ({
         ...prev,
         confirmPassword: "Passwords do not match.",
+      }));
+      isValid = false;
+    }
+
+    if (!nickname || nickname.length < 3) {
+      setValidationMessages((prev) => ({
+        ...prev,
+        nickname: "Nickname must be at least 3 characters long.",
       }));
       isValid = false;
     }
@@ -231,6 +251,22 @@ const SignUp = () => {
                 }`}
               >
                 {validationMessages.confirmPassword}
+              </div>
+            )}
+          </div>
+          <div className="signup-input-wrapper">
+            <input
+              type="text"
+              name="nickname"
+              placeholder="Nickname"
+              value={formData.nickname}
+              onChange={handleChange}
+              className="signup-input"
+              required
+            />
+            {validationMessages.nickname && (
+              <div className="signup-error-message">
+                {validationMessages.nickname}
               </div>
             )}
           </div>

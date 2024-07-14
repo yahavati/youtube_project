@@ -1,12 +1,13 @@
+// Search.js
 import React, { useContext, useState, useEffect, useRef } from "react";
-import "./Search.css"; // Ensure this file exists in the same directory as Search.js
+import "./Search.css";
 import { UserContext } from "../UserContext";
 import { Link, useNavigate } from "react-router-dom";
 
 function Search({ onSearch, setBgColor }) {
   const [query, setQuery] = useState("");
   const [showSearchInput, setShowSearchInput] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // State for controlling user menu
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { authenticatedUser, setFakeUser, logout } = useContext(UserContext);
   const menuRef = useRef(null);
 
@@ -114,7 +115,6 @@ function Search({ onSearch, setBgColor }) {
         </button>
       </div>
       <div className="right_buttons extra-buttons" ref={menuRef}>
-        {/* <div onClick={setFakeUser}>set fake user</div> */}
         <button
           className="icon-button"
           onClick={
@@ -136,7 +136,7 @@ function Search({ onSearch, setBgColor }) {
               alt="User"
               className="user-avatar"
             />
-            <span className="user-name">{authenticatedUser.username}</span>
+            <span className="user-name">{authenticatedUser.nickname}</span>
           </div>
         ) : (
           <Link to="/login">
@@ -153,7 +153,7 @@ function Search({ onSearch, setBgColor }) {
                 alt="User Avatar"
                 className="user-avatar-large"
               />
-              <span>{authenticatedUser.username}</span>
+              <span>{authenticatedUser.nickname}</span>
             </div>
             <div className="user-menu-item">
               <button className="user-option-button">User Settings</button>

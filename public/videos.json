@@ -5,6 +5,7 @@
     "author": "coldplay",
     "views": "120k",
     "when": "1 week ago",
+    "img": "/img1.jpg",
     "videoUrl": "/video1.mp4"
   },
   {
@@ -13,6 +14,7 @@
     "author": "Eyal Golan",
     "views": "10m",
     "when": "4 days ago",
+    "img": "/img9.jpg",
     "videoUrl": "/video2.mp4"
   },
   {
@@ -21,6 +23,7 @@
     "author": "sport 5",
     "views": "20m",
     "when": "2 days ago",
+    "img": "/img8.jpg",
     "videoUrl": "/video3.mp4"
   },
   {
@@ -29,6 +32,7 @@
     "author": "Alicia Keys",
     "views": "120k",
     "when": "1 week ago",
+    "img": "/img4.jpg",
     "videoUrl": "/video4.mp4"
   },
   {
@@ -37,6 +41,7 @@
     "author": "Yahav Atias",
     "views": "120k",
     "when": "2 weeks ago",
+    "img": "/img5.jpg",
     "videoUrl": "/video5.mp4"
   },
   {
@@ -45,6 +50,7 @@
     "author": "Lian",
     "views": "120k",
     "when": "1 week ago",
+    "img": "/img6.jpg",
     "videoUrl": "/video6.mp4"
   },
   {
@@ -53,6 +59,7 @@
     "author": "13 רשת",
     "views": "20m",
     "when": "2 days ago",
+    "img": "/img1.jpg",
     "videoUrl": "/video7.mp4"
   },
   {
@@ -61,6 +68,7 @@
     "author": "sport 5",
     "views": "10m",
     "when": "4 days ago",
+    "img": "/img2.jpg",
     "videoUrl": "/video8.mp4"
   },
   {
@@ -69,6 +77,7 @@
     "author": "Alicia Keys",
     "views": "120k",
     "when": "1 week ago",
+    "img": "/img3.jpg",
     "videoUrl": "/video9.mp4"
   },
   {
@@ -77,6 +86,7 @@
     "author": "Yahav Atias",
     "views": "120k",
     "when": "2 weeks ago",
+    "img": "/img4.jpg",
     "videoUrl": "/video10.mp4"
   }
 ]

@@ -7,9 +7,57 @@ import "./Login.css";
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [validationMessages, setValidationMessages] = useState({
+    username: "",
+    password: "",
+  });
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const { loginUser } = useContext(UserContext);
+
+  const validateForm = (name, value) => {
+    let messages = { ...validationMessages };
+
+    if (name === "username") {
+      const usernameValid = /^[a-zA-Z0-9]{5,}$/.test(value);
+      const hasNumber = /\d/.test(value);
+      if (!usernameValid) {
+        messages.username = "Username must be at least 5 characters long.";
+      } else if (!hasNumber) {
+        messages.username = "Username must include at least one number.";
+      } else {
+        messages.username = "";
+      }
+    }
+
+    if (name === "password") {
+      const hasLetter = /[a-zA-Z]/.test(value);
+      const hasNumber = /\d/.test(value);
+      const isValidLength = value.length >= 8;
+
+      if (!isValidLength) {
+        messages.password = "Password must be at least 8 characters long.";
+      } else if (!hasLetter) {
+        messages.password = "Password must contain at least one letter.";
+      } else if (!hasNumber) {
+        messages.password = "Password must contain at least one number.";
+      } else {
+        messages.password = "";
+      }
+    }
+
+    setValidationMessages(messages);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "username") {
+      setUsername(value);
+    } else if (name === "password") {
+      setPassword(value);
+    }
+    validateForm(name, value);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,23 +91,31 @@ function Login() {
             <input
               type="text"
               id="username"
+              name="username"
               placeholder="Username"
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={handleChange}
               autoComplete="off"
               className="login-input"
             />
+            {validationMessages.username && (
+              <div className="login-error">{validationMessages.username}</div>
+            )}
           </div>
           <div className="login-form-group">
             <input
               type="password"
               id="password"
+              name="password"
               placeholder="Password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handleChange}
               autoComplete="off"
               className="login-input"
             />
+            {validationMessages.password && (
+              <div className="login-error">{validationMessages.password}</div>
+            )}
           </div>
           {error && <p className="login-error">{error}</p>}
           <button type="submit" className="login-button">
@@ -73,13 +129,6 @@ function Login() {
             Sign Up
           </button>
         </form>
-        <div className="login-message">
-          Username must be at least 5 characters long and has to contain at
-          least 1 number and 1 letter
-          <br />
-          Password must be at least 8 characters long and has to contain at
-          least 1 number and 1 letter
-        </div>
       </div>
     </div>
   );

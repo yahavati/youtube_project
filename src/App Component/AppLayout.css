@@ -564,3 +564,12 @@
     flex-direction: column;
   }
 }
+.left_section.dark-mode {
+  background-color: #202020;
+  border-right: 1px solid #333;
+}
+
+.right_section.dark-mode {
+  background-color: #181818;
+  color: #e0e0e0;
+}

@@ -1,29 +1,18 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./VideoItem.css";
-import { VideosContext } from "../VideosContext";
 
-const VideoItem = ({ video, myVideo }) => {
+const VideoItem = ({ video }) => {
   const [playing, setPlaying] = useState(false);
-  const { deleteVideo } = useContext(VideosContext);
 
-  const handleMouseOver = (event) => {
+  const handleClick = (event) => {
     const videoElement = event.target;
-    if (videoElement.readyState >= 2) {
+    if (!playing) {
+      videoElement.play();
       setPlaying(true);
-      videoElement.play().catch((error) => {
-        if (error.name !== "AbortError") {
-          console.error("Playback failed:", error);
-        }
-      });
-    }
-  };
-
-  const handleMouseOut = (event) => {
-    const videoElement = event.target;
-    setPlaying(false);
-    if (!videoElement.paused) {
+    } else {
       videoElement.pause();
+      setPlaying(false);
     }
   };
 
@@ -36,8 +25,8 @@ const VideoItem = ({ video, myVideo }) => {
             poster={video.img}
             preload="metadata"
             muted
-            onMouseOver={handleMouseOver}
-            onMouseOut={handleMouseOut}
+            controls={false}
+            onClick={handleClick}
           >
             Your browser does not support the video tag.
           </video>
@@ -45,22 +34,8 @@ const VideoItem = ({ video, myVideo }) => {
       </div>
       <div className="video-info">
         <h4>{video.title}</h4>
-        {!myVideo ? (
-          <>
-            {" "}
-            <p>{video.author}</p>
-            <p>
-              {video.views || 0} - {video.when || "now"}
-            </p>
-          </>
-        ) : (
-          <img
-            src="/delete.png"
-            alt="delete button"
-            className="delete-video-button"
-            onClick={() => deleteVideo(video.id)}
-          />
-        )}
+        <p>{video.author}</p>
+        <p>{video.views} - {video.when}</p>
       </div>
     </div>
   );

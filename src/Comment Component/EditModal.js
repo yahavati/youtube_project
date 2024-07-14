@@ -2,11 +2,20 @@ import React, { useState } from 'react';
 import './EditModal.css';
 
 const EditModal = ({ show, handleClose, video, handleSave }) => {
-    const [title, setTitle] = useState(video ? video.name : '');
+    const [title, setTitle] = useState(video ? video.title : '');
     const [description, setDescription] = useState(video ? video.description : '');
+    const [thumbnail, setThumbnail] = useState(video ? video.img : '');
+
+    const handleThumbnailChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setThumbnail(URL.createObjectURL(file));
+            video.thumbnailFile = file; // Save the file for later use
+        }
+    };
 
     const handleSubmit = () => {
-        handleSave(video.id, title, description);
+        handleSave(video.id, title, description, thumbnail, video.thumbnailFile);
         handleClose();
     };
 
@@ -32,6 +41,16 @@ const EditModal = ({ show, handleClose, video, handleSave }) => {
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                     />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="thumbnail">Thumbnail</label>
+                    <input
+                        type="file"
+                        id="thumbnail"
+                        accept="image/*"
+                        onChange={handleThumbnailChange}
+                    />
+                    {thumbnail && <img src={thumbnail} alt="Thumbnail" className="thumbnail-preview" />}
                 </div>
                 <button className="save-button" onClick={handleSubmit}>Save</button>
                 <button className="cancel-button" onClick={handleClose}>Cancel</button>

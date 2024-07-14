@@ -44,3 +44,9 @@
   object-fit: cover;
   align-self: center;
 }
+.video-item {
+  position: relative;
+  cursor: pointer;
+}
+
+
