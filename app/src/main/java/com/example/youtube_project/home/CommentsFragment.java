@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 import com.example.youtube_project.R;
+
 public class CommentsFragment extends Fragment implements CommentAdapter.OnCommentClickListener {
 
     private RecyclerView recyclerView;
@@ -23,6 +24,9 @@ public class CommentsFragment extends Fragment implements CommentAdapter.OnComme
     private List<Comment> commentList;
     private EditText editTextComment;
     private Button buttonAddComment;
+
+    private Comment editingComment;
+    private int editingPosition = -1;
 
     @Nullable
     @Override
@@ -42,9 +46,16 @@ public class CommentsFragment extends Fragment implements CommentAdapter.OnComme
         buttonAddComment.setOnClickListener(v -> {
             String commentText = editTextComment.getText().toString();
             if (!commentText.isEmpty()) {
-                Comment newComment = new Comment("Username", commentText, 0);
-                commentList.add(newComment);
-                adapter.notifyItemInserted(commentList.size() - 1);
+                if (editingComment != null) {
+                    editingComment.setText(commentText);
+                    adapter.notifyItemChanged(editingPosition);
+                    editingComment = null;
+                    editingPosition = -1;
+                } else {
+                    Comment newComment = new Comment("Username", commentText, 0, false, false);
+                    commentList.add(newComment);
+                    adapter.notifyItemInserted(commentList.size() - 1);
+                }
                 editTextComment.setText("");
             }
         });
@@ -54,13 +65,51 @@ public class CommentsFragment extends Fragment implements CommentAdapter.OnComme
 
     @Override
     public void onLikeClicked(Comment comment) {
-        comment.setLikeCount(comment.getLikeCount() + 1);
+        if (comment.isDisliked()) {
+            comment.setDisliked(false);
+            comment.setLikeCount(comment.getLikeCount() + 1);
+        }
+
+        if (comment.isLiked()) {
+            comment.setLiked(false);
+            comment.setLikeCount(comment.getLikeCount() - 1);
+        } else {
+            comment.setLiked(true);
+            comment.setLikeCount(comment.getLikeCount() + 1);
+        }
         adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onDislikeClicked(Comment comment) {
-        comment.setLikeCount(comment.getLikeCount() - 1);
+        if (comment.isLiked()) {
+            comment.setLiked(false);
+            comment.setLikeCount(comment.getLikeCount() - 1);
+        }
+
+        if (comment.isDisliked()) {
+            comment.setDisliked(false);
+        } else {
+            comment.setDisliked(true);
+            comment.setLikeCount(comment.getLikeCount() - 1);
+        }
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onEditClicked(Comment comment) {
+        editingComment = comment;
+        editingPosition = commentList.indexOf(comment);
+        editTextComment.setText(comment.getText());
+        editTextComment.requestFocus();
+    }
+
+    @Override
+    public void onDeleteClicked(Comment comment) {
+        int position = commentList.indexOf(comment);
+        if (position != -1) {
+            commentList.remove(position);
+            adapter.notifyItemRemoved(position);
+        }
     }
 }

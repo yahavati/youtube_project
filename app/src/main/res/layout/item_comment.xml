@@ -53,5 +53,23 @@
             android:src="@drawable/dislike"
             android:contentDescription="Dislike"
             android:layout_marginStart="16dp" />
+
+        <ImageButton
+            android:id="@+id/button_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:src="@drawable/comment"
+            android:contentDescription="Edit"
+            android:layout_marginStart="16dp" />
+
+        <ImageButton
+            android:id="@+id/button_delete"
+            android:layout_width="68dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:background="@null"
+            android:contentDescription="Delete"
+            android:src="@drawable/delete" />
     </LinearLayout>
 </LinearLayout>

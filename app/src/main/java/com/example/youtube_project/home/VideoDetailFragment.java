@@ -1,5 +1,6 @@
 package com.example.youtube_project.home;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.VideoView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,10 +33,17 @@ public class VideoDetailFragment extends Fragment {
     private LinearLayout dislikeButton;
     private LinearLayout shareButton;
     private LinearLayout saveButton;
+    private LinearLayout commentsSection;
     private TextView likeCountText;
     private TextView dislikeCountText;
+
     private int likeCount = 0;
     private int dislikeCount = 0;
+    private String currentVideoTitle;
+
+    private static final String PREFS_NAME = "user_actions";
+    private static final String PREF_LIKED_KEY = "liked_";
+    private static final String PREF_DISLIKED_KEY = "disliked_";
 
     public VideoDetailFragment() {
         // Required empty public constructor
@@ -53,6 +62,7 @@ public class VideoDetailFragment extends Fragment {
         dislikeButton = view.findViewById(R.id.button_dislike);
         shareButton = view.findViewById(R.id.button_share);
         saveButton = view.findViewById(R.id.button_save);
+        commentsSection = view.findViewById(R.id.comments_section); // Initialize comments section
         likeCountText = view.findViewById(R.id.like_count);
         dislikeCountText = view.findViewById(R.id.dislike_count);
 
@@ -65,9 +75,9 @@ public class VideoDetailFragment extends Fragment {
         // Initialize RecyclerView
         List<VideoItem> videoList = new ArrayList<>();
         // Populate videoList with your video data
-        videoList.add(new VideoItem(R.raw.videoapp1, "Music", R.drawable.img7, "coldplay", "01 Jan 2022", "1000 views"));
-        videoList.add(new VideoItem(R.raw.videoapp3, "SPORT", R.drawable.img6, "sport5", "02 Jan 2022", "2000 views"));
-        videoList.add(new VideoItem(R.raw.videoapp2, "Music", R.drawable.img7, "coldplay", "08 Jan 2023", "1000 views"));
+        videoList.add(new VideoItem(R.raw.videoapp1, "Music Video 1", R.drawable.img7, "Coldplay", "01 Jan 2022", "1000 views"));
+        videoList.add(new VideoItem(R.raw.videoapp3, "Sport Video 1", R.drawable.img6, "Sport5", "02 Jan 2022", "2000 views"));
+        videoList.add(new VideoItem(R.raw.videoapp2, "Music Video 2", R.drawable.img7, "Coldplay", "08 Jan 2023", "1000 views"));
         videoList.add(new VideoItem(R.raw.videoapp2, "Video 2", R.drawable.one, "Author 2", "02 Jan 2022", "2000 views"));
         videoList.add(new VideoItem(R.raw.videoapp1, "Video 1", R.drawable.two, "Author 1", "01 Jan 2022", "1000 views"));
         videoList.add(new VideoItem(R.raw.videoapp2, "Video 2", R.drawable.three, "Author 2", "02 Jan 2022", "2000 views"));
@@ -87,20 +97,14 @@ public class VideoDetailFragment extends Fragment {
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                likeCount++;
-                likeCountText.setText(String.valueOf(likeCount));
-                likeButton.setBackgroundColor(Color.GREEN);
-                dislikeButton.setBackgroundColor(Color.TRANSPARENT);
+                handleLike();
             }
         });
 
         dislikeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dislikeCount++;
-                dislikeCountText.setText(String.valueOf(dislikeCount));
-                dislikeButton.setBackgroundColor(Color.RED);
-                likeButton.setBackgroundColor(Color.TRANSPARENT);
+                handleDislike();
             }
         });
 
@@ -118,7 +122,91 @@ public class VideoDetailFragment extends Fragment {
             }
         });
 
+        commentsSection.setOnClickListener(new View.OnClickListener() { // Add click listener for comments section
+            @Override
+            public void onClick(View v) {
+                openCommentsFragment();
+            }
+        });
+
         return view;
+    }
+
+    private void handleLike() {
+        SharedPreferences prefs = getActivity().getSharedPreferences(PREFS_NAME, getActivity().MODE_PRIVATE);
+        boolean hasLiked = prefs.getBoolean(PREF_LIKED_KEY + currentVideoTitle, false);
+        boolean hasDisliked = prefs.getBoolean(PREF_DISLIKED_KEY + currentVideoTitle, false);
+
+        SharedPreferences.Editor editor = prefs.edit();
+
+        if (hasDisliked) {
+            // Remove dislike
+            editor.putBoolean(PREF_DISLIKED_KEY + currentVideoTitle, false).apply();
+            dislikeCount--;
+        }
+
+        if (hasLiked) {
+            // Remove like
+            editor.putBoolean(PREF_LIKED_KEY + currentVideoTitle, false).apply();
+            likeCount--;
+            likeButton.setBackgroundColor(Color.TRANSPARENT);
+        } else {
+            // Add like
+            editor.putBoolean(PREF_LIKED_KEY + currentVideoTitle, true).apply();
+            likeCount++;
+            likeButton.setBackgroundColor(Color.GREEN);
+        }
+
+        likeCountText.setText(String.valueOf(likeCount));
+        dislikeCountText.setText(String.valueOf(dislikeCount));
+        updateButtons();
+    }
+
+    private void handleDislike() {
+        SharedPreferences prefs = getActivity().getSharedPreferences(PREFS_NAME, getActivity().MODE_PRIVATE);
+        boolean hasLiked = prefs.getBoolean(PREF_LIKED_KEY + currentVideoTitle, false);
+        boolean hasDisliked = prefs.getBoolean(PREF_DISLIKED_KEY + currentVideoTitle, false);
+
+        SharedPreferences.Editor editor = prefs.edit();
+
+        if (hasLiked) {
+            // Remove like
+            editor.putBoolean(PREF_LIKED_KEY + currentVideoTitle, false).apply();
+            likeCount--;
+        }
+
+        if (hasDisliked) {
+            // Remove dislike
+            editor.putBoolean(PREF_DISLIKED_KEY + currentVideoTitle, false).apply();
+            dislikeCount--;
+            dislikeButton.setBackgroundColor(Color.TRANSPARENT);
+        } else {
+            // Add dislike
+            editor.putBoolean(PREF_DISLIKED_KEY + currentVideoTitle, true).apply();
+            dislikeCount++;
+            dislikeButton.setBackgroundColor(Color.RED);
+        }
+
+        likeCountText.setText(String.valueOf(likeCount));
+        dislikeCountText.setText(String.valueOf(dislikeCount));
+        updateButtons();
+    }
+
+    private void updateButtons() {
+        SharedPreferences prefs = getActivity().getSharedPreferences(PREFS_NAME, getActivity().MODE_PRIVATE);
+        boolean hasLiked = prefs.getBoolean(PREF_LIKED_KEY + currentVideoTitle, false);
+        boolean hasDisliked = prefs.getBoolean(PREF_DISLIKED_KEY + currentVideoTitle, false);
+
+        if (hasLiked) {
+            likeButton.setBackgroundColor(Color.GREEN);
+            dislikeButton.setBackgroundColor(Color.TRANSPARENT);
+        } else if (hasDisliked) {
+            dislikeButton.setBackgroundColor(Color.RED);
+            likeButton.setBackgroundColor(Color.TRANSPARENT);
+        } else {
+            likeButton.setBackgroundColor(Color.TRANSPARENT);
+            dislikeButton.setBackgroundColor(Color.TRANSPARENT);
+        }
     }
 
     @Override
@@ -146,10 +234,21 @@ public class VideoDetailFragment extends Fragment {
     }
 
     private void playVideo(VideoItem video) {
+        currentVideoTitle = video.getTitle();  // Use the title as the unique ID
         updateVideoDetails(video);
+
+        // Reset counts for the new video
+        SharedPreferences prefs = getActivity().getSharedPreferences(PREFS_NAME, getActivity().MODE_PRIVATE);
+        likeCount = prefs.getBoolean(PREF_LIKED_KEY + currentVideoTitle, false) ? 1 : 0;
+        dislikeCount = prefs.getBoolean(PREF_DISLIKED_KEY + currentVideoTitle, false) ? 1 : 0;
+
         String videoPath = "android.resource://" + getActivity().getPackageName() + "/" + video.getVideoResId();
         videoView.setVideoPath(videoPath);
         videoView.start();
+
+        likeCountText.setText(String.valueOf(likeCount));
+        dislikeCountText.setText(String.valueOf(dislikeCount));
+        updateButtons();
     }
 
     private void updateVideoDetails(Bundle args) {
@@ -173,14 +272,16 @@ public class VideoDetailFragment extends Fragment {
     }
 
     private void updateVideoDetails(VideoItem video) {
+        currentVideoTitle = video.getTitle();  // Use the title as the unique ID
+
         videoTitle.setText(video.getTitle());
         videoDetails.setText(video.getAuthor() + " • " + video.getDate() + " • " + video.getViews());
     }
 
     private void openCommentsFragment() {
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, new CommentsFragment())
-                .addToBackStack(null)
-                .commit();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, new CommentsFragment());
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }
