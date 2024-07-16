@@ -10,10 +10,22 @@ public class UserManager {
     private Map<String, UserDetails> users;
     private String currentUser;
 
+    private boolean isLoggedIn;
     private UserManager() {
         users = new HashMap<>();
+        isLoggedIn = false;
 
     }
+
+    public boolean isLoggedIn() {
+        return isLoggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        isLoggedIn = loggedIn;
+    }
+
+
 
     public static synchronized UserManager getInstance() {
         if (instance == null) {

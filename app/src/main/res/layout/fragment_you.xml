@@ -1,4 +1,3 @@
-<!-- fragment_you.xml -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -27,9 +26,7 @@
                     android:id="@+id/user_icon"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:contentDescription="User Icon"
-                    />
-
+                    android:contentDescription="User Icon" />
 
                 <TextView
                     android:id="@+id/user_name"
@@ -39,9 +36,7 @@
                     android:textColor="@android:color/white"
                     android:textSize="20sp"
                     android:layout_marginStart="8dp"
-                    android:layout_weight="1"/>
-
-
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <!-- History Section -->
@@ -58,7 +53,7 @@
                     android:text="History"
                     android:textColor="@android:color/white"
                     android:textSize="20sp"
-                    android:padding="8dp"/>
+                    android:padding="8dp" />
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
@@ -82,7 +77,7 @@
                                 android:layout_height="100dp"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/one"
-                                android:contentDescription="Video Thumbnail"/>
+                                android:contentDescription="Video Thumbnail" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -90,52 +85,10 @@
                                 android:text="Video Title"
                                 android:textColor="@android:color/white"
                                 android:textSize="14sp"
-                                android:layout_marginTop="4dp"/>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:padding="8dp">
-
-                            <ImageView
-                                android:layout_width="180dp"
-                                android:layout_height="100dp"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/two"
-                                android:contentDescription="Video Thumbnail"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Video Title"
-                                android:textColor="@android:color/white"
-                                android:textSize="14sp"
-                                android:layout_marginTop="4dp"/>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:padding="8dp">
-
-                            <ImageView
-                                android:layout_width="180dp"
-                                android:layout_height="100dp"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/three"
-                                android:contentDescription="Video Thumbnail"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Video Title"
-                                android:textColor="@android:color/white"
-                                android:textSize="14sp"
-                                android:layout_marginTop="4dp"/>
+                                android:layout_marginTop="4dp" />
                         </LinearLayout>
 
-                        <!-- Repeat the above block for more history items -->
+                        <!-- Repeat above block for more history items -->
                     </LinearLayout>
                 </HorizontalScrollView>
             </LinearLayout>
@@ -154,7 +107,7 @@
                     android:text="Playlists"
                     android:textColor="@android:color/white"
                     android:textSize="20sp"
-                    android:padding="8dp"/>
+                    android:padding="8dp" />
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
@@ -178,7 +131,7 @@
                                 android:layout_height="100dp"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/three"
-                                android:contentDescription="Playlist Thumbnail"/>
+                                android:contentDescription="Playlist Thumbnail" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -186,10 +139,10 @@
                                 android:text="Playlist Title"
                                 android:textColor="@android:color/white"
                                 android:textSize="14sp"
-                                android:layout_marginTop="4dp"/>
+                                android:layout_marginTop="4dp" />
                         </LinearLayout>
 
-                        <!-- Repeat the above block for more playlist items -->
+                        <!-- Repeat above block for more playlist items -->
                     </LinearLayout>
                 </HorizontalScrollView>
             </LinearLayout>
@@ -209,7 +162,6 @@
                     android:orientation="horizontal"
                     android:padding="8dp"
                     android:gravity="center_vertical"
-
                     android:clickable="true"
                     android:focusable="true">
 
@@ -228,108 +180,7 @@
                         android:textSize="16sp" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="8dp"
-                    android:gravity="center_vertical"
-
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:layout_marginTop="8dp">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/movie"
-                        android:contentDescription="Your Movies Icon"
-                        android:layout_marginEnd="16dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Your movies"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="8dp"
-                    android:gravity="center_vertical"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:layout_marginTop="8dp">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/youtube2"
-                        android:contentDescription="Get YouTube Premium Icon"
-                        android:layout_marginEnd="16dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Get YouTube Premium"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="8dp"
-                    android:gravity="center_vertical"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:layout_marginTop="8dp">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/graph"
-                        android:contentDescription="Time Watched Icon"
-                        android:layout_marginEnd="16dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Time watched"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="8dp"
-                    android:gravity="center_vertical"
-
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:layout_marginTop="8dp">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/questio"
-                        android:contentDescription="Help and Feedback Icon"
-                        android:layout_marginEnd="16dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Help and feedback"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp" />
-                </LinearLayout>
-
+                <!-- Repeat above block for more buttons -->
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

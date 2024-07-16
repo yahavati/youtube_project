@@ -1,9 +1,12 @@
 package com.example.youtube_project.home;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -95,4 +98,16 @@ public class HomeScreenActivity extends AppCompatActivity {
         }
         transaction.commit();
     }
+//    public void addUploadedVideo(Uri videoUri, String username) {
+//        LinearLayout homeVideoContainer = findViewById(R.id.home_video_container); // Assuming you have a container for videos
+//        View videoView = getLayoutInflater().inflate(R.layout.video_item_home_screen, homeVideoContainer, false);
+//        VideoView video = videoView.findViewById(R.id.video_view_home);
+//        video.setVideoURI(videoUri);
+//        video.start();
+//
+//        TextView videoDetails = videoView.findViewById(R.id.video_details);
+//        videoDetails.setText("Uploaded by " + username + " | 0 views | Just now");
+//
+//        homeVideoContainer.addView(videoView);
+//    }
 }

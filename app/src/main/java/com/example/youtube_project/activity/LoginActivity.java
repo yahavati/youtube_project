@@ -55,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
                 String password = passwordField.getText().toString().trim();
 
                 if (userManager.validateUser(username, password)) {
+                    userManager.setLoggedIn(true);
                     Intent i = new Intent(this, HomeScreenActivity.class);
                     startActivity(i);
                 } else {
