@@ -1,0 +1,85 @@
+/* General Styles */
+.settings-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.settings-container h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: var(--header-text-color);
+}
+
+/* Form Styles */
+.settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.settings-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.settings-form-group label {
+  font-weight: bold;
+}
+
+.settings-form-group input[type="text"],
+.settings-form-group input[type="file"] {
+  padding: 10px;
+  border: 1px solid var(--text-color);
+  border-radius: 5px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+/* Button Styles */
+.settings-save-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--link-color);
+  color: var(--background-color);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.settings-save-button:hover {
+  background-color: darken(var(--link-color), 10%);
+}
+
+/* Notification Styles */
+.settings-error,
+.settings-success {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.settings-error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.settings-success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+/* Photo Preview Styles */
+.settings-photo-preview {
+  margin-top: 10px;
+  max-width: 100px;
+  width: 100%;
+  height: 100px;
+  border-radius: 50%;
+}

@@ -1,0 +1,26 @@
+.my-group-item {
+  border-radius: 10px;
+}
+
+.text-left {
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+
+.text-left i {
+  margin-right: 10px;
+}
+.separator-container {
+  padding: 8px 0;
+  background-color: white;
+}
+
+.lini {
+  height: 1px;
+  background-color: #e0e0e0;
+  width: 100%;
+}
+.white {
+  background-color: white;
+}
