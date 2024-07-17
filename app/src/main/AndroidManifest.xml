@@ -38,6 +38,9 @@
             android:configChanges="orientation|screenSize"
             android:screenOrientation="sensor" />
 
+        <activity android:name=".home.YourVideos" />
+
+
         <!-- Add ShortsActivity here -->
         <activity android:name=".home.ShortsActivity"
             android:configChanges="orientation|screenSize"

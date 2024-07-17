@@ -17,16 +17,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 import com.example.youtube_project.R;
+import com.example.youtube_project.user.UserDetails;
+import com.example.youtube_project.user.UserManager;
 
 public class HomeFragment extends Fragment implements VideoAdapter.OnItemClickListener {
+
+    private UserManager userManager;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        List<VideoItem> videos = getVideos();
+        userManager = UserManager.getInstance();
+        userManager.makeVideos();
+        List<VideoItem> videos = userManager.getVideos();
         VideoAdapter adapter = new VideoAdapter(videos);
         adapter.setOnItemClickListener(this);
         recyclerView.setAdapter(adapter);
@@ -81,7 +86,13 @@ public class HomeFragment extends Fragment implements VideoAdapter.OnItemClickLi
         VideoDetailFragment fragment = new VideoDetailFragment();
 
         Bundle args = new Bundle();
-        args.putInt("VIDEO_RES_ID", video.getVideoResId());
+        if (video.isUri()) {
+            args.putParcelable("VIDEO_RES_URI", video.getVideoResIdUri());
+            args.putBoolean("IS_URI", true);
+        } else {
+            args.putInt("VIDEO_RES_ID", video.getVideoResIdInt());
+            args.putBoolean("IS_URI", false);
+        }
         args.putString("VIDEO_TITLE", video.getTitle());
         args.putString("VIDEO_AUTHOR", video.getAuthor());
         args.putString("VIDEO_DATE", video.getDate());
@@ -91,17 +102,5 @@ public class HomeFragment extends Fragment implements VideoAdapter.OnItemClickLi
         if (getActivity() != null) {
             ((HomeScreenActivity) getActivity()).loadFragment(fragment);
         }
-    }
-
-    private List<VideoItem> getVideos() {
-        List<VideoItem> videos = new ArrayList<>();
-        videos.add(new VideoItem(R.raw.videoapp1, "Music", R.drawable.img7, "coldplay", "01 Jan 2022", "1000 views"));
-        videos.add(new VideoItem(R.raw.videoapp3, "SPORT", R.drawable.img6, "sport5", "02 Jan 2022", "2000 views"));
-        videos.add(new VideoItem(R.raw.videoapp2, "Music", R.drawable.img7, "coldplay", "08 Jan 2023", "1000 views"));
-        videos.add(new VideoItem(R.raw.videoapp2, "Video 2", R.drawable.one, "Author 2", "02 Jan 2022", "2000 views"));
-        videos.add(new VideoItem(R.raw.videoapp1, "Video 1", R.drawable.two, "Author 1", "01 Jan 2022", "1000 views"));
-        videos.add(new VideoItem(R.raw.videoapp2, "Video 2", R.drawable.three, "Author 2", "02 Jan 2022", "2000 views"));
-        // Add more videos as needed
-        return videos;
     }
 }

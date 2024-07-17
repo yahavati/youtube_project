@@ -1,11 +1,13 @@
 package com.example.youtube_project.home;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
@@ -15,8 +17,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.youtube_project.R;
-import com.example.youtube_project.home.HomeScreenActivity;
 import com.example.youtube_project.activity.LoginActivity;
+import com.example.youtube_project.home.HomeScreenActivity;
 import com.example.youtube_project.user.UserDetails;
 import com.example.youtube_project.user.UserManager;
 
@@ -24,12 +26,14 @@ public class YouFragment extends Fragment {
 
     private ImageView userIcon;
     private UserManager userManager;
+    private Button yourVideos;
 
+    @SuppressLint("MissingInflatedId")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_you, container, false);
-
+        yourVideos = view.findViewById(R.id.your_videos_button);
         userIcon = view.findViewById(R.id.user_icon);
         userManager = UserManager.getInstance();
         UserDetails currUser = userManager.getCurrentUser();
@@ -70,6 +74,20 @@ public class YouFragment extends Fragment {
                 });
 
                 popupMenu.show();
+            }
+        });
+
+        yourVideos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (userManager.isLoggedIn()){
+                    ((HomeScreenActivity) getActivity()).loadFragment(new YourVideos());
+                }
+                else{
+                    Intent loginIntent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(loginIntent);
+                }
+
             }
         });
 

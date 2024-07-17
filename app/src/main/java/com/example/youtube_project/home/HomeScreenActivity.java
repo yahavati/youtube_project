@@ -14,14 +14,21 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.youtube_project.R;
 
+import com.example.youtube_project.user.UserDetails;
+import com.example.youtube_project.user.UserManager;
+
 public class HomeScreenActivity extends AppCompatActivity {
 
     private ImageButton settingsButton;
+    private UserManager userManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_screen_activity);
+        //making sure videos will be created at the beginning since it's the first class to run
+        userManager = UserManager.getInstance();
+        userManager.makeVideos();
 
         // Load the bottom navigation fragment
         if (savedInstanceState == null) {

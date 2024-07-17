@@ -1,5 +1,6 @@
 package com.example.youtube_project.home;
 
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +63,12 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
 
         public void bind(final VideoItem video, final OnItemClickListener listener) {
             videoTitle.setText(video.getTitle());
-            videoThumbnail.setImageResource(video.getThumbnailResId());
+
+            if (video.getThumbnailUri() != null) {
+                videoThumbnail.setImageURI(video.getThumbnailUri());
+            } else {
+                videoThumbnail.setImageResource(video.getThumbnailResId());
+            }
 
             String details = video.getAuthor() + " • " + video.getDate() + " • " + video.getViews();
             videoDetails.setText(details);
@@ -74,6 +80,5 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
                 }
             });
         }
-
     }
 }
