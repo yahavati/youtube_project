@@ -1,5 +1,6 @@
 package com.example.youtube_project.home;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.MediaPlayer;
@@ -19,6 +20,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.youtube_project.R;
+import com.example.youtube_project.activity.LoginActivity;
+import com.example.youtube_project.user.UserManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +48,8 @@ public class VideoDetailFragment extends Fragment {
     private static final String PREF_LIKED_KEY = "liked_";
     private static final String PREF_DISLIKED_KEY = "disliked_";
 
+    private UserManager userManager;
+
     public VideoDetailFragment() {
         // Required empty public constructor
     }
@@ -65,6 +70,8 @@ public class VideoDetailFragment extends Fragment {
         commentsSection = view.findViewById(R.id.comments_section); // Initialize comments section
         likeCountText = view.findViewById(R.id.like_count);
         dislikeCountText = view.findViewById(R.id.dislike_count);
+
+        userManager = UserManager.getInstance();
 
         // Retrieve video details from arguments
         Bundle args = getArguments();
@@ -97,6 +104,12 @@ public class VideoDetailFragment extends Fragment {
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!userManager.isLoggedIn()) {
+                    // Redirect to login screen if user is not logged in
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                    return;
+                }
                 handleLike();
             }
         });
@@ -104,6 +117,12 @@ public class VideoDetailFragment extends Fragment {
         dislikeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!userManager.isLoggedIn()) {
+                    // Redirect to login screen if user is not logged in
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                    return;
+                }
                 handleDislike();
             }
         });
