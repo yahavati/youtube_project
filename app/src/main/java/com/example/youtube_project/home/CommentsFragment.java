@@ -1,5 +1,6 @@
 package com.example.youtube_project.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.example.youtube_project.R;
+import com.example.youtube_project.activity.LoginActivity;
+import com.example.youtube_project.user.UserManager;
 
 public class CommentsFragment extends Fragment implements CommentAdapter.OnCommentClickListener {
 
@@ -27,6 +31,8 @@ public class CommentsFragment extends Fragment implements CommentAdapter.OnComme
 
     private Comment editingComment;
     private int editingPosition = -1;
+
+    private UserManager userManager;
 
     @Nullable
     @Override
@@ -43,7 +49,16 @@ public class CommentsFragment extends Fragment implements CommentAdapter.OnComme
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
+        userManager = UserManager.getInstance();
+
         buttonAddComment.setOnClickListener(v -> {
+            if (!userManager.isLoggedIn()) {
+                // Redirect to login screen if user is not logged in
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                return;
+            }
+
             String commentText = editTextComment.getText().toString();
             if (!commentText.isEmpty()) {
                 if (editingComment != null) {
@@ -52,7 +67,7 @@ public class CommentsFragment extends Fragment implements CommentAdapter.OnComme
                     editingComment = null;
                     editingPosition = -1;
                 } else {
-                    Comment newComment = new Comment("Username", commentText, 0, false, false);
+                    Comment newComment = new Comment(userManager.getCurrentUser().getNickName(), commentText, 0, false, false);
                     commentList.add(newComment);
                     adapter.notifyItemInserted(commentList.size() - 1);
                 }
