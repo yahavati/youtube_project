@@ -34,6 +34,7 @@ api.interceptors.response.use(
       (error.response.status === 401 || error.response.status === 403)
     ) {
       alert("You need to log in again.");
+      Cookies.remove("token"); // Remove the token to prevent loop
       // Optional: Redirect to login page
       window.location.href = "/login"; // You can adjust the path as necessary
     }

@@ -1,4 +1,5 @@
 const Video = require("../models/Video");
+const mongoose = require("mongoose");
 
 const getVideos = async (req, res) => {
   try {
@@ -15,7 +16,9 @@ const getVideos = async (req, res) => {
       {
         $match: {
           _id: {
-            $nin: mostViewedVideoIds.map((id) => mongoose.Types.ObjectId(id)),
+            $nin: mostViewedVideoIds.map(
+              (id) => new mongoose.Types.ObjectId(id)
+            ),
           },
         },
       },
