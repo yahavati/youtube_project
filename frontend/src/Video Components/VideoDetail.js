@@ -7,7 +7,11 @@ import VideoRecommendation from "../Video Components/VideoRecommendation";
 import "./VideoDetail.css";
 import { VideosContext } from "../VideosContext";
 import { UserContext } from "../UserContext";
-import { toggleVideoDislike, toggleVideoLike } from "../api/video"; // Import API functions
+import {
+  toggleVideoDislike,
+  toggleVideoLike,
+  updateVideoView,
+} from "../api/video"; // Import API functions
 import { getMediaSource } from "../utils/mediaUtils";
 
 function VideoDetail() {
@@ -19,6 +23,7 @@ function VideoDetail() {
   const [dislikes, setDislikes] = useState(0);
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [views, setViews] = useState(0);
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
@@ -29,6 +34,18 @@ function VideoDetail() {
         setLikes(fetchedVideo.likes || 0);
         setDislikes(fetchedVideo.dislikes || 0);
         setComments(fetchedVideo.comments || []);
+        setViews(fetchedVideo.views || 0);
+
+        // Update view count if the user is not the owner
+        if (user && fetchedVideo.user._id !== user._id) {
+          const updatedVideo = await updateVideoView(id);
+
+          if (updatedVideo.views !== views) {
+            setViews(updatedVideo.views);
+          } else {
+            setViews(fetchedVideo.views);
+          }
+        }
       } catch (error) {
         if (error.response && error.response.status === 404) {
           setNotFound(true); // Set not found state if video does not exist
@@ -40,7 +57,7 @@ function VideoDetail() {
       }
     };
     fetchVideo();
-  }, [id, videos]);
+  }, [id, user, updateVideo, getVideoById]);
 
   const handleLikeClick = async () => {
     if (!user) {
@@ -106,6 +123,7 @@ function VideoDetail() {
         <VideoInfo
           video={video}
           likes={likes}
+          views={views}
           dislikes={dislikes}
           onLike={handleLikeClick}
           onDislike={handleDislikeClick}

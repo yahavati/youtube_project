@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../UserContext";
 import { timeAgo } from "../utils/timeUtils";
 
-function VideoInfo({ video, likes, dislikes, onLike, onDislike }) {
+function VideoInfo({ video, likes, views, dislikes, onLike, onDislike }) {
   const [liked, setLiked] = useState(false);
   const [disliked, setDisliked] = useState(false);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
@@ -105,7 +105,7 @@ function VideoInfo({ video, likes, dislikes, onLike, onDislike }) {
       <div className="description-container">
         <div className="upper-container">
           <div>
-            <strong>Views:</strong> {video.views} - {timeAgo(video.createdAt)}
+            <strong>Views:</strong> {views} - {timeAgo(video.createdAt)}
           </div>
         </div>
         <div className="description">

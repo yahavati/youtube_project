@@ -5,7 +5,13 @@ const Video = require("../models/Video");
 const getUserVideos = async (req, res) => {
   try {
     const userId = req.params.id;
-    const user = await User.findById(userId).populate("videos");
+    const user = await User.findById(userId).populate({
+      path: "videos",
+      populate: {
+        path: "user",
+        select: "displayName photo",
+      },
+    });
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -67,7 +73,7 @@ const updateUserVideo = async (req, res) => {
 
     const updatedVideo = await Video.findByIdAndUpdate(videoId, updateData, {
       new: true,
-    });
+    }).populate("user", "displayName photo");
 
     if (!updatedVideo) {
       return res.status(404).json({ message: "Video not found" });

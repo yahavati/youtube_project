@@ -45,14 +45,34 @@ const Videos = () => {
         description: newDescription,
         thumbnail,
       });
+
+      let base64Thumbnail = "";
+
+      if (thumbnail) {
+        base64Thumbnail = await convertFileToBase64(thumbnail);
+      }
+
       setVideos(
         videos.map((video) => (video._id === id ? updatedVideo : video))
       );
-      updateVideo(id, { title: newTitle, description: newDescription });
+      updateVideo(id, {
+        title: newTitle,
+        description: newDescription,
+        thumbnail: base64Thumbnail,
+      });
       handleCloseEditModal();
     } catch (error) {
       console.error("Error updating video:", error);
     }
+  };
+
+  const convertFileToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
   };
 
   const handleDelete = async (id) => {

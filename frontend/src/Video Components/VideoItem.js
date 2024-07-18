@@ -3,12 +3,16 @@ import { Link } from "react-router-dom";
 import "./VideoItem.css";
 import { VideosContext } from "../VideosContext";
 import { timeAgo } from "../utils/timeUtils";
+import { getMediaSource } from "../utils/mediaUtils";
 
 const VideoItem = ({ video, myVideo }) => {
   const [playing, setPlaying] = useState(false);
   const { deleteVideo } = useContext(VideosContext);
 
   const handleMouseOver = (event) => {
+    if (video.thumbnail) {
+      return;
+    }
     const videoElement = event.target;
     if (videoElement.readyState >= 2) {
       setPlaying(true);
@@ -21,6 +25,9 @@ const VideoItem = ({ video, myVideo }) => {
   };
 
   const handleMouseOut = (event) => {
+    if (video.thumbnail) {
+      return;
+    }
     const videoElement = event.target;
     setPlaying(false);
     if (!videoElement.paused) {
@@ -35,6 +42,16 @@ const VideoItem = ({ video, myVideo }) => {
     return `data:video/mp4;base64,${video.url}`;
   };
 
+  const getImageSource = () => {
+    if (
+      video.thumbnail.startsWith("http") ||
+      video.thumbnail.startsWith("data")
+    ) {
+      return video.thumbnail;
+    }
+    return `data:image;base64,${video.thumbnail}`;
+  };
+
   return (
     <div className="video-item">
       <div className="video-thumbnail">
@@ -44,7 +61,7 @@ const VideoItem = ({ video, myVideo }) => {
         >
           <video
             src={getVideoSource(video.url)}
-            poster={video.thumbnail}
+            poster={video.thumbnail && getImageSource(video.thumbnail)}
             preload="metadata"
             muted
             onMouseOver={handleMouseOver}
@@ -56,23 +73,25 @@ const VideoItem = ({ video, myVideo }) => {
       </div>
       <div className="video-info">
         <h4>{video.title}</h4>
-        {!myVideo ? (
-          <>
-            <Link to={`/videos/${video.user._id}`}>
-              {video.user.displayName}
-            </Link>
-            <p>
-              {video.views || 0} - {timeAgo(video.createdAt) || "now"}
-            </p>
-          </>
-        ) : (
+        <div>
           <img
-            src="/delete.png"
-            alt="delete button"
-            className="delete-video-button"
-            onClick={() => deleteVideo(video.id)}
+            src={getMediaSource(video.user.photo)}
+            alt="user"
+            style={{
+              width: "40px",
+              height: "40px",
+              objectFit: "cover",
+              borderRadius: "50%",
+              marginRight: "10px",
+            }}
           />
-        )}
+          <Link style={{ color: "black" }} to={`/videos/${video.user._id}`}>
+            {video.user.displayName}
+          </Link>
+        </div>
+        <p>
+          {video.views || 0} - {timeAgo(video.createdAt) || "now"}
+        </p>
       </div>
     </div>
   );

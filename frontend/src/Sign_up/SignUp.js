@@ -101,6 +101,7 @@ const SignUp = () => {
       setFormData({
         ...formData,
         photo: file,
+        photoPreview: reader.result,
       });
       validateForm("photo", file);
     };
@@ -120,6 +121,7 @@ const SignUp = () => {
         setFormData({
           ...formData,
           photo: file,
+          photoPrview: dataUrl,
         });
         setIsCameraOpen(false);
         validateForm("photo", file);
@@ -293,6 +295,20 @@ const SignUp = () => {
               onChange={handleFileChange}
             />
           </div>
+          {formData.photoPreview && (
+            <div className="signup-photo-preview">
+              <img
+                src={formData.photoPreview}
+                alt="Preview"
+                style={{
+                  width: "150px",
+                  height: "150px",
+                  objectFit: "cover",
+                  borderRadius: "10px",
+                }}
+              />
+            </div>
+          )}
           {validationMessages.photo && (
             <div className="signup-error-message">
               {validationMessages.photo}

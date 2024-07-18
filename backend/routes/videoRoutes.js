@@ -4,6 +4,7 @@ const {
   getVideoById,
   toggleLike,
   toggleDislike,
+  addView,
 } = require("../controllers/videoController");
 const authMiddleware = require("../services/authMiddleware");
 
@@ -14,6 +15,8 @@ router.get("/", getVideos);
 
 // GET /api/videos/:id - Fetch a video by ID
 router.get("/:id", getVideoById);
+
+router.post("/:id/view", authMiddleware, addView);
 
 // Toggle like on a video
 router.post("/:videoId/like", authMiddleware, toggleLike);

@@ -35,6 +35,13 @@ function VideoRecommendation({
     }
   };
 
+  const getImageSource = () => {
+    if (thumbnail.startsWith("http") || thumbnail.startsWith("data")) {
+      return thumbnail;
+    }
+    return `data:image;base64,${thumbnail}`;
+  };
+
   return (
     <Link
       to={`/video/${_id}`}
@@ -44,7 +51,7 @@ function VideoRecommendation({
       <div className="video-thumbnail">
         <video
           ref={videoRef}
-          poster={thumbnail}
+          poster={getImageSource(thumbnail)}
           src={getMediaSource(url)}
           preload="metadata"
           muted

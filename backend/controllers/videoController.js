@@ -138,9 +138,53 @@ const toggleDislike = async (req, res) => {
   }
 };
 
+const addView = async (req, res) => {
+  try {
+    const videoId = req.params.id;
+    const userId = req.user._id;
+
+    const video = await Video.findById(videoId);
+
+    if (!video) {
+      return res.status(404).json({ message: "Video not found" }); // Use 404 for not found
+    }
+
+    // Check if the user is the owner of the video
+    if (video.user.toString() === userId) {
+      return res
+        .status(200)
+        .json({ message: "User is the owner, view not counted" });
+    }
+
+    // Check if the user has already viewed the video
+    if (video.viewedBy.includes(userId)) {
+      return res
+        .status(200)
+        .json({
+          message: "User has already viewed the video",
+          views: video.views,
+        });
+    }
+
+    // Increment view count and add user to viewedBy array
+    video.views += 1;
+    video.viewedBy.push(userId);
+
+    await video.save();
+
+    return res
+      .status(200)
+      .json({ message: "View count incremented", views: video.views });
+  } catch (error) {
+    console.error("Error incrementing view count:", error);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
 module.exports = {
   getVideos,
   getVideoById,
   toggleLike,
   toggleDislike,
+  addView,
 };
