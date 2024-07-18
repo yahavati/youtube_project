@@ -40,16 +40,6 @@
 
             </LinearLayout>
 
-            <!-- Your Videos Button -->
-            <Button
-                android:id="@+id/your_videos_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Your Videos"
-                android:textColor="@android:color/white"
-                android:background="@color/colorPrimary"
-                android:layout_marginTop="16dp"/>
-
             <!-- History Section -->
             <LinearLayout
                 android:id="@+id/history_section"
@@ -225,12 +215,16 @@
                         android:contentDescription="Your Videos Icon"
                         android:layout_marginEnd="16dp"/>
 
-                    <TextView
+                    <!-- Your Videos Button -->
+                    <Button
+                        android:id="@+id/your_videos_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Your videos"
+                        android:text="Your Videos"
                         android:textColor="@android:color/white"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp"
+                        android:background="@android:color/transparent" />
+
                 </LinearLayout>
 
                 <LinearLayout

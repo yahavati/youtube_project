@@ -38,7 +38,6 @@ public class CommentsFragment extends Fragment implements CommentAdapter.OnComme
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_comments, container, false);
-
         recyclerView = view.findViewById(R.id.recycler_view_comments);
         editTextComment = view.findViewById(R.id.edit_text_comment);
         buttonAddComment = view.findViewById(R.id.button_add_comment);
@@ -53,7 +52,6 @@ public class CommentsFragment extends Fragment implements CommentAdapter.OnComme
 
         buttonAddComment.setOnClickListener(v -> {
             if (!userManager.isLoggedIn()) {
-                // Redirect to login screen if user is not logged in
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 return;
@@ -80,6 +78,12 @@ public class CommentsFragment extends Fragment implements CommentAdapter.OnComme
 
     @Override
     public void onLikeClicked(Comment comment) {
+        userManager = UserManager.getInstance();
+        if (!userManager.isLoggedIn()) {
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+            return;
+        }
         if (comment.isDisliked()) {
             comment.setDisliked(false);
             comment.setLikeCount(comment.getLikeCount() + 1);
@@ -97,6 +101,12 @@ public class CommentsFragment extends Fragment implements CommentAdapter.OnComme
 
     @Override
     public void onDislikeClicked(Comment comment) {
+        userManager = UserManager.getInstance();
+        if (!userManager.isLoggedIn()) {
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+            return;
+        }
         if (comment.isLiked()) {
             comment.setLiked(false);
             comment.setLikeCount(comment.getLikeCount() - 1);

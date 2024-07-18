@@ -84,7 +84,7 @@ public class HomeFragment extends Fragment implements VideoAdapter.OnItemClickLi
     @Override
     public void onItemClick(VideoItem video) {
         VideoDetailFragment fragment = new VideoDetailFragment();
-
+        fragment.setCurrentVideo(video);
         Bundle args = new Bundle();
         if (video.isUri()) {
             args.putParcelable("VIDEO_RES_URI", video.getVideoResIdUri());
@@ -97,10 +97,14 @@ public class HomeFragment extends Fragment implements VideoAdapter.OnItemClickLi
         args.putString("VIDEO_AUTHOR", video.getAuthor());
         args.putString("VIDEO_DATE", video.getDate());
         args.putString("VIDEO_VIEWS", video.getViews());
+        args.putString("VIDEO_DESCRIPTION", video.getDescription());
+        args.putStringArrayList("VIDEO_LIKES", new ArrayList<>(video.getLikes()));
+        args.putStringArrayList("VIDEO_DISLIKES", new ArrayList<>(video.getDislikes()));
         fragment.setArguments(args);
 
         if (getActivity() != null) {
             ((HomeScreenActivity) getActivity()).loadFragment(fragment);
         }
     }
+
 }

@@ -2,6 +2,10 @@ package com.example.youtube_project.home;
 
 import android.net.Uri;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class VideoItem {
     private Uri videoResIdUri;
     private int videoResIdInt;
@@ -12,6 +16,11 @@ public class VideoItem {
     private String date;
     private String views;
     private String description;
+    private List<String> likes;
+    private List<String> dislikes;
+
+    private int likesAmount;
+    private int disLikesAmount;
 
     public VideoItem(Uri videoResId, String title, int thumbnailResId, String author, String date, String views) {
         this.videoResIdUri = videoResId;
@@ -22,6 +31,10 @@ public class VideoItem {
         this.views = views;
         this.description = null;
         this.thumbnailUri = null;
+        this.likes = new ArrayList<>();
+        this.dislikes = new ArrayList<>();
+        likesAmount = 0;
+        disLikesAmount = 0;
     }
 
     public VideoItem(int videoResId, String title, int thumbnailResId, String author, String date, String views) {
@@ -33,6 +46,64 @@ public class VideoItem {
         this.views = views;
         this.description = null;
         this.thumbnailUri = null;
+        this.likes = new ArrayList<>();
+        this.dislikes = new ArrayList<>();
+        likesAmount = 0;
+        disLikesAmount = 0;
+    }
+
+    public int getLikesAmount() {
+        int num = likes.size();
+        if (likesAmount != num){
+            likesAmount = num;
+        }
+        return likesAmount;
+    }
+
+    public int getDisLikesAmount() {
+        int num = dislikes.size();
+        if (disLikesAmount != num){
+            disLikesAmount = num;
+        }
+        return disLikesAmount;
+    }
+
+    public void addLike(String username) {
+        if (likes.contains(username) && !dislikes.contains(username)) {
+            likes.remove(username);
+            likesAmount -=1;
+        } else if (dislikes.contains(username) && !likes.contains(username)) {
+            dislikes.remove(username);
+            likes.add(username);
+            disLikesAmount -=1;
+            likesAmount +=1;
+        } else {
+            likes.add(username);
+            likesAmount +=1;
+        }
+    }
+
+    public void addDislike(String username) {
+        if (likes.contains(username) && !dislikes.contains(username)) {
+            likes.remove(username);
+            dislikes.add(username);
+            disLikesAmount +=1;
+            likesAmount -=1;
+        } else if (dislikes.contains(username) && !likes.contains(username)) {
+            dislikes.remove(username);
+            disLikesAmount -=1;
+        } else {
+            dislikes.add(username);
+            disLikesAmount +=1;
+        }
+    }
+
+    public List<String> getLikes() {
+        return likes;
+    }
+
+    public List<String> getDislikes() {
+        return dislikes;
     }
 
     public int getVideoResIdInt() {

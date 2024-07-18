@@ -165,6 +165,9 @@ public class YourVideos extends Fragment {
                 showThumbnailOptions();
             }
         });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,11 +175,11 @@ public class YourVideos extends Fragment {
                 videoItem.setTitle(editTitle.getText().toString());
                 videoItem.setDescription(editDescription.getText().toString());
                 loadUploadedVideos();
+                dialog.dismiss();
             }
         });
 
-        AlertDialog dialog = builder.create();
-        dialog.show();
+
     }
 
     private void showThumbnailOptions() {
