@@ -2,23 +2,31 @@ const Video = require("../models/Video");
 
 const getVideos = async (req, res) => {
   try {
-    // Fetch 10 random videos
-    const randomVideos = await Video.aggregate([{ $sample: { size: 10 } }]);
-
     // Fetch 10 most viewed videos
     const mostViewedVideos = await Video.find({}).sort({ views: -1 }).limit(10);
 
-    // Create a Set to ensure no duplicates
-    const videoSet = new Set();
+    // Extract IDs of the most viewed videos
+    const mostViewedVideoIds = mostViewedVideos.map((video) =>
+      video._id.toString()
+    );
 
-    // Add random videos to the set
-    randomVideos.forEach((video) => videoSet.add(video._id.toString()));
+    // Fetch 10 random videos excluding the most viewed ones
+    const randomVideos = await Video.aggregate([
+      {
+        $match: {
+          _id: {
+            $nin: mostViewedVideoIds.map((id) => mongoose.Types.ObjectId(id)),
+          },
+        },
+      },
+      { $sample: { size: 10 } },
+    ]);
 
-    // Add most viewed videos to the set, ensuring no duplicates
-    mostViewedVideos.forEach((video) => videoSet.add(video._id.toString()));
+    // Combine the two lists
+    const combinedVideos = [...mostViewedVideos, ...randomVideos];
 
-    // Fetch complete video details for the unique video IDs
-    const uniqueVideoIds = Array.from(videoSet).slice(0, 20); // Ensure the total is 20
+    // Fetch complete video details for the combined video IDs
+    const uniqueVideoIds = combinedVideos.map((video) => video._id);
     const uniqueVideos = await Video.find({
       _id: { $in: uniqueVideoIds },
     }).populate("user", "displayName photo");
