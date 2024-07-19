@@ -36,7 +36,7 @@ function VideoRecommendation({
   };
 
   const getImageSource = () => {
-    if (thumbnail.startsWith("http") || thumbnail.startsWith("data")) {
+    if (thumbnail?.startsWith("http") || thumbnail?.startsWith("data")) {
       return thumbnail;
     }
     return `data:image;base64,${thumbnail}`;

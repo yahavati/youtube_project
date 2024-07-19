@@ -42,6 +42,7 @@ function VideoDetail() {
 
           if (updatedVideo.views !== views) {
             setViews(updatedVideo.views);
+            updateVideo(id, { views: updatedVideo.views });
           } else {
             setViews(fetchedVideo.views);
           }
@@ -57,7 +58,7 @@ function VideoDetail() {
       }
     };
     fetchVideo();
-  }, [id, user, updateVideo, getVideoById]);
+  }, [id, user, updateVideo, getVideoById, views]);
 
   const handleLikeClick = async () => {
     if (!user) {

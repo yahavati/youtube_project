@@ -3,7 +3,6 @@ import "./VideoList.css";
 import VideoItem from "./VideoItem";
 
 function VideoList({ videos, searchQuery }) {
-  console.log(videos);
   const filteredVideos = searchQuery
     ? videos.filter(
         (video) =>
