@@ -51,7 +51,12 @@ const createUserVideo = async (req, res) => {
     user.videos.push(savedVideo._id);
     await user.save();
 
-    res.status(201).json(savedVideo);
+    const populatedVideo = await Video.findById(savedVideo._id).populate(
+      "user",
+      "displayName photo"
+    );
+
+    res.status(201).json(populatedVideo);
   } catch (error) {
     console.error("Error creating new video:", error);
     res.status(500).json({ message: "Server error" });

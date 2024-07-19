@@ -8,7 +8,7 @@ import { getMediaSource } from "../utils/mediaUtils";
 
 const Videos = () => {
   const { user } = useContext(UserContext);
-  const { updateVideo } = useContext(VideosContext);
+  const { updateVideo, deleteVideo } = useContext(VideosContext);
   const [videos, setVideos] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [currentVideo, setCurrentVideo] = useState(null);
@@ -78,6 +78,7 @@ const Videos = () => {
   const handleDelete = async (id) => {
     try {
       await deleteUserVideo(user._id, id);
+      deleteVideo(id);
       setVideos(videos.filter((video) => video._id !== id));
     } catch (error) {
       console.error("Error deleting video:", error);
