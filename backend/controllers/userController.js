@@ -1,6 +1,29 @@
 const User = require("../models/User");
 const Video = require("../models/Video");
 
+// Fetch all user by ID
+const getUserById = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const user = await User.findById(userId).populate({
+      path: "videos",
+      populate: {
+        path: "user",
+        select: "displayName photo",
+      },
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json({ user });
+  } catch (error) {
+    console.error("Error fetching user videos:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 // Fetch all videos for a user
 const getUserVideos = async (req, res) => {
   try {
@@ -146,4 +169,5 @@ module.exports = {
   updateUserVideo,
   deleteUserVideo,
   updateUserDetails,
+  getUserById,
 };

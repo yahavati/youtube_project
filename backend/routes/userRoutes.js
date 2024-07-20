@@ -5,6 +5,7 @@ const {
   updateUserVideo,
   deleteUserVideo,
   updateUserDetails,
+  getUserById,
 } = require("../controllers/userController");
 const authMiddleware = require("../services/authMiddleware");
 const multer = require("multer");
@@ -12,6 +13,9 @@ const multer = require("multer");
 const router = express.Router();
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
+
+// GET /api/users/:id - Fetch user by ID
+router.get("/:id", getUserById);
 
 // GET /api/users/:id/videos - Fetch all videos for a user
 router.get("/:id/videos", getUserVideos);
