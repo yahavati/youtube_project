@@ -26,7 +26,8 @@
                     android:id="@+id/user_icon"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:contentDescription="User Icon"/>
+                    android:contentDescription="User Icon"
+                    android:src="@drawable/ic_circlr1" /> <!-- Default pink rounded photo -->
 
                 <TextView
                     android:id="@+id/user_name"
@@ -36,7 +37,7 @@
                     android:textColor="@android:color/white"
                     android:textSize="20sp"
                     android:layout_marginStart="8dp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
 
             </LinearLayout>
 
@@ -54,7 +55,7 @@
                     android:text="History"
                     android:textColor="@android:color/white"
                     android:textSize="20sp"
-                    android:padding="8dp"/>
+                    android:padding="8dp" />
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
@@ -78,7 +79,7 @@
                                 android:layout_height="100dp"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/one"
-                                android:contentDescription="Video Thumbnail"/>
+                                android:contentDescription="Video Thumbnail" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -86,7 +87,7 @@
                                 android:text="Video Title"
                                 android:textColor="@android:color/white"
                                 android:textSize="14sp"
-                                android:layout_marginTop="4dp"/>
+                                android:layout_marginTop="4dp" />
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -99,7 +100,7 @@
                                 android:layout_height="100dp"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/two"
-                                android:contentDescription="Video Thumbnail"/>
+                                android:contentDescription="Video Thumbnail" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -107,7 +108,7 @@
                                 android:text="Video Title"
                                 android:textColor="@android:color/white"
                                 android:textSize="14sp"
-                                android:layout_marginTop="4dp"/>
+                                android:layout_marginTop="4dp" />
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -120,7 +121,7 @@
                                 android:layout_height="100dp"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/three"
-                                android:contentDescription="Video Thumbnail"/>
+                                android:contentDescription="Video Thumbnail" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -128,7 +129,7 @@
                                 android:text="Video Title"
                                 android:textColor="@android:color/white"
                                 android:textSize="14sp"
-                                android:layout_marginTop="4dp"/>
+                                android:layout_marginTop="4dp" />
                         </LinearLayout>
 
                         <!-- Repeat the above block for more history items -->
@@ -150,7 +151,7 @@
                     android:text="Playlists"
                     android:textColor="@android:color/white"
                     android:textSize="20sp"
-                    android:padding="8dp"/>
+                    android:padding="8dp" />
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
@@ -174,7 +175,7 @@
                                 android:layout_height="100dp"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/three"
-                                android:contentDescription="Playlist Thumbnail"/>
+                                android:contentDescription="Playlist Thumbnail" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -182,7 +183,7 @@
                                 android:text="Playlist Title"
                                 android:textColor="@android:color/white"
                                 android:textSize="14sp"
-                                android:layout_marginTop="4dp"/>
+                                android:layout_marginTop="4dp" />
                         </LinearLayout>
 
                         <!-- Repeat the above block for more playlist items -->
@@ -213,7 +214,7 @@
                         android:layout_height="24dp"
                         android:src="@drawable/play"
                         android:contentDescription="Your Videos Icon"
-                        android:layout_marginEnd="16dp"/>
+                        android:layout_marginEnd="16dp" />
 
                     <!-- Your Videos Button -->
                     <Button
@@ -242,13 +243,13 @@
                         android:layout_height="24dp"
                         android:src="@drawable/movie"
                         android:contentDescription="Your Movies Icon"
-                        android:layout_marginEnd="16dp"/>
+                        android:layout_marginEnd="16dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Your movies"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -266,14 +267,14 @@
                         android:layout_height="24dp"
                         android:src="@drawable/youtube2"
                         android:contentDescription="Get YouTube Premium Icon"
-                        android:layout_marginEnd="16dp"/>
+                        android:layout_marginEnd="16dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Get YouTube Premium"
                         android:textColor="@android:color/white"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -291,14 +292,14 @@
                         android:layout_height="24dp"
                         android:src="@drawable/graph"
                         android:contentDescription="Time Watched Icon"
-                        android:layout_marginEnd="16dp"/>
+                        android:layout_marginEnd="16dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Time watched"
                         android:textColor="@android:color/white"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -316,14 +317,14 @@
                         android:layout_height="24dp"
                         android:src="@drawable/questio"
                         android:contentDescription="Help and Feedback Icon"
-                        android:layout_marginEnd="16dp"/>
+                        android:layout_marginEnd="16dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Help and feedback"
                         android:textColor="@android:color/white"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp" />
                 </LinearLayout>
 
             </LinearLayout>

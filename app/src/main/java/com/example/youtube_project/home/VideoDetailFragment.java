@@ -283,7 +283,7 @@ public class VideoDetailFragment extends Fragment {
 
     private void openCommentsFragment() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new CommentsFragment());
+        transaction.replace(R.id.fragment_container, new CommentsFragment(this.currentVideo));
         transaction.addToBackStack(null);
         transaction.commit();
     }

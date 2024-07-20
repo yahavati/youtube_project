@@ -3,6 +3,10 @@ package com.example.youtube_project.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -29,7 +33,9 @@ import com.example.youtube_project.user.UserDetails;
 import com.example.youtube_project.user.UserManager;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -221,7 +227,8 @@ public class SignUpActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_IMAGE_PICK) {
                 if (data != null) {
-                    photoUri = data.getData();
+                    Uri selectedImageUri = data.getData();
+                    photoUri = saveImageToInternalStorage(selectedImageUri);
                     profileImageView.setImageURI(photoUri);
                 }
             } else if (requestCode == REQUEST_IMAGE_CAPTURE) {
@@ -229,6 +236,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
         }
     }
+
 
     private boolean validateUsername(String username) {
         return username.length() >= 5 && username.matches(".*[a-zA-Z].*") && username.matches(".*\\d.*");
@@ -253,4 +261,52 @@ public class SignUpActivity extends AppCompatActivity {
             }
         }
     }
+    private Uri saveImageToInternalStorage(Uri imageUri) {
+        try {
+            InputStream inputStream = getContentResolver().openInputStream(imageUri);
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            bitmap = rotateImageIfRequired(bitmap, imageUri);
+            File file = new File(getFilesDir(), "profile_image.jpg");
+            FileOutputStream outputStream = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+            outputStream.close();
+            return Uri.fromFile(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private Bitmap rotateImageIfRequired(Bitmap img, Uri selectedImage) throws IOException {
+        InputStream input = getContentResolver().openInputStream(selectedImage);
+        ExifInterface ei;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            ei = new ExifInterface(input);
+        } else {
+            ei = new ExifInterface(selectedImage.getPath());
+        }
+
+        int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                return rotateImage(img, 90);
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                return rotateImage(img, 180);
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                return rotateImage(img, 270);
+            default:
+                return img;
+        }
+    }
+
+    private Bitmap rotateImage(Bitmap img, int degree) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        Bitmap rotatedImg = Bitmap.createBitmap(img, 0, 0, img.getWidth(), img.getHeight(), matrix, true);
+        img.recycle();
+        return rotatedImg;
+    }
+
+
 }

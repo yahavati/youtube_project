@@ -1,6 +1,7 @@
 package com.example.youtube_project.home;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +15,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.example.youtube_project.R;
 import com.example.youtube_project.activity.LoginActivity;
 import com.example.youtube_project.user.UserManager;
@@ -25,7 +23,6 @@ public class CommentsFragment extends Fragment implements CommentAdapter.OnComme
 
     private RecyclerView recyclerView;
     private CommentAdapter adapter;
-    private List<Comment> commentList;
     private EditText editTextComment;
     private Button buttonAddComment;
 
@@ -33,6 +30,12 @@ public class CommentsFragment extends Fragment implements CommentAdapter.OnComme
     private int editingPosition = -1;
 
     private UserManager userManager;
+    private VideoItem currentVideo;
+
+    public CommentsFragment(VideoItem video) {
+        currentVideo = video;
+        userManager = UserManager.getInstance();
+    }
 
     @Nullable
     @Override
@@ -42,13 +45,10 @@ public class CommentsFragment extends Fragment implements CommentAdapter.OnComme
         editTextComment = view.findViewById(R.id.edit_text_comment);
         buttonAddComment = view.findViewById(R.id.button_add_comment);
 
-        commentList = new ArrayList<>();
-        adapter = new CommentAdapter(commentList, this);
+        adapter = new CommentAdapter(currentVideo.getComments(), this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
-
-        userManager = UserManager.getInstance();
 
         buttonAddComment.setOnClickListener(v -> {
             if (!userManager.isLoggedIn()) {
@@ -65,20 +65,21 @@ public class CommentsFragment extends Fragment implements CommentAdapter.OnComme
                     editingComment = null;
                     editingPosition = -1;
                 } else {
-                    Comment newComment = new Comment(userManager.getCurrentUser().getNickName(), commentText, 0, false, false);
-                    commentList.add(newComment);
-                    adapter.notifyItemInserted(commentList.size() - 1);
+                    Uri userPhotoUri = userManager.getCurrentUser().getProfilePhoto();
+                    Comment newComment = new Comment(userManager.getCurrentUserName(), commentText, 0, false, false, userPhotoUri);
+                    currentVideo.addComment(newComment);
+                    adapter.notifyItemInserted(currentVideo.getComments().size() - 1);
                 }
                 editTextComment.setText("");
             }
         });
+
 
         return view;
     }
 
     @Override
     public void onLikeClicked(Comment comment) {
-        userManager = UserManager.getInstance();
         if (!userManager.isLoggedIn()) {
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
@@ -101,7 +102,6 @@ public class CommentsFragment extends Fragment implements CommentAdapter.OnComme
 
     @Override
     public void onDislikeClicked(Comment comment) {
-        userManager = UserManager.getInstance();
         if (!userManager.isLoggedIn()) {
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
@@ -123,18 +123,22 @@ public class CommentsFragment extends Fragment implements CommentAdapter.OnComme
 
     @Override
     public void onEditClicked(Comment comment) {
-        editingComment = comment;
-        editingPosition = commentList.indexOf(comment);
-        editTextComment.setText(comment.getText());
-        editTextComment.requestFocus();
+        if (userManager.getCurrentUserName().equals(comment.getUsername())) {
+            editingComment = comment;
+            editingPosition = currentVideo.getComments().indexOf(comment);
+            editTextComment.setText(comment.getText());
+            editTextComment.requestFocus();
+        }
     }
 
     @Override
     public void onDeleteClicked(Comment comment) {
-        int position = commentList.indexOf(comment);
-        if (position != -1) {
-            commentList.remove(position);
-            adapter.notifyItemRemoved(position);
+        if (userManager.getCurrentUserName().equals(comment.getUsername())) {
+            int position = currentVideo.getComments().indexOf(comment);
+            if (position != -1) {
+                currentVideo.getComments().remove(position);
+                adapter.notifyItemRemoved(position);
+            }
         }
     }
 }

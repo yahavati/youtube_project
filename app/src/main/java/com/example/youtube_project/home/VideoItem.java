@@ -19,6 +19,8 @@ public class VideoItem {
     private List<String> likes;
     private List<String> dislikes;
 
+    private List<Comment> comments;
+
     private int likesAmount;
     private int disLikesAmount;
 
@@ -35,6 +37,7 @@ public class VideoItem {
         this.dislikes = new ArrayList<>();
         likesAmount = 0;
         disLikesAmount = 0;
+        this.comments = new ArrayList<>();
     }
 
     public VideoItem(int videoResId, String title, int thumbnailResId, String author, String date, String views) {
@@ -50,6 +53,7 @@ public class VideoItem {
         this.dislikes = new ArrayList<>();
         likesAmount = 0;
         disLikesAmount = 0;
+        this.comments = new ArrayList<>();
     }
 
     public int getLikesAmount() {
@@ -172,5 +176,18 @@ public class VideoItem {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void addComment(Comment newComment){
+        comments.add(newComment);
+    }
+    public void deleteComment(Comment rem_comment){
+        if (comments.contains(rem_comment)){
+            comments.remove(rem_comment);
+        }
+    }
+
+    public List<Comment> getComments() {
+        return comments;
     }
 }

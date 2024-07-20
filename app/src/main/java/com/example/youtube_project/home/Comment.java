@@ -1,20 +1,30 @@
 package com.example.youtube_project.home;
 
+import android.net.Uri;
+
 public class Comment {
     private String username;
     private String text;
     private int likeCount;
     private boolean isLiked;
     private boolean isDisliked;
+    private Uri userPhoto;
 
-    public Comment(String username, String text, int likeCount, boolean isLiked, boolean isDisliked) {
+    public Comment(String username, String text, int likeCount, boolean isLiked, boolean isDisliked, Uri userPhoto) {
         this.username = username;
         this.text = text;
         this.likeCount = likeCount;
         this.isLiked = isLiked;
         this.isDisliked = isDisliked;
+        this.userPhoto = userPhoto;
     }
 
+    public Uri getUserPhoto() {
+        return userPhoto;
+    }
+    public void setUserPhoto(Uri userPhotoUri) {
+        this.userPhoto = userPhotoUri;
+    }
     public String getUsername() {
         return username;
     }
