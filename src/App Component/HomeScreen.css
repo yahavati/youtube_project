@@ -9,8 +9,8 @@
   top: 0;
   left: 0;
   height: 100vh;
-  width: 250px; /* Adjust as needed */
-  background-color: #f8f9fa; /* Adjust as needed */
+  width: 250px; 
+  background-color: #f8f9fa; 
   transition: transform 0.3s ease-in-out;
   z-index: 1000;
 }

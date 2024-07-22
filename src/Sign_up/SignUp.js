@@ -1,4 +1,3 @@
-// src/Sign_up/SignUp.js
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Camera from "./Camera";

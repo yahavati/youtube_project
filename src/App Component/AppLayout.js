@@ -11,59 +11,51 @@ import { VideosContext } from "../VideosContext";
 import { SearchQueryContext } from "../SearchQueryContext";
 
 function AppLayout() {
-  const { videos } = useContext(VideosContext);
-  const { setSearchQuery } = useContext(SearchQueryContext);
-  const [bgColor, setBgColor] = useState("white");
-  const windowWidth = useWindowWidth();
-  const location = useLocation();
-  const navigate = useNavigate();
-  const isVideoDetail = location.pathname.startsWith("/video/");
-  const isLargeScreen = windowWidth >= 992;
-  const [isLeftMenuOpen, setIsLeftMenuOpen] = useState(isLargeScreen);
+    const { videos } = useContext(VideosContext);
+    const { setSearchQuery } = useContext(SearchQueryContext);
+    const [bgColor, setBgColor] = useState("white");
+    const windowWidth = useWindowWidth();
+    const location = useLocation();
+    const navigate = useNavigate();
+    const isVideoDetail = location.pathname.startsWith("/video/");
+    const isLargeScreen = windowWidth >= 992;
+    const [isLeftMenuOpen, setIsLeftMenuOpen] = useState(isLargeScreen);
 
-  console.log(videos);
+    console.log(videos);
 
-  const toggleLeftMenu = () => {
-    setIsLeftMenuOpen(!isLeftMenuOpen);
-  };
+    const toggleLeftMenu = () => {
+        setIsLeftMenuOpen(!isLeftMenuOpen);
+    };
 
-  const navigateToHome = () => {
-    navigate("/");
-  };
+    const navigateToHome = () => {
+        navigate("/");
+    };
 
-  return (
-    <div className="container-fluid App container_full">
-      <button className="sandwich-button" onClick={toggleLeftMenu}>
-        <i className="bi bi-list"></i>
-      </button>
-      <div className={`left_section ${isLeftMenuOpen ? "open" : "closed"}`}>
-        <div className="left-menu-top">
-          <button className="youtube-button" onClick={navigateToHome}>
-            <i className="bi bi-youtube youtube-icon"></i>
-            <span className="youtube-text">YouTube</span>
-          </button>
+    return (
+        <div className="container-fluid App container_full">
+            <button className="sandwich-button" onClick={toggleLeftMenu}>
+                <i className="bi bi-list"></i>
+            </button>
+            <div className={`left_section ${isLeftMenuOpen ? "open" : "closed"}`}>
+                <div className="left-menu-top">
+                    <button className="youtube-button" onClick={navigateToHome}>
+                        <i className="bi bi-youtube youtube-icon"></i>
+                        <span className="youtube-text">YouTube</span>
+                    </button>
+                </div>
+                <div className="left-menu-content">{isLargeScreen && <LeftMenu />}</div>
+            </div>
+            <div className={`right_section ${isLeftMenuOpen ? "with-menu" : "full-width"}`}>
+                <div className={`col ${isLargeScreen && isVideoDetail ? "main-content" : "main-content"}`}>
+                    <div style={{ backgroundColor: bgColor, minHeight: "100vh" }}>
+                        <Search onSearch={setSearchQuery} setBgColor={setBgColor} />
+                        <div className="row bg-white">{!isVideoDetail && <MidMenu />}</div>
+                        <Outlet />
+                    </div>
+                </div>
+            </div>
         </div>
-        <div className="left-menu-content">{isLargeScreen && <LeftMenu />}</div>
-      </div>
-      <div
-        className={`right_section ${
-          isLeftMenuOpen ? "with-menu" : "full-width"
-        }`}
-      >
-        <div
-          className={`col ${
-            isLargeScreen && isVideoDetail ? "main-content" : "main-content"
-          }`}
-        >
-          <div style={{ backgroundColor: bgColor, minHeight: "100vh" }}>
-            <Search onSearch={setSearchQuery} setBgColor={setBgColor} />
-            <div className="row bg-white">{!isVideoDetail && <MidMenu />}</div>
-            <Outlet />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+    );
 }
 
 export default AppLayout;
