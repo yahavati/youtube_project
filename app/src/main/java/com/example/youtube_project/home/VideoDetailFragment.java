@@ -3,7 +3,6 @@ package com.example.youtube_project.home;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -89,10 +88,9 @@ public class VideoDetailFragment extends Fragment {
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (userManager.isLoggedIn()){
+                if (userManager.isLoggedIn()) {
                     handleLike();
-                }
-                else{
+                } else {
                     Intent loginIntent = new Intent(getActivity(), LoginActivity.class);
                     startActivity(loginIntent);
                 }
@@ -102,11 +100,9 @@ public class VideoDetailFragment extends Fragment {
         dislikeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (userManager.isLoggedIn()){
+                if (userManager.isLoggedIn()) {
                     handleDislike();
-                }
-                else{
+                } else {
                     Intent loginIntent = new Intent(getActivity(), LoginActivity.class);
                     startActivity(loginIntent);
                 }
@@ -185,6 +181,18 @@ public class VideoDetailFragment extends Fragment {
             }
         });
 
+        // Add click listener for the video to handle play/pause
+        videoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (videoView.isPlaying()) {
+                    videoView.pause();
+                } else {
+                    videoView.start();
+                }
+            }
+        });
+
         return view;
     }
 
@@ -230,8 +238,8 @@ public class VideoDetailFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (videoView != null) {
-            videoView.resume();
+        if (videoView != null && !videoView.isPlaying()) {
+            videoView.start();
         }
     }
 

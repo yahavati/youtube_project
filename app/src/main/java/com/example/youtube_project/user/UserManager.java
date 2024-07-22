@@ -2,6 +2,8 @@ package com.example.youtube_project.user;
 
 
 
+import android.content.Context;
+
 import com.example.youtube_project.R;
 import com.example.youtube_project.home.VideoItem;
 
@@ -66,13 +68,13 @@ public class UserManager {
     //in order to make sure that these videos will be made, even when I uploaded a video first
     public List<VideoItem> makeVideos() {
         if (videos.isEmpty()){
-            videos.add(new VideoItem(R.raw.videoapp1, "Music", R.drawable.img7, "coldplay", "01 Jan 2022", "1000 views"));
+            videos.add(new VideoItem( R.raw.videoapp1, "Music", R.drawable.img7, "coldplay", "01 Jan 2022", "1000 views"));
             videos.add(new VideoItem(R.raw.videoapp2, "Music", R.drawable.img2, "coldplay", "08 Jan 2023", "1000 views"));
-            videos.add(new VideoItem(R.raw.videoapp3, "SPORT", R.drawable.img6, "sport5", "02 Jan 2024", "2000 views"));
-            videos.add(new VideoItem(R.raw.videoapp4, "Toys", R.drawable.one, "Lian", "01 Jan 2020", "5 views"));
+            videos.add(new VideoItem( R.raw.videoapp3, "SPORT", R.drawable.img6, "sport5", "02 Jan 2024", "2000 views"));
+            videos.add(new VideoItem( R.raw.videoapp4, "Toys", R.drawable.one, "Lian", "01 Jan 2020", "5 views"));
             videos.add(new VideoItem(R.raw.videoapp5, "Park", R.drawable.two, "Lian", "02 Jan 2021", "2000 views"));
             videos.add(new VideoItem(R.raw.videoapp6, "Window", R.drawable.three, "Yahav", "08 Jan 2023", "1000 views"));
-            videos.add(new VideoItem(R.raw.videoapp7, "AirCon", R.drawable.img1, "Yahav", "01 Jan 2022", "30 views"));
+            videos.add(new VideoItem( R.raw.videoapp7, "AirCon", R.drawable.img1, "Yahav", "01 Jan 2022", "30 views"));
             videos.add(new VideoItem(R.raw.videoapp8, "Light", R.drawable.img3, "Ido", "02 Jan 2016", "2000 views"));
             videos.add(new VideoItem(R.raw.videoapp9, "Cupboard", R.drawable.img4, "Ido", "01 Jan 2008", "500 views"));
             videos.add(new VideoItem(R.raw.videoapp10, "Books", R.drawable.img5, "Lian", "02 Jan 2018", "200 views"));

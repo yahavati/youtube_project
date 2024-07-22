@@ -1,5 +1,7 @@
 package com.example.youtube_project.home;
 
+import android.content.Context;
+import android.media.MediaPlayer;
 import android.net.Uri;
 
 import java.util.ArrayList;
@@ -7,6 +9,7 @@ import java.util.List;
 
 
 public class VideoItem {
+
     private Uri videoResIdUri;
     private int videoResIdInt;
     private String title;
@@ -18,13 +21,12 @@ public class VideoItem {
     private String description;
     private List<String> likes;
     private List<String> dislikes;
-
     private List<Comment> comments;
-
     private int likesAmount;
     private int disLikesAmount;
 
-    public VideoItem(Uri videoResId, String title, int thumbnailResId, String author, String date, String views) {
+    // Modified constructors to include Context
+    public VideoItem( Uri videoResId, String title, int thumbnailResId, String author, String date, String views) {
         this.videoResIdUri = videoResId;
         this.title = title;
         this.thumbnailResId = thumbnailResId;
@@ -55,6 +57,7 @@ public class VideoItem {
         disLikesAmount = 0;
         this.comments = new ArrayList<>();
     }
+
 
     public int getLikesAmount() {
         int num = likes.size();
