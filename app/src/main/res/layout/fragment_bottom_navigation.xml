@@ -1,9 +1,9 @@
-<!-- fragment_bottom_navigation.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="70sp"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:background="@color/black">
+
+    android:padding="8dp">
 
     <!-- Home Button -->
     <LinearLayout
@@ -16,6 +16,7 @@
             android:id="@+id/button_home"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_gravity="center"
             android:background="@null"
             android:src="@drawable/ic_home"
             android:contentDescription="Home button" />
@@ -24,8 +25,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Home"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
+
+            android:textSize="14sp" />
     </LinearLayout>
 
     <!-- Shorts Button -->
@@ -39,6 +40,7 @@
             android:id="@+id/button_shorts"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_gravity="center"
             android:background="@null"
             android:src="@drawable/ic_short"
             android:contentDescription="Shorts button" />
@@ -47,42 +49,54 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Shorts"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
+
+            android:textSize="14sp" />
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/button6"
-        android:layout_width="48dp"
-        android:layout_height="56dp"
-        android:background="@null"
-        android:contentDescription="Circle button"
-        android:src="@drawable/ic_circle" />
+    <!-- Center Button Wrapper -->
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageButton
+                android:id="@+id/button_center"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:src="@drawable/ic_circle"
+                android:contentDescription="Circle button" />
+        </LinearLayout>
+    </FrameLayout>
 
+    <!-- Subscriptions Button -->
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical">
-
-        <!-- Subscriptions Button -->
-
         <ImageButton
             android:id="@+id/button_subscriptions"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_gravity="center"
             android:background="@null"
             android:src="@drawable/ic_subscriptions"
             android:contentDescription="Subscriptions button" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Subscription"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
+
+            android:textSize="14sp" />
     </LinearLayout>
 
     <!-- You Button -->
@@ -92,11 +106,11 @@
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical">
-        <ImageButton
+        <ImageView
             android:id="@+id/button_you"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="@null"
+            android:layout_gravity="center"
             android:src="@drawable/ic_circlr1"
             android:contentDescription="You button" />
         <TextView
@@ -104,7 +118,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="You"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
+
+            android:textSize="14sp" />
     </LinearLayout>
 </LinearLayout>

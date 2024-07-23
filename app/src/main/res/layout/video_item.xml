@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:text="Video Title"
         android:textSize="22sp"
-        android:textColor="@color/white"
+
         android:paddingTop="4dp" />
 
     <TextView

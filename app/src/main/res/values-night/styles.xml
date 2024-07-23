@@ -1,0 +1,11 @@
+<resources>
+    <!-- Night mode application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:windowBackground">@color/background</item>
+    </style>
+</resources>

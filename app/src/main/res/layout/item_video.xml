@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="3.4K"
-            android:textColor="@android:color/white"
+
             android:textSize="14sp"
             android:gravity="center"
             android:layout_marginTop="4dp" />
@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="61"
-            android:textColor="@android:color/white"
+
             android:textSize="14sp"
             android:gravity="center"
             android:layout_marginTop="4dp" />
@@ -91,7 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="codewithnomi"
-            android:textColor="@android:color/white"
+
             android:textSize="18sp" />
 
         <TextView
@@ -99,7 +99,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Fruit Shop UI in React Native 🔥 #shorts #reactnative #reactjs #reactnativetutorial #expo #ui"
-            android:textColor="@android:color/white"
+
             android:textSize="14sp"
             android:layout_marginTop="4dp" />
     </LinearLayout>

@@ -2,56 +2,91 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:padding="8dp"
-    android:background="@color/black">
+  >
 
-    <TextView
-        android:id="@+id/text_username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Username"
-        android:textColor="@android:color/white"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/text_comment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Comment text"
-        android:textColor="@android:color/white"
-        android:layout_marginTop="4dp" />
+    <ImageView
+        android:id="@+id/image_user_photo"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="8dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_circlr1" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="4dp">
-
-        <ImageButton
-            android:id="@+id/button_like"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:src="@drawable/like"
-            android:contentDescription="Like" />
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/text_like_count"
+            android:id="@+id/text_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0"
-            android:textColor="@android:color/white"
-            android:layout_marginStart="4dp"
-            android:layout_gravity="center_vertical" />
+            android:text="Username"
 
-        <ImageButton
-            android:id="@+id/button_dislike"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/text_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@null"
-            android:src="@drawable/dislike"
-            android:contentDescription="Dislike"
-            android:layout_marginStart="16dp" />
+            android:text="Comment text"
+
+            android:layout_marginTop="4dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+
+            <ImageButton
+                android:id="@+id/button_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:src="@drawable/like"
+                android:contentDescription="Like" />
+
+            <TextView
+                android:id="@+id/text_like_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+
+                android:layout_marginStart="4dp"
+                android:layout_gravity="center_vertical" />
+
+            <ImageButton
+                android:id="@+id/button_dislike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:src="@drawable/dislike"
+                android:contentDescription="Dislike"
+                android:layout_marginStart="16dp" />
+
+            <ImageButton
+                android:id="@+id/button_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:src="@drawable/comment"
+                android:contentDescription="Edit"
+                android:layout_marginStart="16dp"
+                android:visibility="gone" />
+
+            <ImageButton
+                android:id="@+id/button_delete"
+                android:layout_width="68dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:background="@null"
+                android:contentDescription="Delete"
+                android:src="@drawable/delete"
+                android:visibility="gone" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
