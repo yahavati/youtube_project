@@ -6,6 +6,8 @@ const {
   deleteUserVideo,
   updateUserDetails,
   getUserById,
+  updateUserById,
+  deleteUserById,
 } = require("../controllers/userController");
 const authMiddleware = require("../services/authMiddleware");
 const multer = require("multer");
@@ -16,6 +18,10 @@ const upload = multer({ storage: storage });
 
 // GET /api/users/:id - Fetch user by ID
 router.get("/:id", getUserById);
+
+router.put("/:id", updateUserById);
+
+router.delete("/:id", deleteUserById);
 
 // GET /api/users/:id/videos - Fetch all videos for a user
 router.get("/:id/videos", getUserVideos);

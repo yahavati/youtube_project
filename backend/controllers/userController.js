@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const Video = require("../models/Video");
+const Comment = require("../models/Comment");
 
 // Fetch all user by ID
 const getUserById = async (req, res) => {
@@ -20,6 +21,55 @@ const getUserById = async (req, res) => {
     res.json({ user });
   } catch (error) {
     console.error("Error fetching user videos:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// Update user
+
+const updateUserById = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const updateData = req.body;
+
+    // Find the user by ID and update their details
+    const updatedUser = await User.findByIdAndUpdate(userId, updateData, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json({ message: "User updated successfully", user: updatedUser });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// Delete video for a user
+const deleteUserById = async (req, res) => {
+  try {
+    const userId = req.params.id;
+
+    // Find and delete the user
+    const deletedUser = await User.findByIdAndDelete(userId);
+
+    if (!deletedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Remove all videos of the user from the Videos collection
+    await Video.deleteMany({ user: userId });
+
+    // Remove all comments made by the user from the Comments collection
+    await Comment.deleteMany({ user: userId });
+
+    res.json({ message: "User and associated data deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting user and associated data:", error);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -170,4 +220,6 @@ module.exports = {
   deleteUserVideo,
   updateUserDetails,
   getUserById,
+  updateUserById,
+  deleteUserById,
 };
