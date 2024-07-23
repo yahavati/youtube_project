@@ -86,6 +86,25 @@ const createUserVideo = async (req, res) => {
   }
 };
 
+// Get a user video
+const getUserVideo = async (req, res) => {
+    try {
+        const { videoId } = req.params;
+
+        const fetchedVideo = await Video.findById(videoId).populate("user", "displayName photo");
+
+        if (!fetchedVideo) {
+            return res.status(404).json({ message: "Video not found" });
+        }
+
+        res.json(fetchedVideo);
+    } catch (error) {
+        console.error("Error updating video:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+};
+
+
 // Update a video for a user
 const updateUserVideo = async (req, res) => {
   try {
@@ -170,4 +189,5 @@ module.exports = {
   deleteUserVideo,
   updateUserDetails,
   getUserById,
+  getUserVideo,
 };

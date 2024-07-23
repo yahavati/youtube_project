@@ -6,6 +6,7 @@ const {
   deleteUserVideo,
   updateUserDetails,
   getUserById,
+  getUserVideo
 } = require("../controllers/userController");
 const authMiddleware = require("../services/authMiddleware");
 const multer = require("multer");
@@ -27,6 +28,9 @@ router.post(
   upload.single("url"),
   createUserVideo
 );
+
+// GET /api/users/:id/videos/:videoId - Fetch a user video
+router.get("/:id/videos/:videoId", getUserVideo);
 
 // PUT /api/users/:id/videos/:videoId - Update a video for a user
 router.put(
