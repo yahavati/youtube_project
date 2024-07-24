@@ -7,6 +7,7 @@ const {
   updateUserDetails,
   getUserById,
   updateUserById,
+  createUser,
   deleteUserById,
   getUserVideo,
 } = require("../controllers/userController");
@@ -17,11 +18,16 @@ const router = express.Router();
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
+// POST /api/users - Create a new user
+router.post("/", upload.single("photo"), createUser);
+
 // GET /api/users/:id - Fetch user by ID
 router.get("/:id", getUserById);
 
+// PUT /api/users/:id - Edit user by ID
 router.put("/:id", updateUserById);
 
+// DELETE /api/users/:id - Delete user by ID
 router.delete("/:id", deleteUserById);
 
 // GET /api/users/:id/videos - Fetch all videos for a user

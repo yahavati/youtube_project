@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const Video = require("../models/Video");
 const Comment = require("../models/Comment");
+const bcrypt = require("bcryptjs");
 
 // Fetch all user by ID
 const getUserById = async (req, res) => {
@@ -45,6 +46,47 @@ const updateUserById = async (req, res) => {
     res.json({ message: "User updated successfully", user: updatedUser });
   } catch (error) {
     console.error("Error updating user:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+const createUser = async (req, res) => {
+  const { username, displayName, password } = req.body;
+  const photo = req.file;
+
+  try {
+    if (!username || !displayName || !password) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    const userExists = await User.findOne({ username });
+    const displayNameExists = await User.findOne({ displayName });
+    if (userExists) {
+      return res.status(400).json({ message: "Username already exists" });
+    }
+    if (displayNameExists) {
+      return res.status(400).json({ message: "Display name already exists" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    let photoBase64 = null;
+    if (photo) {
+      photoBase64 = photo.buffer.toString("base64");
+    }
+
+    const user = new User({
+      username,
+      displayName,
+      password: hashedPassword,
+      photo: photoBase64,
+    });
+
+    await user.save();
+
+    res.status(201).json({ message: "User registered successfully" });
+  } catch (error) {
+    console.error("Error during registration:", error);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -242,6 +284,7 @@ module.exports = {
   updateUserDetails,
   getUserById,
   updateUserById,
+  createUser,
   deleteUserById,
   getUserVideo,
 };
