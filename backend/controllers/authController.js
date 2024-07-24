@@ -12,7 +12,7 @@ const register = async (req, res) => {
         const user = await authService.register(username, password, profilePhotoUrl );
         res.status(201).json({ success: true, user });
     } catch (error) {
-        res.status(400).json({ success: false, message: error.message });
+        res.status(409).json({ success: false, message: error.message });
     }
 };
 
@@ -51,7 +51,7 @@ const login = async (req, res) => {
         const { user, token } = await authService.login(username, password);
         res.status(200).json({ success: true, user, token });
     } catch (error) {
-        res.status(400).json({ success: false, message: error.message });
+        res.status(404).json({ success: false, message: error.message });
     }
 };
 const getProfilePhoto = async (req, res) => {
