@@ -52,14 +52,14 @@ const login = async (req, res) => {
 
     if (!user) {
       console.log("User not found");
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res.status(404).json({ message: "Invalid credentials" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
       console.log("Password does not match");
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res.status(404).json({ message: "Invalid credentials" });
     }
 
     const token = jwt.sign({ id: user._id }, "your_jwt_secret", {

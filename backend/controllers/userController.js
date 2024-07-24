@@ -2,12 +2,21 @@ const User = require("../models/User");
 const Video = require("../models/Video");
 const Comment = require("../models/Comment");
 const bcrypt = require("bcryptjs");
+const mongoose = require("mongoose");
 
 // Fetch all user by ID
 const getUserById = async (req, res) => {
   try {
     const userId = req.params.id;
-    const user = await User.findById(userId).populate({
+
+    // Check if userId is a valid ObjectId
+    const isObjectId = mongoose.Types.ObjectId.isValid(userId);
+
+    const query = isObjectId
+      ? { $or: [{ username: userId }, { _id: userId }] }
+      : { username: userId };
+
+    const user = await User.findOne(query).populate({
       path: "videos",
       populate: {
         path: "user",
@@ -21,7 +30,7 @@ const getUserById = async (req, res) => {
 
     res.json({ user });
   } catch (error) {
-    console.error("Error fetching user videos:", error);
+    console.error("Error fetching user", error);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -33,8 +42,16 @@ const updateUserById = async (req, res) => {
     const userId = req.params.id;
     const updateData = req.body;
 
+    const isObjectId = mongoose.Types.ObjectId.isValid(userId);
+
+    const query = isObjectId
+      ? { $or: [{ username: userId }, { _id: userId }] }
+      : { username: userId };
+
+    console.log(query);
+
     // Find the user by ID and update their details
-    const updatedUser = await User.findByIdAndUpdate(userId, updateData, {
+    const updatedUser = await User.findOneAndUpdate(query, updateData, {
       new: true,
       runValidators: true,
     });
@@ -62,10 +79,10 @@ const createUser = async (req, res) => {
     const userExists = await User.findOne({ username });
     const displayNameExists = await User.findOne({ displayName });
     if (userExists) {
-      return res.status(400).json({ message: "Username already exists" });
+      return res.status(409).json({ message: "Username already exists" });
     }
     if (displayNameExists) {
-      return res.status(400).json({ message: "Display name already exists" });
+      return res.status(409).json({ message: "Display name already exists" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -84,7 +101,7 @@ const createUser = async (req, res) => {
 
     await user.save();
 
-    res.status(201).json({ message: "User registered successfully" });
+    res.status(200).json({ message: "User registered successfully" });
   } catch (error) {
     console.error("Error during registration:", error);
     res.status(500).json({ message: "Server error" });
@@ -96,18 +113,25 @@ const deleteUserById = async (req, res) => {
   try {
     const userId = req.params.id;
 
-    // Find and delete the user
-    const deletedUser = await User.findByIdAndDelete(userId);
+    const isObjectId = mongoose.Types.ObjectId.isValid(userId);
+
+    const query = isObjectId
+      ? { $or: [{ username: userId }, { _id: userId }] }
+      : { username: userId };
+
+    const deletedUserId = await User.findOne(query);
+
+    const deletedUser = await User.findOneAndDelete(query);
 
     if (!deletedUser) {
       return res.status(404).json({ message: "User not found" });
     }
 
     // Remove all videos of the user from the Videos collection
-    await Video.deleteMany({ user: userId });
+    await Video.deleteMany({ user: deletedUserId._id });
 
     // Remove all comments made by the user from the Comments collection
-    await Comment.deleteMany({ user: userId });
+    await Comment.deleteMany({ user: deletedUserId._id });
 
     res.json({ message: "User and associated data deleted successfully" });
   } catch (error) {
