@@ -27,7 +27,7 @@ Checkout to the part-2-branch branch:
 
 ```
 cd youtube_project
-git checkout part-2-branch
+git checkout part-2-final
 
 ```
 
