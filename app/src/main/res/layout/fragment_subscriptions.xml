@@ -1,0 +1,218 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/black"
+    tools:context=".SubscriptionsFragment">
+
+    <!-- Row of circular buttons with images -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/round_button_background"
+                android:contentDescription="Button 1" />
+
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/round_button_background"
+                android:contentDescription="Button 2" />
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/round_button_background"
+                android:contentDescription="Button 3" />
+
+            <!-- Add more buttons as needed -->
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- Row of horizontally scrollable buttons -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:backgroundTint="@color/gray"
+                android:padding="3dp"
+                android:text="All" />
+
+            <Button
+                android:layout_width="50dp"
+                android:layout_height="48dp"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:backgroundTint="@color/gray"
+                android:padding="3dp"
+                android:text="Today" />
+            <Button
+                android:layout_width="60dp"
+                android:layout_height="48dp"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:backgroundTint="@color/gray"
+                android:padding="3dp"
+                android:text="Videos" />
+            <Button
+                android:layout_width="60dp"
+                android:layout_height="48dp"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:backgroundTint="@color/gray"
+                android:padding="3dp"
+                android:text="Shorts" />
+            <Button
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:backgroundTint="@color/gray"
+                android:padding="3dp"
+                android:text="Live" />
+            <Button
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:backgroundTint="@color/gray"
+                android:padding="3dp"
+                android:text="Posts" />
+            <Button
+                android:layout_width="60dp"
+                android:layout_height="48dp"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:backgroundTint="@color/gray"
+                android:padding="3dp"
+                android:text="Gaming" />
+            <Button
+                android:layout_width="50dp"
+                android:layout_height="48dp"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:backgroundTint="@color/gray"
+                android:padding="3dp"
+                android:text="Sport" />
+
+            <!-- Add more buttons as needed -->
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- Vertically scrollable list of videos -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="400dp"
+                    android:layout_height="200dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/one"
+                    android:contentDescription="Video Thumbnail"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Video Title"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="400dp"
+                    android:layout_height="200dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/one"
+                    android:contentDescription="Video Thumbnail"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Video Title"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="400dp"
+                    android:layout_height="200dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/one"
+                    android:contentDescription="Video Thumbnail"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Video Title"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp"/>
+            </LinearLayout>
+
+            <!-- Add more LinearLayouts for more videos -->
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
