@@ -6,7 +6,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
-### `npm start`
+### `npm start`  
+(after running npm install and then npm install bootstrap)
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
@@ -68,3 +69,15 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+Options:
+When Signing up, if you want to take a picture using the camera, allow the browser to use a camera.
+Then when you upload a photo using the camera, wait for the camera to work and then press on capture photo- 
+We don't want any errors. 
+On the top right corner there is a user's icon, press on it
+in order to log in. You can't comment or like videos without logging in. 
+Sign Up and then log in and you will see on the left menu a button named your videos.
+There you will be able to upload your own videos and to edit them.
+You can comment, like and watch videos as much as you want in our site.
+Enjoy!
