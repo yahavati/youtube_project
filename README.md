@@ -4,9 +4,17 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
+How to run:
 In the project directory, you can run:
+### 'npm install' and then 'npm install bootstrap' in frontend folder
+### `npm start` (in both backend and frontend folders, 
+###  but first Connect to mongodb://localhost:27017
+###  in MongoDB and create there a new data base named Youtube)
 
-### `npm start`
+
+
+
+
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
@@ -68,3 +76,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+

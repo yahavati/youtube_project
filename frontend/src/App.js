@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomeScreen from "./App Component/HomeScreen";
-import Login from "./Login";
+import Login from "./Log_in/Login";
 import SignUp from "./Sign_up/SignUp";
 import YourVideos from "./Your Video Component/YourVideos";
 import VideoDetail from "./Video Components/VideoDetail";
