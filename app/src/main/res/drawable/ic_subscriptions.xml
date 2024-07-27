@@ -1,0 +1,28 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="50dp"
+    android:height="60dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Smaller Top bar -->
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M7,7h10v0.5H7z"/>
+
+    <!-- Middle bar -->
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M5,8h14v0.5H5z"/>
+
+    <!-- Bottom play button container with white border -->
+    <path
+        android:fillColor="@color/black"
+        android:strokeColor="@color/white"
+        android:strokeWidth="0.4"
+        android:pathData="M4,10h16v8H4z"/>
+
+    <!-- Smaller play button -->
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M10,12l4,2-4,2z"/>
+</vector>
