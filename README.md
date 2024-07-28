@@ -78,6 +78,7 @@ We don't want any errors.
 On the top right corner there is a user's icon, press on it
 in order to log in. You can't comment or like videos without logging in. 
 Sign Up and then log in and you will see on the left menu a button named your videos.
-There you will be able to upload your own videos and to edit them.
+There you will be able to upload your own videos and to edit and delete them.
 You can comment, like and watch videos as much as you want in our site.
+Also searching videos will let you choose the video you searched for.
 Enjoy!
