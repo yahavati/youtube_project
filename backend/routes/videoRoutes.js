@@ -1,41 +1,27 @@
-const express = require('express');
-const videoController = require('../controllers/videoController');
-const authMiddleware = require('../middleware/authMiddleware');
-const multer = require('multer');
+const express = require("express");
+const {
+  getVideos,
+  getVideoById,
+  toggleLike,
+  toggleDislike,
+  addView,
+} = require("../controllers/videoController");
+const authMiddleware = require("../services/authMiddleware");
 
 const router = express.Router();
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads/');
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname);
-    }
-});
+// GET /api/videos - Fetch 20 videos (10 random and 10 most viewed)
+router.get("/", getVideos);
 
-const upload = multer({ storage: storage });
+// GET /api/videos/:id - Fetch a video by ID
+router.get("/:id", getVideoById);
 
-router.get('/videos', videoController.getAllVideos);
-router.get('/allVideos', videoController.get20Videos);
-router.get('/videos/:id', videoController.getVideoById);
-router.post('/videos', upload.fields([
-    { name: 'video', maxCount: 1 },
-]), videoController.uploadVideo);
-router.post('/videos/:id/like', videoController.likeVideo);
-router.post('/videos/:id/dislike', videoController.dislikeVideo);
-router.put('/videos/:id', upload.fields([
-    { name: 'video', maxCount: 1 },
-    { name: 'thumbnail', maxCount: 1 }
-]), videoController.updateVideo);
-router.delete('/videos/:id', videoController.deleteVideo);
-router.post('/videos/:id/comments', videoController.addComment);
-router.put('/videos/:id/comments/:commentId', videoController.editComment);
-router.delete('/videos/:id/comments/:commentId', videoController.deleteComment);
-router.get('/videos/:id/view', videoController.incrementViews);
-router.post('/videos/:id/comments/:commentId/like', videoController.likeComment);
-router.post('/videos/:id/comments/:commentId/dislike', videoController.dislikeComment);
+router.post("/:id/view", authMiddleware, addView);
 
+// Toggle like on a video
+router.post("/:videoId/like", authMiddleware, toggleLike);
 
+// Toggle dislike on a video
+router.post("/:videoId/dislike", authMiddleware, toggleDislike);
 
 module.exports = router;

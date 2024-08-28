@@ -1,175 +1,107 @@
-const authService = require('../services/authService');
-const User = require('.././models/User');
-const jwt = require('jsonwebtoken');
-const config = require('../config');
-const mongoose = require('mongoose');
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const User = require("../models/User");
 
 const register = async (req, res) => {
+    const { username, displayName, password } = req.body;
+    const photo = req.file;
+
     try {
-        const { username, password } = req.body;
-        const profilePhotoUrl = req.file ? req.file.path : '';
-
-        const user = await authService.register(username, password, profilePhotoUrl );
-        res.status(201).json({ success: true, user });
-    } catch (error) {
-        res.status(409).json({ success: false, message: error.message });
-    }
-};
-
-const createToken = async (req, res) => {
-    try {
-        const { username, password } = req.body;
-
-        // Find the user by username
-        const user = await User.findOne({ username });
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
+        if (!username || !displayName || !password) {
+            return res.status(400).json({ message: "All fields are required" });
         }
 
-        // Check if the password matches
-        const isMatch = await user.matchPassword(password);
-        if (!isMatch) {
-            return res.status(401).json({ message: 'Invalid credentials' });
+        const userExists = await User.findOne({ username });
+        const displayNameExists = await User.findOne({ displayName });
+        if (userExists) {
+            return res.status(400).json({ message: "Username already exists" });
+        }
+        if (displayNameExists) {
+            return res.status(400).json({ message: "Display name already exists" });
         }
 
-        // Create a token
-        const token = jwt.sign({ id: user._id }, config.jwtSecret, {
-            expiresIn: '1h'
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        let photoBase64 = null;
+        if (photo) {
+            photoBase64 = photo.buffer.toString("base64");
+        }
+
+        const user = new User({
+            username,
+            displayName,
+            password: hashedPassword,
+            photo: photoBase64,
         });
 
-        // Return the token
-        res.status(200).json({ token });
+        await user.save();
+
+        res.status(201).json({ message: "User registered successfully" });
     } catch (error) {
-        res.status(500).json({ message: 'Server error', error: error.message });
+        console.error("Error during registration:", error);
+        res.status(500).json({ message: "Server error" });
     }
 };
 
 const login = async (req, res) => {
+    const { username, password } = req.body;
+
     try {
-        const { username, password } = req.body;
-        console.log('Request body:', req.body);
-        const { user, token } = await authService.login(username, password);
-        res.status(200).json({ success: true, user, token });
-    } catch (error) {
-        res.status(404).json({ success: false, message: error.message });
-    }
-};
-const getProfilePhoto = async (req, res) => {
-    try {
-        const userId = req.user.id;
-        const user = await User.findById(userId);
+        console.log(`Login attempt with username: ${username}`);
+        const user = await User.findOne({ username });
+
         if (!user) {
-            return res.status(404).json({ message: 'User not found' });
+            console.log("User not found");
+            return res.status(404).json({ message: "Invalid credentials" });
         }
-        res.status(200).json({ profilePhotoUrl: user.profilePhotoUrl });
-    } catch (error) {
-        res.status(500).json({ message: 'Server error', error: error.message });
-    }
-};
 
-const getUserProfile = async (req, res) => {
-    try {
+        const isMatch = await bcrypt.compare(password, user.password);
 
-        const user = req.user;
+        if (!isMatch) {
+            console.log("Password does not match");
+            return res.status(404).json({ message: "Invalid credentials" });
+        }
 
-        const profilePhotoUrl = user.profilePhotoUrl;
-
-        const userProfile = {
-            username: user.username,
-            nickname: user.nickname,
-            profilePhotoUrl: profilePhotoUrl,
-        };
-
-        res.status(200).json({
-            success: true,
-            message: 'User profile fetched successfully',
-            data: userProfile
+        const token = jwt.sign({ id: user._id }, "your_jwt_secret", {
+            expiresIn: "1h",
         });
+
+        res
+            .cookie("token", token, { httpOnly: false })
+            .json({ message: "Logged in successfully", user });
     } catch (error) {
-        console.error('Error in getUserProfile:', error);
-        res.status(500).json({
-            success: false,
-            message: 'An error occurred while fetching the user profile',
-            error: error.message
-        });
+        console.error("Error during login:", error);
+        res.status(500).json({ message: "Server error" });
     }
 };
 
-const getUserById = async (req, res) => {
+
+const logout = (req, res) => {
+    res.clearCookie("token").json({ message: "Logged out successfully" });
+};
+
+const getCurrentUser = async (req, res) => {
     try {
-        const { userId } = req.params;
-        let user;
+        // Extract token from Authorization header
+        const authHeader = req.header("Authorization");
+    
 
-        // Check if the identifier is a valid ObjectId
-        if (mongoose.Types.ObjectId.isValid(userId)) {
-            // Try to find the user by ID
-            user = await User.findById(userId);
-        }
+        const token = authHeader.replace("Bearer ", "").trim();
 
-        // If no user found by ID or identifier is not a valid ObjectId, search by username
+        // Verify the token
+        const decoded = jwt.verify(token, "your_jwt_secret");
+        const user = await User.findById(decoded.id).select("-password");
         if (!user) {
-            user = await User.findOne({ username: userId });
+            return res.status(404).json({ message: "User not found" });
         }
 
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        res.status(200).json({ user });
+        // Send back the user data
+        res.json(user);
     } catch (error) {
-        res.status(500).json({ message: 'Server error', error: error.message });
-    }
-};
-const updateUserById = async (req, res) => {
-    try {
-        const { userId } = req.params;
-        const { profilePhotoUrl, ...updateData } = req.body;
-
-       
-
-        // Find the user by ID and update with new data
-        const updatedUser = await User.findByIdAndUpdate(
-            userId,
-            { profilePhotoUrl, ...updateData },
-            { new: true, runValidators: true }
-        );
-
-        if (!updatedUser) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        res.status(200).json({ message: 'User updated successfully', user: updatedUser });
-    } catch (error) {
-        res.status(500).json({ message: 'Server error', error: error.message });
+        console.error("Error getting current user:", error);
+        res.status(500).json({ message: "Server error" });
     }
 };
 
-const deleteById = async (req, res) => {
-    try {
-        const { userId } = req.params;
+module.exports = { register, login, logout, getCurrentUser };
 
-        // Find the user by ID and delete
-        const deletedUser = await User.findByIdAndDelete(userId);
-
-        if (!deletedUser) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        res.status(200).json({ message: 'User deleted successfully' });
-    } catch (error) {
-        res.status(500).json({ message: 'Server error', error: error.message });
-    }
-};
-
-
-
-module.exports = {
-    register,
-    login,
-    getProfilePhoto,
-    getUserProfile,
-    getUserById,
-    updateUserById,
-    deleteById,
-    createToken
-};

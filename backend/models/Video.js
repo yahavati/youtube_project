@@ -1,74 +1,67 @@
-const mongoose = require('mongoose');
-
-const commentSchema = new mongoose.Schema({
-    username: {
-        type: String,
-        required: true
-    },
-    text: {
-        type: String,
-        required: true
-    },
-    date: {
-        type: Date,
-        default: Date.now
-    },
-    userPhoto: {
-        type: String
-    },
-    likes: {
-        type: [String],
-        default: []
-    },
-    dislikes: {
-        type: [String],
-        default: []
-    }
-});
+const mongoose = require("mongoose");
 
 const videoSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true
+  title: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+  },
+  url: {
+    type: String,
+    required: true,
+  },
+  thumbnail: {
+    type: String,
+    required: false,
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Comment",
     },
-    author: {
-        type: String,
-        required: true
+  ],
+  likes: {
+    type: Number,
+    default: 0,
+  },
+  dislikes: {
+    type: Number,
+    default: 0,
+  },
+  views: {
+    type: Number,
+    default: 0,
+  },
+  likedBy: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
-    date: {
-        type: Date,
-        required: true,
-        default: Date.now
+  ],
+  dislikedBy: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
-    views: {
-        type: Number,
-        default: 0
+  ],
+  viewedBy: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
-    videoPath: {
-        type: String,
-        required: true
-    },
-    thumbnailUri: {
-        type: String
-    },
-    description: {
-        type: String
-    },
-    likes: {
-        type: [String],
-        default: []
-    },
-    dislikes: {
-        type: [String],
-        default: []
-    },
-    comments: {
-        type: [commentSchema],
-        default: []
-    }
-    
+  ],
 });
 
-const Video = mongoose.model('Video', videoSchema);
-
+const Video = mongoose.model("Video", videoSchema);
 module.exports = Video;

@@ -1,242 +1,212 @@
-const videoService = require('../services/videoService');
-const User = require('.././models/User');
-const Video = require('.././models/Video');
+const Video = require("../models/Video");
+const mongoose = require("mongoose");
 
-const getAllVideos = async (req, res) => {
+
+const getVideos = async (req, res) => {
     try {
-        const videos = await videoService.getAllVideos();
-        res.status(200).json({ success: true, data: videos });
+        // Fetch 10 most viewed videos
+        const mostViewedVideos = await Video.find({}).sort({ views: -1 }).limit(10);
+
+        // Extract IDs of the most viewed videos
+        const mostViewedVideoIds = mostViewedVideos.map((video) =>
+            video._id.toString()
+        );
+
+        // Fetch 10 random videos excluding the most viewed ones
+        const randomVideos = await Video.aggregate([
+            {
+                $match: {
+                    _id: {
+                        $nin: mostViewedVideoIds.map(
+                            (id) => new mongoose.Types.ObjectId(id)
+                        ),
+                    },
+                },
+            },
+            { $sample: { size: 10 } },
+        ]);
+
+        // Combine the two lists
+        const combinedVideos = [...mostViewedVideos, ...randomVideos];
+
+        // Fetch complete video details for the combined video IDs
+        const uniqueVideoIds = combinedVideos.map((video) => video._id);
+        const uniqueVideos = await Video.find({
+            _id: { $in: uniqueVideoIds },
+        }).populate("user", "displayName photo");
+
+        res.json(uniqueVideos);
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
+        console.error("Error fetching videos:", error);
+        res.status(500).json({ message: "Server error" });
     }
 };
-
-const get20Videos = async (req, res) => {
-    try {
-        const videos = await videoService.getVideos();
-        res.status(200).json({ success: true, data: videos });
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
-};
-
 
 const getVideoById = async (req, res) => {
     try {
-        const video = await videoService.getVideoById(req.params.id);
+        const videoId = req.params.id;
+        const video = await Video.findById(videoId)
+            .populate({
+                path: "comments",
+                populate: {
+                    path: "user",
+                    select: "displayName photo",
+                },
+                select: "text createdAt likes dislikes likedBy dislikedBy",
+            })
+            .populate("user", "displayName photo");
+
         if (!video) {
-            return res.status(404).json({ success: false, message: 'Video not found' });
-        }
-        res.status(200).json({ success: true, data: video });
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
-};
-
-const uploadVideo = async (req, res) => {
-    try {
-        if (!req.files || !req.files.video) {
-            return res.status(400).json({ success: false, message: 'No video file uploaded' });
+            return res.status(404).json({ message: "Video not found" });
         }
 
-        const videoData = {
-            ...req.body,
-            videoPath: req.files.video[0].path,
-        };
 
-        const video = await videoService.createVideo(videoData);
-        res.status(201).json({ success: true, data: video });
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
-};
-
-const likeVideo = async (req, res) => {
-    try {
-        const video = await videoService.likeVideo(req.params.id, req.body.username);
-        res.status(200).json({ success: true, data: video });
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
-};
-
-const dislikeVideo = async (req, res) => {
-    try {
-        const video = await videoService.dislikeVideo(req.params.id, req.body.username);
-        res.status(200).json({ success: true, data: video });
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
-};
-
-const updateVideo = async (req, res) => {
-    try {
-        const updateData = { ...req.body };
-        if (req.files.video) {
-            updateData.videoPath = req.files.video[0].path;
-        }
-        if (req.files.thumbnail) {
-            updateData.thumbnailPath = req.files.thumbnail[0].path;
-        }
-
-        const video = await videoService.updateVideo(req.params.id, updateData);
-        if (!video) {
-            return res.status(404).json({ success: false, message: 'Video not found' });
-        }
-        res.status(200).json({ success: true, data: video });
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
-};
-
-const deleteVideo = async (req, res) => {
-    try {
-        const result = await videoService.deleteVideo(req.params.id);
-        if (!result) {
-            return res.status(404).json({ success: false, message: 'Video not found' });
-        }
-        res.status(200).json({ success: true, message: 'Video deleted successfully' });
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
-};
-
-const addComment = async (req, res) => {
-    try {
-        const comment = await videoService.addComment(req.params.id, req.body.username, req.body.text);
-        if (!comment) {
-            return res.status(404).json({ success: false, message: 'Video not found' });
-        }
-        res.status(201).json({ success: true, data: comment });
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
-};
-
-const editComment = async (req, res) => {
-    try {
-        const comment = await videoService.editComment(req.params.id, req.params.commentId, req.body.text);
-        if (!comment) {
-            return res.status(404).json({ success: false, message: 'Video or comment not found' });
-        }
-        res.status(200).json({ success: true, data: comment });
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
-};
-
-const incrementViews = async (req, res) => {
-    try {
-        const video = await videoService.incrementViews(req.params.id);
-        if (!video) {
-            return res.status(404).json({ success: false, message: 'Video not found' });
-        }
-        res.status(200).json({ success: true, data: video });
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
-};
-
-const deleteComment = async (req, res) => {
-    try {
-        const result = await videoService.deleteComment(req.params.id, req.params.commentId);
-        if (!result) {
-            return res.status(404).json({ success: false, message: 'Video or comment not found' });
-        }
-        res.status(200).json({ success: true, message: 'Comment deleted successfully' });
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
-};
-const likeComment = async (req, res) => {
-    try {
-        const comment = await videoService.likeComment(req.params.id, req.params.commentId, req.body.username);
-        if (!comment) {
-            return res.status(404).json({ success: false, message: 'Video or comment not found' });
-        }
-        res.status(200).json({ success: true, data: comment });
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
-};
-
-const dislikeComment = async (req, res) => {
-    try {
-        const comment = await videoService.dislikeComment(req.params.id, req.params.commentId, req.body.username);
-        if (!comment) {
-            return res.status(404).json({ success: false, message: 'Video or comment not found' });
-        }
-        res.status(200).json({ success: true, data: comment });
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
-};
-
-const getByUser = async (req, res) => {
-    try {
-        const { userId } = req.params;
-
-        // Find the user by ID to get the username
-        const user = await User.findById(userId);
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
         
-        const username = user.username;
-
-        // Find videos by author's username
-        const videos = await Video.find({ author: username });
-
-        if (videos.length === 0) {
-            return res.status(404).json({ message: 'No videos found for this user' });
-        }
-
-        res.status(200).json(videos);
+        res.json(video);
     } catch (error) {
-        res.status(500).json({ message: 'Server error', error: error.message });
+        console.error("Error fetching video:", error);
+        res.status(500).json({ message: "Server error" });
     }
 };
 
-const getByUserAndVideoId = async (req, res) => {
+const toggleLike = async (req, res) => {
+    const { videoId } = req.params;
+    const userId = req.user._id;
+
     try {
-        const { userId, videoId } = req.params;
-
-        // Find the user by ID to get the username
-        const user = await User.findById(userId);
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-        
-        const username = user.username;
-
-        // Find the video by author's username and video ID
-        const video = await Video.findOne({ author: username, _id: videoId });
+        let video = await Video.findById(videoId);
 
         if (!video) {
-            return res.status(404).json({ message: 'Video not found for this user' });
+            return res.status(404).json({ message: "Video not found" });
         }
+
+        const likedIndex = video.likedBy.indexOf(userId);
+        const dislikedIndex = video.dislikedBy.indexOf(userId);
+
+        if (likedIndex !== -1) {
+            video.likes -= 1;
+            video.likedBy.splice(likedIndex, 1);
+        } else {
+            video.likes += 1;
+            video.likedBy.push(userId);
+            if (dislikedIndex !== -1) {
+                video.dislikes -= 1;
+                video.dislikedBy.splice(dislikedIndex, 1);
+            }
+        }
+
+        await video.save();
+        video = await Video.findById(videoId).populate("user", "displayName photo");
 
         res.status(200).json(video);
     } catch (error) {
-        res.status(500).json({ message: 'Server error', error: error.message });
+        console.error("Error toggling like on video:", error);
+        res.status(500).json({ message: "Server error" });
     }
 };
 
-module.exports = {
-    getAllVideos,
-    getVideoById,
-    uploadVideo,
-    get20Videos,
-    likeVideo,
-    dislikeVideo,
-    updateVideo,
-    deleteVideo,
-    addComment,
-    editComment,
-    deleteComment,
-    incrementViews,
-    likeComment,
-    dislikeComment,
-    getByUser,
-    getByUserAndVideoId
+
+const toggleDislike = async (req, res) => {
+    const { videoId } = req.params;
+    const userId = req.user._id;
+
+    try {
+        let video = await Video.findById(videoId);
+
+        if (!video) {
+            return res.status(404).json({ message: "Video not found" });
+        }
+
+        const dislikedIndex = video.dislikedBy.indexOf(userId);
+        const likedIndex = video.likedBy.indexOf(userId);
+
+        if (dislikedIndex !== -1) {
+            video.dislikes -= 1;
+            video.dislikedBy.splice(dislikedIndex, 1);
+        } else {
+            video.dislikes += 1;
+            video.dislikedBy.push(userId);
+            if (likedIndex !== -1) {
+                video.likes -= 1;
+                video.likedBy.splice(likedIndex, 1);
+            }
+        }
+
+        await video.save();
+        video = await Video.findById(videoId).populate("user", "displayName photo");
+
+        res.status(200).json(video);
+    } catch (error) {
+        console.error("Error toggling dislike on video:", error);
+        res.status(500).json({ message: "Server error" });
+    }
 };
+
+const addView = async (req, res) => {
+    try {
+        const videoId = req.params.id;
+        const userId = req.user._id;
+
+        console.log(`Attempting to add view for videoId: ${videoId}, userId: ${userId}`);
+
+        let video = await Video.findById(videoId);
+
+        if (!video) {
+            console.log(`Video not found for id: ${videoId}`);
+            return res.status(404).json({ message: "Video not found" });
+        }
+
+        console.log(`Video found: ${video.title}`);
+
+       
+
+        // Check if the user is the owner of the video
+        if (video.user.toString() === userId) {
+            console.log(`User ${userId} is the owner of the video, view not counted`);
+            return res.status(200).json({ 
+                message: "User is the owner, view not counted"
+            });
+        }
+
+        // Check if the user has already viewed the video
+        if (video.viewedBy.includes(userId)) {
+            console.log(`User ${userId} has already viewed the video`);
+            return res.status(200).json({
+                message: "User has already viewed the video",
+                views: video.views,
+            });
+        }
+
+        // Increment view count and add user to viewedBy array
+        video.views += 1;
+        video.viewedBy.push(userId);
+
+        console.log(`Incrementing view count for video ${videoId}. New count: ${video.views}`);
+        await video.save();
+
+        return res.status(200).json({ 
+            message: "View count incremented", 
+            views: video.views
+        });
+        
+        
+
+    } catch (error) {
+        console.error("Error in addView:", error);
+        return res.status(500).json({ message: "Server error", error: error.message });
+    }
+};
+
+
+
+
+
+
+module.exports = {
+    getVideos,
+    getVideoById,
+    toggleLike,
+    toggleDislike,
+    addView,
+};
+
