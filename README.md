@@ -1,80 +1,27 @@
-# Getting Started with Create React App
+Youtube Application 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+To run the application you need to open MongoDb and connect to mongodb://localhost:27017 
+Then create a Database named Youtube. 
 
-## Available Scripts
+Clone the repository and connect to this branch (part3). 
 
-How to run the project:
-In the project directory, you can run:
-### 'npm install' and then 'npm install bootstrap' in frontend folder
-### `npm start` (in both backend and frontend folders, 
-###  but first Connect to mongodb://localhost:27017
-###  in MongoDB and create there a new data base named Youtube)
+In terminal, go to backend folder (by cd backend) and run: npm install 
+and then run: npm start 
 
-
-
-
-
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+And then open the code in android folder in Android Studio. go to this 3 files and change the IP adress in their to 
+your computer's IP adress: 
+1. Constants.java 
+2. ApiHandler.java, line 19 
+3. In xml foldr, network_security_rules.xml line 4 
 
 
+Sync project with Gradle files. 
+Then run the application on an emulator which is on your own computer in android studio.  
+If you want to upload videos, you should have videos in your gallery in the emulator. 
+
+When you upload a comment (when watching a video you can enter its comments) you will see it 
+after returning to this page. You can login by pressing on you in the bottom menu and then pressing on 
+the icon in this page and it will give you an option to login. 
+In the same page there is the button where you can upload videos and edit them. 
+
+Enjoy!

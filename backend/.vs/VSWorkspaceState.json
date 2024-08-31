@@ -1,13 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\config",
-    "\\controllers",
-    "\\models",
-    "\\routes",
-    "\\scripts",
-    "\\services"
+    ""
   ],
-  "SelectedNode": "\\routes\\videoRoutes.js",
+  "SelectedNode": "\\index.js",
   "PreviewInSolutionExplorer": false
 }

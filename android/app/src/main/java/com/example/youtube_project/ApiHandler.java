@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class ApiHandler {
-    private static final String BASE_URL = "http://10.25.1.226:5000/api";
+    private static final String BASE_URL = "http://192.168.241.1:5000/api";
     private static final OkHttpClient httpClient;
     public static String jwtToken = "";
 
@@ -50,6 +50,12 @@ public class ApiHandler {
         return sendGet("/videos/");
     }
 
+    public static Response fetchUserVideos(String id) throws IOException {
+        String testUrl = BASE_URL+"/users/"+id+"/videos";
+        Log.d("tag_test", testUrl);
+
+        return sendGet("/users/"+id+"/videos");
+    }
     public static OkHttpClient getClient() {
         return httpClient;
     }

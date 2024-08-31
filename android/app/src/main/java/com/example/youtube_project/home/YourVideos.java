@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -116,6 +117,8 @@ public class YourVideos extends Fragment {
                 thumbnailPreview.setVisibility(View.VISIBLE);
                 currentVideoItem.setThumbnail(imageUri.toString());
             }
+        } else {
+            Toast.makeText(getContext(), "unable to select video", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -217,14 +220,15 @@ public class YourVideos extends Fragment {
 
                 RequestBody requestBody = new MultipartBody.Builder()
                         .setType(MultipartBody.FORM)
-                        .addFormDataPart("video", fileName, videoBody)
+                        .addFormDataPart("url", fileName, videoBody)
                         .addFormDataPart("title", "New Video")
-                        .addFormDataPart("author", getContext().getSharedPreferences("user", Context.MODE_PRIVATE).getString("username", "guest"))
+                        .addFormDataPart("author", UserManager.getInstance().getCurrentUser().getId())
+                        .addFormDataPart("description", "")
                         .addFormDataPart("date", new Date().toString())
                         .build();
 
                 Request request = new Request.Builder()
-                        .url(Constants.URL+"api/videos")
+                        .url(Constants.URL+"api/users/"+ UserManager.getInstance().getCurrentUser().getId()  +"/videos")
                         .post(requestBody)
                         .build();
 
@@ -310,7 +314,7 @@ public class YourVideos extends Fragment {
                 RequestBody requestBody = multipartBuilder.build();
 
                 Request request = new Request.Builder()
-                        .url("http://10.25.1.226:5000/api/videos/" + videoId)
+                        .url(Constants.URL+"api/users/"+UserManager.getInstance().getCurrentUser().getId()+"/videos/"+videoId)
                         .put(requestBody)
                         .build();
 
@@ -349,7 +353,7 @@ public class YourVideos extends Fragment {
             String videoId = params[0];
             try {
                 Request request = new Request.Builder()
-                        .url(Constants.URL+"api/videos/" + videoId)
+                        .url(Constants.URL+"api/users/"+ UserManager.getInstance().getCurrentUser().getId() +"/videos/" + videoId)
                         .delete()
                         .build();
 
@@ -380,13 +384,16 @@ public class YourVideos extends Fragment {
             @Override
             protected List<VideoItem> doInBackground(Void... voids) {
                 try {
-                    Response response = ApiHandler.fetchAllVideos();
+                    Response response = ApiHandler.fetchUserVideos(UserManager.getInstance().getCurrentUser().getId());
                     if (response.isSuccessful()) {
                         String responseBody = response.body().string();
                         Log.d("LoadVideosTask", "Response body: " + responseBody);
 
-                        // Directly parse the response as a JsonArray
-                        JsonArray videoArray = new Gson().fromJson(responseBody, JsonArray.class);
+                        // Parse the response body as a JsonObject
+                        JsonObject jsonObject = new Gson().fromJson(responseBody, JsonObject.class);
+
+                        // Extract the "videos" array from the JsonObject
+                        JsonArray videoArray = jsonObject.getAsJsonArray("videos");
 
                         List<VideoItem> videos = new ArrayList<>();
 
@@ -394,11 +401,8 @@ public class YourVideos extends Fragment {
                             JsonObject videoObject = videoArray.get(i).getAsJsonObject();
                             Log.d("LoadVideosTask", "Video object: " + videoObject.toString());
                             VideoItem video = new Gson().fromJson(videoObject, VideoItem.class);
-                            Log.d("video_checker", "Video ID: " + video.getId() + ", Title: " + video.getTitle());
-                            String username = UserManager.getInstance().getCurrentUserName();
-                            if(video != null && video.getUser() != null && video.getUser().getUsername() != null && video.getUser().getUsername().equals(username))  {
-                                videos.add(video);
-                            }
+                            Log.d("video_checker", "Video ID: " + video.getUser().getId() + ", Title: " + video.getTitle());
+                            videos.add(video);
                         }
                         return videos;
                     } else {
@@ -421,32 +425,54 @@ public class YourVideos extends Fragment {
                         VideoView videoDisplay = videoView.findViewById(R.id.video_view);
                         Button editButton = videoView.findViewById(R.id.edit_button);
                         Button deleteButton = videoView.findViewById(R.id.delete_button);
+                        String base64VideoString = video.getUrl();
 
-                        // Set the video URI and start the video
-                        videoDisplay.setVideoURI(Uri.parse(Constants.URL+video.getUrl().replace("\\", "/")));
-                        videoDisplay.seekTo(1); // Display the first frame as a thumbnail
+                        byte[] decodedBytes = Base64.decode(base64VideoString, Base64.DEFAULT);
+                        try {
+                            // Create a temporary file to store the video
+                            File tempFile = File.createTempFile("video", ".mp4", getContext().getCacheDir());
+                            FileOutputStream fos = new FileOutputStream(tempFile);
+                            fos.write(decodedBytes);
+                            fos.close();
 
-                        // Handle edit button click
-                        editButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                showEditDialog(video);
-                            }
-                        });
+                            // Set the video URI and start the video
+                            Uri videoUri = Uri.fromFile(tempFile);
+                            videoDisplay.setVideoURI(videoUri);
+                            videoDisplay.seekTo(1); // Display the first frame as a thumbnail
 
-                        // Handle delete button click
-                        deleteButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                String videoId = video.getId();
-                                Log.d("DeleteVideo", "Attempting to delete video with ID: " + videoId);
-                                if (videoId != null && !videoId.isEmpty()) {
-                                    new DeleteVideoTask().execute(videoId);
+                            // Add click listener to play/pause video
+                            videoDisplay.setOnClickListener(v -> {
+                                if (videoDisplay.isPlaying()) {
+                                    videoDisplay.pause();
                                 } else {
-                                    Toast.makeText(getContext(), "Invalid video ID", Toast.LENGTH_SHORT).show();
+                                    videoDisplay.start();
                                 }
-                            }
-                        });
+                            });
+
+                            // Handle edit button click
+                            editButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    showEditDialog(video);
+                                }
+                            });
+
+                            // Handle delete button click
+                            deleteButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    String videoId = video.getId();
+                                    Log.d("DeleteVideo", "Attempting to delete video with ID: " + videoId);
+                                    if (videoId != null && !videoId.isEmpty()) {
+                                        new DeleteVideoTask().execute(videoId);
+                                    } else {
+                                        Toast.makeText(getContext(), "Invalid video ID", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
                         videoContainer.addView(videoView); // Add the video view to the container
                     }
@@ -472,7 +498,7 @@ public class YourVideos extends Fragment {
         thumbnailPreview = dialogView.findViewById(R.id.thumbnail_preview);
 
         editTitle.setText(videoItem.getTitle());
-
+        editDescription.setText(videoItem.getDescription());
 
         chooseThumbnailButton.setOnClickListener(new View.OnClickListener() {
             @Override

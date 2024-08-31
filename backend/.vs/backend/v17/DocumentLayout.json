@@ -1,22 +1,10 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Bar Ilan\\Advanced Programmng\\Part 3 Youtube\\youtube_project-Part2\\backend\\",
+  "WorkspaceRootPath": "C:\\Users\\labuser\\Downloads\\Part 3 Youtube Fix\\backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Bar Ilan\\Advanced Programmng\\Part 3 Youtube\\youtube_project-Part2\\backend\\routes\\videoRoutes.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:routes\\videoRoutes.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Bar Ilan\\Advanced Programmng\\Part 3 Youtube\\youtube_project-Part2\\backend\\models\\Video.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:models\\Video.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Bar Ilan\\Advanced Programmng\\Part 3 Youtube\\youtube_project-Part2\\backend\\controllers\\videoController.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:controllers\\videoController.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Bar Ilan\\Advanced Programmng\\Part 3 Youtube\\youtube_project-Part2\\backend\\config\\db.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:config\\db.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\labuser\\Downloads\\Part 3 Youtube Fix\\backend\\index.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:index.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,7 +14,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,53 +30,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Video.js",
-              "DocumentMoniker": "C:\\Bar Ilan\\Advanced Programmng\\Part 3 Youtube\\youtube_project-Part2\\backend\\models\\Video.js",
-              "RelativeDocumentMoniker": "models\\Video.js",
-              "ToolTip": "C:\\Bar Ilan\\Advanced Programmng\\Part 3 Youtube\\youtube_project-Part2\\backend\\models\\Video.js",
-              "RelativeToolTip": "models\\Video.js",
-              "ViewState": "AQIAADMAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2024-08-27T07:29:26.035Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "videoRoutes.js",
-              "DocumentMoniker": "C:\\Bar Ilan\\Advanced Programmng\\Part 3 Youtube\\youtube_project-Part2\\backend\\routes\\videoRoutes.js",
-              "RelativeDocumentMoniker": "routes\\videoRoutes.js",
-              "ToolTip": "C:\\Bar Ilan\\Advanced Programmng\\Part 3 Youtube\\youtube_project-Part2\\backend\\routes\\videoRoutes.js",
-              "RelativeToolTip": "routes\\videoRoutes.js",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Title": "index.js",
+              "DocumentMoniker": "C:\\Users\\labuser\\Downloads\\Part 3 Youtube Fix\\backend\\index.js",
+              "RelativeDocumentMoniker": "index.js",
+              "ToolTip": "C:\\Users\\labuser\\Downloads\\Part 3 Youtube Fix\\backend\\index.js",
+              "RelativeToolTip": "index.js",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABkAAAAkAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2024-08-27T07:29:11.407Z",
+              "WhenOpened": "2024-08-30T13:27:37.846Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "videoController.js",
-              "DocumentMoniker": "C:\\Bar Ilan\\Advanced Programmng\\Part 3 Youtube\\youtube_project-Part2\\backend\\controllers\\videoController.js",
-              "RelativeDocumentMoniker": "controllers\\videoController.js",
-              "ToolTip": "C:\\Bar Ilan\\Advanced Programmng\\Part 3 Youtube\\youtube_project-Part2\\backend\\controllers\\videoController.js",
-              "RelativeToolTip": "controllers\\videoController.js",
-              "ViewState": "AQIAAMMAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2024-08-27T07:28:56.146Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "db.js",
-              "DocumentMoniker": "C:\\Bar Ilan\\Advanced Programmng\\Part 3 Youtube\\youtube_project-Part2\\backend\\config\\db.js",
-              "RelativeDocumentMoniker": "config\\db.js",
-              "ToolTip": "C:\\Bar Ilan\\Advanced Programmng\\Part 3 Youtube\\youtube_project-Part2\\backend\\config\\db.js",
-              "RelativeToolTip": "config\\db.js",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAtAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2024-08-27T07:06:19.406Z"
             }
           ]
         }

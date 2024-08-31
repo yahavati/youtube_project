@@ -7,8 +7,10 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +44,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -405,17 +409,78 @@ public class VideoDetailFragment extends Fragment {
 
     private void initializeVideo(VideoItem video) {
         if (video != null && video.getUrl() != null) {
-            videoView.setVideoURI(Uri.parse(video.getUrl().replace("\\", "/")));
-        }
-        videoView.start();
+            // First, try to play the video directly
+            Uri videoUri = Uri.parse(video.getUrl().replace("\\", "/"));
+            videoView.setVideoURI(videoUri);
+            videoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+                @Override
+                public boolean onError(MediaPlayer mp, int what, int extra) {
+                    // If direct playback fails, try base64 decoding
+                    tryBase64Decoding(video.getUrl());
+                    return true;
+                }
+            });
 
+            videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    videoView.start();
+                    setupMediaController();
+                    updateVideoStats(video);
+                }
+            });
+
+            videoView.requestFocus();
+            videoView.start();
+        } else {
+            Log.e("VideoDetailFragment", "Video or video URL is null");
+            Toast.makeText(getContext(), "Invalid video data", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void tryBase64Decoding(String base64String) {
+        try {
+            // Decode base64 string to byte array
+            byte[] decodedBytes = Base64.decode(base64String, Base64.DEFAULT);
+
+            // Create a temporary file to store the video
+            File tempFile = File.createTempFile("video", ".mp4", getContext().getCacheDir());
+            FileOutputStream fos = new FileOutputStream(tempFile);
+            fos.write(decodedBytes);
+            fos.close();
+
+            // Set the video URI using the temporary file
+            Uri videoUri = Uri.fromFile(tempFile);
+            videoView.setVideoURI(videoUri);
+            videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    videoView.start();
+                    setupMediaController();
+                    updateVideoStats(currentVideo);
+                }
+            });
+            videoView.requestFocus();
+            videoView.start();
+
+        } catch (IOException e) {
+            Log.e("VideoDetailFragment", "Error decoding video", e);
+            Toast.makeText(getContext(), "Error loading video", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void setupMediaController() {
         CustomMediaController mediaController = new CustomMediaController(getContext(), this);
         mediaController.setAnchorView(videoView);
         videoView.setMediaController(mediaController);
+    }
+
+    private void updateVideoStats(VideoItem video) {
         incrementViewCount(video.getId());
         updateLikeDislikeCounts();
         updateButtons();
     }
+
 
     private void updateVideoDetails(VideoItem video) {
         Date date = video.getCreatedAt();

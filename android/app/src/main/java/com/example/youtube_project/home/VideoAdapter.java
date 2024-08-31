@@ -1,7 +1,11 @@
 package com.example.youtube_project.home;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +14,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.example.youtube_project.R;
 
 import java.text.SimpleDateFormat;
@@ -79,6 +88,50 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
             videoDetails = itemView.findViewById(R.id.video_details);
             this.context = context;
         }
+        private void tryLoadingBase64(Context context, String url, ImageView videoThumbnail) {
+            try {
+                byte[] decodedBytes = Base64.decode(url, Base64.DEFAULT);
+                Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+
+                if (decodedBitmap != null) {
+                    Glide.with(context)
+                            .load(decodedBitmap)
+                            .apply(new RequestOptions()
+                                    .frame(1000000)
+                                    .centerCrop())
+                            .listener(new RequestListener<Drawable>() {
+                                @Override
+                                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                    loadPlaceholder(context, videoThumbnail);
+                                    return true;
+                                }
+
+                                @Override
+                                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                    return false;
+                                }
+                            })
+                            .into(videoThumbnail);
+                } else {
+                    loadPlaceholder(context, videoThumbnail);
+                }
+            } catch (Exception ex) {
+                Log.e("ThumbnailLoader", "Error decoding base64 image", ex);
+                loadPlaceholder(context, videoThumbnail);
+            }
+        }
+
+        private void loadPlaceholder(Context context, ImageView videoThumbnail) {
+            try {
+                Glide.with(context)
+                        .load(R.drawable.ic_circlr1) // Replace with your default thumbnail drawable
+                        .into(videoThumbnail);
+            } catch (Exception e) {
+                Log.e("ThumbnailLoader", "Error loading placeholder image", e);
+                // If even loading the placeholder fails, we'll just leave the ImageView as is
+            }
+        }
+
 
         public void bind(final VideoItem video, final OnItemClickListener listener) {
             videoTitle.setText(video.getTitle());
@@ -90,6 +143,19 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
                     .apply(new RequestOptions()
                             .frame(1000000) // Extract frame after 1 second
                             .centerCrop())
+                    .listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            // If loading fails, try decoding the URL as base64
+                            tryLoadingBase64(context, video.getUrl(), videoThumbnail);
+                            return true;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            return false; // Return false if you want Glide to handle setting the resource on the target
+                        }
+                    })
                     .into(videoThumbnail);
 
             Date date = video.getCreatedAt();

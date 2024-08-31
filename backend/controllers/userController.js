@@ -174,7 +174,7 @@ const createUserVideo = async (req, res) => {
             return res.status(400).json({ message: "Title and file are required" });
         }
 
-        // Convert file buffer to base64
+        
         const base64Video = file.buffer.toString("base64");
 
         const newVideo = new Video({
