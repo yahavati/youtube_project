@@ -15,7 +15,7 @@ your computer's IP adress:
 3. In xml foldr, network_security_rules.xml line 4 
 
 
-Sync project with Gradle files. 
+Sync project with Gradle files. In android Studio it's the elephant icon at the top right menu. 
 Then run the application on an emulator which is on your own computer in android studio.  
 If you want to upload videos, you should have videos in your gallery in the emulator. 
 
