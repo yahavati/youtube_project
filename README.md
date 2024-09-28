@@ -23,11 +23,11 @@ git clone https://github.com/yahavati/youtube_project.git
 
 ### Checkout to the Specific Branch
 
-Checkout to the part-2-branch branch:
+Checkout to the Youtube_project branch:
 
 ```
 cd youtube_project
-git checkout part-2-final
+git checkout Youtube_project
 
 ```
 
